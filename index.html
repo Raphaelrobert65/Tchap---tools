@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tchap - Tools</title>
+  <style>
+    :root {
+      --tchap-navy: #0B1F3A;
+      --tchap-navy-light: #143158;
+      --tchap-gold: #C8A96A;
+      --tchap-bg: #f4f7fb;
+      --tchap-card: #ffffff;
+      --tchap-text: #0B1F3A;
+      --tchap-muted: #5f6b7a;
+      --tchap-border: #d9e1ea;
+      --tchap-success-bg: #eef5ff;
+      --tchap-error-bg: #fff1f1;
+      --tchap-error: #b42318;
+      --shadow: 0 10px 30px rgba(11, 31, 58, 0.12);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(200,169,106,0.18), transparent 25%),
+        linear-gradient(180deg, #102748 0%, #0B1F3A 100%);
+      min-height: 100vh;
+      color: var(--tchap-text);
+      padding: 40px 20px;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      color: white;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,0.88);
+      font-size: 16px;
+      max-width: 760px;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--tchap-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-header {
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tchap-gold);
+      margin-bottom: 8px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: var(--tchap-navy);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--tchap-muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .field {
+      margin-top: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tchap-navy);
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--tchap-border);
+      border-radius: 12px;
+      padding: 14px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      color: var(--tchap-text);
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: var(--tchap-gold);
+      box-shadow: 0 0 0 4px rgba(200,169,106,0.16);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: var(--tchap-navy);
+      color: white;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background: var(--tchap-navy-light);
+    }
+
+    .btn-secondary {
+      background: #edf2f8;
+      color: var(--tchap-navy);
+    }
+
+    .result,
+    .status,
+    .error-box {
+      margin-top: 18px;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .status {
+      background: #f8fafc;
+      border: 1px solid var(--tchap-border);
+      color: var(--tchap-muted);
+      font-size: 14px;
+    }
+
+    .error-box {
+      background: var(--tchap-error-bg);
+      border: 1px solid #f3c7c7;
+      color: var(--tchap-error);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .result {
+      background: var(--tchap-success-bg);
+      border: 1px solid #dbe7fb;
+    }
+
+    .result-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-item {
+      background: white;
+      border: 1px solid #dfe8f5;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .result-label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--tchap-muted);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .result-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--tchap-navy);
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-top: 14px;
+      background: var(--tchap-gold);
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+
+    .copy-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 10px;
+      background: white;
+      color: var(--tchap-navy);
+      border: 1px solid #cfdae8;
+    }
+
+    .copy-feedback {
+      font-size: 12px;
+      color: var(--tchap-muted);
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <h1>Tchap - Tools</h1>
+      <p>
+        Outil interne pour retrouver une instance Tchap à partir d’un domaine
+        et générer un MXID à partir d’une adresse email professionnelle.
+      </p>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="card-header">
+          <div class="eyebrow">Fonctionnalité 1</div>
+          <h2>Retrouver une instance</h2>
+          <p>Saisis un domaine professionnel pour identifier automatiquement l’instance Tchap associée.</p>
+        </div>
+
+        <div class="field">
+          <label for="domainInput">Domaine</label>
+          <div class="input-wrap">
+            <input id="domainInput" type="text" placeholder="ex : beta.gouv.fr" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="domainSearchBtn" class="btn-primary" type="button">Tester le domaine</button>
+          <button id="domainResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
+        </div>
+
+        <div id="domainOutput"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div class="eyebrow">Fonctionnalité 2</div>
+          <h2>Générer un MXID</h2>
+          <p>Saisis un email professionnel. L’outil retrouve l’instance et construit automatiquement le MXID.</p>
+        </div>
+
+        <div class="field">
+          <label for="emailInput">Email professionnel</label>
+          <div class="input-wrap">
+            <input id="emailInput" type="email" placeholder="ex : raphael.robert@beta.gouv.fr" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="emailSearchBtn" class="btn-primary" type="button">Générer le MXID</button>
+          <button id="emailResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
+        </div>
+
+        <div id="emailOutput"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const TchapApp = (() => {
+      const CONFIG = {
+        apiBaseUrl: "https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info"
+      };
+
+      const DOM = {
+        domainInput: document.getElementById("domainInput"),
+        emailInput: document.getElementById("emailInput"),
+        domainOutput: document.getElementById("domainOutput"),
+        emailOutput: document.getElementById("emailOutput"),
+        domainSearchBtn: document.getElementById("domainSearchBtn"),
+        emailSearchBtn: document.getElementById("emailSearchBtn"),
+        domainResetBtn: document.getElementById("domainResetBtn"),
+        emailResetBtn: document.getElementById("emailResetBtn")
+      };
+
+      function init() {
+        bindEvents();
+      }
+
+      function bindEvents() {
+        DOM.domainSearchBtn.addEventListener("click", handleDomainSearch);
+        DOM.emailSearchBtn.addEventListener("click", handleEmailSearch);
+        DOM.domainResetBtn.addEventListener("click", resetDomainBlock);
+        DOM.emailResetBtn.addEventListener("click", resetEmailBlock);
+
+        DOM.domainInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") handleDomainSearch();
+        });
+
+        DOM.emailInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") handleEmailSearch();
+        });
+      }
+
+      async function handleDomainSearch() {
+        const domain = DOM.domainInput.value.trim().toLowerCase();
+
+        if (!Validator.isValidDomain(domain)) {
+          Renderer.renderError(DOM.domainOutput, "Veuillez saisir un domaine valide.");
+          return;
+        }
+
+        UI.setLoadingState(DOM.domainSearchBtn, true, "Recherche...");
+        Renderer.renderStatus(DOM.domainOutput, "Recherche de l’instance en cours...");
+
+        try {
+          const instance = await Api.fetchInstanceFromDomain(domain);
+          const instanceType = Mapper.getInstanceType(instance);
+
+          Renderer.renderDomainResult(DOM.domainOutput, {
+            domain,
+            instance,
+            instanceType
+          });
+        } catch (error) {
+          console.error(error);
+          Renderer.renderError(
+            DOM.domainOutput,
+            "Impossible de retrouver l’instance pour ce domaine."
+          );
+        } finally {
+          UI.setLoadingState(DOM.domainSearchBtn, false, "Tester le domaine");
+        }
+      }
+
+      async function handleEmailSearch() {
+        const email = DOM.emailInput.value.trim().toLowerCase();
+
+        if (!Validator.isValidEmail(email)) {
+          Renderer.renderError(DOM.emailOutput, "Veuillez saisir une adresse email professionnelle valide.");
+          return;
+        }
+
+        const domain = Parser.extractDomainFromEmail(email);
+
+        if (!Validator.isValidDomain(domain)) {
+          Renderer.renderError(DOM.emailOutput, "Le domaine extrait depuis cet email est invalide.");
+          return;
+        }
+
+        UI.setLoadingState(DOM.emailSearchBtn, true, "Génération...");
+        Renderer.renderStatus(DOM.emailOutput, "Recherche de l’instance et génération du MXID en cours...");
+
+        try {
+          const instance = await Api.fetchInstanceFromDomain(domain);
+          const instanceType = Mapper.getInstanceType(instance);
+          const mxid = Builder.buildMxid(email, instance);
+
+          Renderer.renderEmailResult(DOM.emailOutput, {
+            email,
+            domain,
+            instance,
+            instanceType,
+            mxid
+          });
+        } catch (error) {
+          console.error(error);
+          Renderer.renderError(
+            DOM.emailOutput,
+            "Impossible de générer le MXID pour cette adresse email."
+          );
+        } finally {
+          UI.setLoadingState(DOM.emailSearchBtn, false, "Générer le MXID");
+        }
+      }
+
+      function resetDomainBlock() {
+        DOM.domainInput.value = "";
+        DOM.domainOutput.innerHTML = "";
+        DOM.domainInput.focus();
+      }
+
+      function resetEmailBlock() {
+        DOM.emailInput.value = "";
+        DOM.emailOutput.innerHTML = "";
+        DOM.emailInput.focus();
+      }
+
+      const Api = {
+        async fetchInstanceFromDomain(domain) {
+          const syntheticEmail = `test@${domain}`;
+          const url = `${CONFIG.apiBaseUrl}?medium=&address=${encodeURIComponent(syntheticEmail)}`;
+
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (!data || !data.hs || typeof data.hs !== "string") {
+            throw new Error("Réponse API invalide");
+          }
+
+          return data.hs;
+        }
+      };
+
+      const Validator = {
+        isValidDomain(domain) {
+          const domainRegex = /^(?!-)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+          return Boolean(domain) && domainRegex.test(domain);
+        },
+
+        isValidEmail(email) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return Boolean(email) && emailRegex.test(email);
+        }
+      };
+
+      const Parser = {
+        extractDomainFromEmail(email) {
+          const parts = email.split("@");
+          return parts.length === 2 ? parts[1] : "";
+        }
+      };
+
+      const Builder = {
+        buildMxid(email, instance) {
+          const matrixLocalPart = email.replace("@", "-");
+          return `@${matrixLocalPart}:${instance}`;
+        }
+      };
+
+      const Mapper = {
+        getInstanceType(instance) {
+          if (!instance) return "Inconnu";
+          if (instance.includes("agent")) return "Agent";
+          if (instance.includes("externe")) return "Externe";
+          return "Autre";
+        }
+      };
+
+      const UI = {
+        setLoadingState(button, isLoading, loadingLabel) {
+          button.disabled = isLoading;
+          if (isLoading) {
+            button.dataset.originalText = button.textContent;
+            button.textContent = loadingLabel;
+          } else {
+            button.textContent = button.dataset.originalText || button.textContent;
+          }
+        },
+
+        async copyToClipboard(text, feedbackElement) {
+          try {
+            await navigator.clipboard.writeText(text);
+            feedbackElement.textContent = "Copié";
+          } catch (error) {
+            console.error(error);
+            feedbackElement.textContent = "Copie impossible";
+          }
+
+          setTimeout(() => {
+            feedbackElement.textContent = "";
+          }, 1800);
+        }
+      };
+
+      const Renderer = {
+        renderStatus(container, message) {
+          container.innerHTML = `<div class="status">${message}</div>`;
+        },
+
+        renderError(container, message) {
+          container.innerHTML = `<div class="error-box">${message}</div>`;
+        },
+
+        renderDomainResult(container, data) {
+          container.innerHTML = `
+            <div class="result">
+              <div class="result-grid">
+                <div class="result-item">
+                  <span class="result-label">Domaine</span>
+                  <div class="result-value">${data.domain}</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">Instance</span>
+                  <div class="result-value">${data.instance}</div>
+                  <div class="copy-row">
+                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
+                    <span class="copy-feedback"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="badge">${data.instanceType}</div>
+            </div>
+          `;
+
+          this.attachCopyHandlers(container);
+        },
+
+        renderEmailResult(container, data) {
+          container.innerHTML = `
+            <div class="result">
+              <div class="result-grid">
+                <div class="result-item">
+                  <span class="result-label">Email</span>
+                  <div class="result-value">${data.email}</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">Domaine</span>
+                  <div class="result-value">${data.domain}</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">Instance</span>
+                  <div class="result-value">${data.instance}</div>
+                  <div class="copy-row">
+                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
+                    <span class="copy-feedback"></span>
+                  </div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">MXID</span>
+                  <div class="result-value">${data.mxid}</div>
+                  <div class="copy-row">
+                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.mxid)}">Copier le MXID</button>
+                    <span class="copy-feedback"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="badge">${data.instanceType}</div>
+            </div>
+          `;
+
+          this.attachCopyHandlers(container);
+        },
+
+        attachCopyHandlers(container) {
+          const buttons = container.querySelectorAll("[data-copy]");
+
+          buttons.forEach((button) => {
+            button.addEventListener("click", async () => {
+              const textToCopy = button.getAttribute("data-copy");
+              const feedbackElement = button.parentElement.querySelector(".copy-feedback");
+              await UI.copyToClipboard(textToCopy, feedbackElement);
+            });
+          });
+        },
+
+        escapeAttribute(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        }
+      };
+
+      return { init };
+    })();
+
+    TchapApp.init();
+  </script>
+</body>
+</html>
