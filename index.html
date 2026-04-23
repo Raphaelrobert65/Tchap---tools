@@ -8,28 +8,20 @@
     :root {
       --tchap-navy: #0B1F3A;
       --tchap-navy-light: #143158;
-      --tchap-navy-deep: #091629;
-      --tchap-navy-soft: #1a2f52;
-      --tchap-gold: #C8A96A;
-      --tchap-gold-soft: rgba(200, 169, 106, 0.12);
       --tchap-card: rgba(255, 255, 255, 0.985);
       --tchap-card-stroke: rgba(255, 255, 255, 0.16);
       --tchap-text: #0B1F3A;
       --tchap-muted: #68778b;
       --tchap-border: #dbe4ee;
-      --tchap-border-strong: #cfd9e5;
       --tchap-success-bg: #eef6ff;
       --tchap-success-soft: #eaf7ee;
       --tchap-success: #17663a;
       --tchap-error-bg: #fff2f2;
       --tchap-error: #b42318;
-      --tchap-overlay: rgba(7, 18, 35, 0.58);
       --shadow-hero: 0 24px 64px rgba(8, 23, 46, 0.22);
       --shadow-card: 0 20px 54px rgba(9, 24, 47, 0.16);
-      --shadow-md: 0 12px 28px rgba(9, 24, 47, 0.1);
       --shadow-sm: 0 6px 14px rgba(9, 24, 47, 0.06);
       --radius-2xl: 28px;
-      --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 16px;
       --radius-sm: 12px;
@@ -82,7 +74,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 100% 0%, rgba(200,169,106,0.14), transparent 28%);
+        radial-gradient(circle at 100% 0%, rgba(200,169,106,0.10), transparent 28%);
       pointer-events: none;
     }
 
@@ -100,8 +92,8 @@
       padding: 8px 12px;
       border-radius: 999px;
       background: rgba(255,255,255,0.06);
-      color: #f3dfb0;
-      border: 1px solid rgba(200,169,106,0.2);
+      color: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.12);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -128,40 +120,18 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
-      align-items: stretch;
+      align-items: start;
     }
 
     .card {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
       background: linear-gradient(180deg, rgba(255,255,255,0.985) 0%, rgba(250,252,255,0.985) 100%);
       border-radius: var(--radius-2xl);
       box-shadow: var(--shadow-card);
       padding: 28px;
       border: 1px solid var(--tchap-card-stroke);
       overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(200,169,106,0), rgba(200,169,106,0.55), rgba(200,169,106,0));
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 28px;
-      right: 28px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(200,169,106,0.72), rgba(200,169,106,0.18));
-      opacity: 0.9;
+      align-self: start;
     }
 
     .card-header {
@@ -176,7 +146,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #b28d46;
+      color: #7c8ca2;
       margin-bottom: 10px;
     }
 
@@ -185,7 +155,7 @@
       font-size: 24px;
       line-height: 1.15;
       letter-spacing: -0.02em;
-      color: var(--tchap-navy);
+      color: var(--tchap-text);
       min-height: 56px;
     }
 
@@ -206,7 +176,7 @@
       margin-bottom: 10px;
       font-size: 14px;
       font-weight: 700;
-      color: var(--tchap-navy);
+      color: var(--tchap-text);
     }
 
     .input-wrap {
@@ -231,8 +201,8 @@
     }
 
     input:focus {
-      border-color: rgba(200,169,106,0.72);
-      box-shadow: 0 0 0 5px rgba(200,169,106,0.14);
+      border-color: rgba(11,31,58,0.28);
+      box-shadow: 0 0 0 5px rgba(11,31,58,0.08);
       transform: translateY(-1px);
       background: #fff;
     }
@@ -279,18 +249,13 @@
 
     .btn-secondary {
       background: #eef3f8;
-      color: var(--tchap-navy);
+      color: var(--tchap-text);
       border: 1px solid #dde6f0;
     }
 
     .btn-secondary:hover {
       background: #e7eef6;
       border-color: #d3ddeb;
-    }
-
-    .feature-card-footer {
-      margin-top: auto;
-      padding-top: 2px;
     }
 
     .result,
@@ -348,7 +313,7 @@
     .result-value {
       font-size: 15px;
       font-weight: 700;
-      color: var(--tchap-navy);
+      color: var(--tchap-text);
       line-height: 1.55;
       word-break: break-word;
     }
@@ -368,7 +333,7 @@
       font-weight: 700;
       border-radius: 11px;
       background: white;
-      color: var(--tchap-navy);
+      color: var(--tchap-text);
       border: 1px solid #cfdae8;
       box-shadow: 0 4px 10px rgba(11,31,58,0.05);
     }
@@ -392,7 +357,7 @@
       align-items: center;
       gap: 8px;
       width: fit-content;
-      background: linear-gradient(180deg, #cfb173 0%, #be9a55 100%);
+      background: linear-gradient(180deg, #8c9aab 0%, #75859a 100%);
       color: white;
       font-weight: 700;
       font-size: 12px;
@@ -400,7 +365,7 @@
       border-radius: 999px;
       letter-spacing: 0.03em;
       text-transform: capitalize;
-      box-shadow: 0 8px 18px rgba(200,169,106,0.18);
+      box-shadow: 0 8px 18px rgba(116,133,154,0.18);
     }
 
     .status-pill {
@@ -432,124 +397,6 @@
       background: #f5f7fa;
       color: #5f6b7a;
       border: 1px solid #d9e1ea;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 22px;
-      z-index: 999;
-    }
-
-    .modal.is-open {
-      display: flex;
-    }
-
-    .modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: var(--tchap-overlay);
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-panel {
-      position: relative;
-      width: 100%;
-      max-width: 700px;
-      background: rgba(255,255,255,0.985);
-      border-radius: 28px;
-      box-shadow: 0 28px 80px rgba(11, 31, 58, 0.28);
-      padding: 28px;
-      z-index: 1;
-      animation: modalIn 0.22s ease;
-      border: 1px solid rgba(255,255,255,0.58);
-      overflow: hidden;
-    }
-
-    .modal-panel::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(200,169,106,0), rgba(200,169,106,0.58), rgba(200,169,106,0));
-    }
-
-    .modal-panel::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 28px;
-      right: 28px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, rgba(200,169,106,0.72), rgba(200,169,106,0.18));
-    }
-
-    @keyframes modalIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.985);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .modal-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 22px;
-    }
-
-    .modal-title-wrap .eyebrow {
-      margin-bottom: 8px;
-    }
-
-    .modal-title-wrap h2 {
-      margin: 0 0 8px;
-      color: var(--tchap-navy);
-      font-size: 28px;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-    }
-
-    .modal-title-wrap p {
-      margin: 0;
-      color: var(--tchap-muted);
-      line-height: 1.65;
-      font-size: 14px;
-      max-width: 520px;
-    }
-
-    .modal-close {
-      background: #eef3f8;
-      color: var(--tchap-navy);
-      border: 1px solid #dde6f0;
-      border-radius: 14px;
-      width: 46px;
-      height: 46px;
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1;
-      flex-shrink: 0;
-      padding: 0;
-    }
-
-    .modal-close:hover {
-      background: #e7eef6;
-    }
-
-    .helper {
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--tchap-muted);
-      line-height: 1.6;
     }
 
     @media (max-width: 1120px) {
@@ -585,32 +432,9 @@
         border-radius: 22px;
       }
 
-      .card::after {
-        left: 18px;
-        right: 18px;
-      }
-
       .card h2,
       .card p {
         min-height: auto;
-      }
-
-      .modal-panel {
-        padding: 22px 18px;
-        border-radius: 24px;
-      }
-
-      .modal-panel::after {
-        left: 18px;
-        right: 18px;
-      }
-
-      .modal-top {
-        flex-direction: column;
-      }
-
-      .modal-close {
-        align-self: flex-end;
       }
     }
   </style>
@@ -678,52 +502,23 @@
         <div class="card-header">
           <div class="eyebrow">Fonctionnalité 3</div>
           <h2>Vérifier si un domaine est ouvert</h2>
-          <p>Renseigner un domaine. Vérifier l’ouverture à partir de l’instance Tchap retournée.</p>
+          <p>Renseigner un domaine. Vérifier le statut d’ouverture directement dans l’interface principale.</p>
         </div>
 
-        <div class="feature-card-footer">
-          <div class="field">
-            <label for="statusDomainShortcutInput">Domaine</label>
-            <div class="input-wrap">
-              <input id="statusDomainShortcutInput" type="text" placeholder="ex : beta.gouv.fr" />
-            </div>
-          </div>
-
-          <div class="actions">
-            <button id="openStatusModalBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
+        <div class="field">
+          <label for="statusDomainInput">Domaine</label>
+          <div class="input-wrap">
+            <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" />
           </div>
         </div>
+
+        <div class="actions">
+          <button id="statusSearchBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
+          <button id="statusResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
+        </div>
+
+        <div id="statusOutput"></div>
       </section>
-    </div>
-  </div>
-
-  <div id="statusModal" class="modal" aria-hidden="true">
-    <div class="modal-backdrop" data-close-modal="true"></div>
-
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="statusModalTitle">
-      <div class="modal-top">
-        <div class="modal-title-wrap">
-          <div class="eyebrow">Fonctionnalité 3</div>
-          <h2 id="statusModalTitle">Vérifier si un domaine est ouvert</h2>
-          <p>Renseigner un domaine. Vérifier le statut métier d’ouverture.</p>
-        </div>
-
-        <button id="closeStatusModalBtn" class="modal-close" type="button" aria-label="Fermer">×</button>
-      </div>
-
-      <div class="field">
-        <label for="statusDomainInput">Domaine</label>
-        <div class="input-wrap">
-          <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" />
-        </div>
-      </div>
-
-      <div class="actions">
-        <button id="statusSearchBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
-        <button id="statusResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-      </div>
-
-      <div id="statusOutput"></div>
     </div>
   </div>
 
@@ -736,20 +531,18 @@
       const DOM = {
         domainInput: document.getElementById("domainInput"),
         emailInput: document.getElementById("emailInput"),
+        statusDomainInput: document.getElementById("statusDomainInput"),
+
         domainOutput: document.getElementById("domainOutput"),
         emailOutput: document.getElementById("emailOutput"),
+        statusOutput: document.getElementById("statusOutput"),
+
         domainSearchBtn: document.getElementById("domainSearchBtn"),
         emailSearchBtn: document.getElementById("emailSearchBtn"),
+        statusSearchBtn: document.getElementById("statusSearchBtn"),
+
         domainResetBtn: document.getElementById("domainResetBtn"),
         emailResetBtn: document.getElementById("emailResetBtn"),
-
-        openStatusModalBtn: document.getElementById("openStatusModalBtn"),
-        statusDomainShortcutInput: document.getElementById("statusDomainShortcutInput"),
-        closeStatusModalBtn: document.getElementById("closeStatusModalBtn"),
-        statusModal: document.getElementById("statusModal"),
-        statusDomainInput: document.getElementById("statusDomainInput"),
-        statusOutput: document.getElementById("statusOutput"),
-        statusSearchBtn: document.getElementById("statusSearchBtn"),
         statusResetBtn: document.getElementById("statusResetBtn")
       };
 
@@ -760,25 +553,11 @@
       function bindEvents() {
         DOM.domainSearchBtn.addEventListener("click", handleDomainSearch);
         DOM.emailSearchBtn.addEventListener("click", handleEmailSearch);
+        DOM.statusSearchBtn.addEventListener("click", handleDomainStatusSearch);
+
         DOM.domainResetBtn.addEventListener("click", resetDomainBlock);
         DOM.emailResetBtn.addEventListener("click", resetEmailBlock);
-
-        DOM.openStatusModalBtn.addEventListener("click", openStatusModalFromShortcut);
-        DOM.closeStatusModalBtn.addEventListener("click", closeStatusModal);
-        DOM.statusSearchBtn.addEventListener("click", handleDomainStatusSearch);
         DOM.statusResetBtn.addEventListener("click", resetStatusBlock);
-
-        DOM.statusModal.addEventListener("click", (event) => {
-          if (event.target.dataset.closeModal === "true") {
-            closeStatusModal();
-          }
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && DOM.statusModal.classList.contains("is-open")) {
-            closeStatusModal();
-          }
-        });
 
         DOM.domainInput.addEventListener("keydown", (event) => {
           if (event.key === "Enter") handleDomainSearch();
@@ -786,10 +565,6 @@
 
         DOM.emailInput.addEventListener("keydown", (event) => {
           if (event.key === "Enter") handleEmailSearch();
-        });
-
-        DOM.statusDomainShortcutInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") openStatusModalFromShortcut();
         });
 
         DOM.statusDomainInput.addEventListener("keydown", (event) => {
@@ -918,34 +693,6 @@
         DOM.statusDomainInput.value = "";
         DOM.statusOutput.innerHTML = "";
         DOM.statusDomainInput.focus();
-      }
-
-      function openStatusModalFromShortcut() {
-        const shortcutDomain = DOM.statusDomainShortcutInput.value.trim();
-        openStatusModal(shortcutDomain);
-      }
-
-      function openStatusModal(prefilledDomain = "") {
-        DOM.statusModal.classList.add("is-open");
-        DOM.statusModal.setAttribute("aria-hidden", "false");
-
-        if (prefilledDomain) {
-          DOM.statusDomainInput.value = prefilledDomain;
-        }
-
-        setTimeout(() => {
-          DOM.statusDomainInput.focus();
-          DOM.statusDomainInput.setSelectionRange(
-            DOM.statusDomainInput.value.length,
-            DOM.statusDomainInput.value.length
-          );
-        }, 30);
-      }
-
-      function closeStatusModal() {
-        DOM.statusModal.classList.remove("is-open");
-        DOM.statusModal.setAttribute("aria-hidden", "true");
-        DOM.openStatusModalBtn.focus();
       }
 
       const Api = {
