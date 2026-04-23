@@ -176,6 +176,23 @@
       color: var(--tchap-navy);
     }
 
+    .btn-tertiary {
+      background: rgba(200,169,106,0.14);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-tertiary:hover {
+      background: rgba(200,169,106,0.24);
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
     .result,
     .status,
     .error-box {
@@ -247,6 +264,7 @@
       padding: 8px 12px;
       border-radius: 999px;
       letter-spacing: 0.03em;
+      text-transform: capitalize;
     }
 
     .copy-row {
@@ -272,6 +290,130 @@
       color: var(--tchap-muted);
     }
 
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .status-pill.open {
+      background: #eaf7ee;
+      color: #17663a;
+      border: 1px solid #b9e2c5;
+    }
+
+    .status-pill.closed {
+      background: #fff1f1;
+      color: #b42318;
+      border: 1px solid #f3c7c7;
+    }
+
+    .status-pill.unknown {
+      background: #f5f7fa;
+      color: #5f6b7a;
+      border: 1px solid #d9e1ea;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal.is-open {
+      display: flex;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 31, 58, 0.58);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-panel {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      background: var(--tchap-card);
+      border-radius: 20px;
+      box-shadow: 0 22px 60px rgba(11, 31, 58, 0.28);
+      padding: 24px;
+      z-index: 1;
+      animation: modalIn 0.18s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .modal-title-wrap .eyebrow {
+      margin-bottom: 6px;
+    }
+
+    .modal-title-wrap h2 {
+      margin: 0 0 8px;
+      color: var(--tchap-navy);
+      font-size: 24px;
+    }
+
+    .modal-title-wrap p {
+      margin: 0;
+      color: var(--tchap-muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .modal-close {
+      background: #edf2f8;
+      color: var(--tchap-navy);
+      border: none;
+      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover {
+      background: #e3ebf5;
+    }
+
+    .helper {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--tchap-muted);
+      line-height: 1.5;
+    }
+
     @media (max-width: 860px) {
       .grid {
         grid-template-columns: 1fr;
@@ -280,11 +422,35 @@
       .hero h1 {
         font-size: 28px;
       }
+
+      .toolbar {
+        justify-content: stretch;
+      }
+
+      .toolbar button {
+        width: 100%;
+      }
+
+      .modal-panel {
+        padding: 20px;
+      }
+
+      .modal-top {
+        flex-direction: column;
+      }
+
+      .modal-close {
+        align-self: flex-end;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page">
+    <div class="toolbar">
+      <button id="openStatusModalBtn" class="btn-tertiary" type="button">Fonctionnalité 3 · Domaine ouvert ?</button>
+    </div>
+
     <div class="hero">
       <h1>Tchap - Tools</h1>
       <p>
@@ -340,6 +506,42 @@
     </div>
   </div>
 
+  <div id="statusModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal="true"></div>
+
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="statusModalTitle">
+      <div class="modal-top">
+        <div class="modal-title-wrap">
+          <div class="eyebrow">Fonctionnalité 3</div>
+          <h2 id="statusModalTitle">Vérifier si un domaine est ouvert</h2>
+          <p>
+            Saisis un domaine. Si l’instance retournée est <strong>externe</strong>, le domaine est considéré comme non ouvert.
+            Sinon, il est considéré comme ouvert.
+          </p>
+        </div>
+
+        <button id="closeStatusModalBtn" class="modal-close" type="button" aria-label="Fermer">×</button>
+      </div>
+
+      <div class="field">
+        <label for="statusDomainInput">Domaine</label>
+        <div class="input-wrap">
+          <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" />
+        </div>
+        <div class="helper">
+          Règle métier appliquée : instance dédiée = domaine ouvert · instance externe = domaine non ouvert.
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="statusSearchBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
+        <button id="statusResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
+      </div>
+
+      <div id="statusOutput"></div>
+    </div>
+  </div>
+
   <script>
     const TchapApp = (() => {
       const CONFIG = {
@@ -354,7 +556,15 @@
         domainSearchBtn: document.getElementById("domainSearchBtn"),
         emailSearchBtn: document.getElementById("emailSearchBtn"),
         domainResetBtn: document.getElementById("domainResetBtn"),
-        emailResetBtn: document.getElementById("emailResetBtn")
+        emailResetBtn: document.getElementById("emailResetBtn"),
+
+        openStatusModalBtn: document.getElementById("openStatusModalBtn"),
+        closeStatusModalBtn: document.getElementById("closeStatusModalBtn"),
+        statusModal: document.getElementById("statusModal"),
+        statusDomainInput: document.getElementById("statusDomainInput"),
+        statusOutput: document.getElementById("statusOutput"),
+        statusSearchBtn: document.getElementById("statusSearchBtn"),
+        statusResetBtn: document.getElementById("statusResetBtn")
       };
 
       function init() {
@@ -367,12 +577,33 @@
         DOM.domainResetBtn.addEventListener("click", resetDomainBlock);
         DOM.emailResetBtn.addEventListener("click", resetEmailBlock);
 
+        DOM.openStatusModalBtn.addEventListener("click", openStatusModal);
+        DOM.closeStatusModalBtn.addEventListener("click", closeStatusModal);
+        DOM.statusSearchBtn.addEventListener("click", handleDomainStatusSearch);
+        DOM.statusResetBtn.addEventListener("click", resetStatusBlock);
+
+        DOM.statusModal.addEventListener("click", (event) => {
+          if (event.target.dataset.closeModal === "true") {
+            closeStatusModal();
+          }
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && DOM.statusModal.classList.contains("is-open")) {
+            closeStatusModal();
+          }
+        });
+
         DOM.domainInput.addEventListener("keydown", (event) => {
           if (event.key === "Enter") handleDomainSearch();
         });
 
         DOM.emailInput.addEventListener("keydown", (event) => {
           if (event.key === "Enter") handleEmailSearch();
+        });
+
+        DOM.statusDomainInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") handleDomainStatusSearch();
         });
       }
 
@@ -448,6 +679,39 @@
         }
       }
 
+      async function handleDomainStatusSearch() {
+        const domain = DOM.statusDomainInput.value.trim().toLowerCase();
+
+        if (!Validator.isValidDomain(domain)) {
+          Renderer.renderError(DOM.statusOutput, "Veuillez saisir un domaine valide.");
+          return;
+        }
+
+        UI.setLoadingState(DOM.statusSearchBtn, true, "Vérification...");
+        Renderer.renderStatus(DOM.statusOutput, "Vérification du statut du domaine en cours...");
+
+        try {
+          const instance = await Api.fetchInstanceFromDomain(domain);
+          const instanceType = Mapper.getInstanceType(instance);
+          const domainStatus = Mapper.getDomainOpeningStatus(instance);
+
+          Renderer.renderDomainStatusResult(DOM.statusOutput, {
+            domain,
+            instance,
+            instanceType,
+            domainStatus
+          });
+        } catch (error) {
+          console.error(error);
+          Renderer.renderError(
+            DOM.statusOutput,
+            "Impossible de vérifier l’ouverture de ce domaine."
+          );
+        } finally {
+          UI.setLoadingState(DOM.statusSearchBtn, false, "Vérifier l’ouverture");
+        }
+      }
+
       function resetDomainBlock() {
         DOM.domainInput.value = "";
         DOM.domainOutput.innerHTML = "";
@@ -458,6 +722,26 @@
         DOM.emailInput.value = "";
         DOM.emailOutput.innerHTML = "";
         DOM.emailInput.focus();
+      }
+
+      function resetStatusBlock() {
+        DOM.statusDomainInput.value = "";
+        DOM.statusOutput.innerHTML = "";
+        DOM.statusDomainInput.focus();
+      }
+
+      function openStatusModal() {
+        DOM.statusModal.classList.add("is-open");
+        DOM.statusModal.setAttribute("aria-hidden", "false");
+        setTimeout(() => {
+          DOM.statusDomainInput.focus();
+        }, 30);
+      }
+
+      function closeStatusModal() {
+        DOM.statusModal.classList.remove("is-open");
+        DOM.statusModal.setAttribute("aria-hidden", "true");
+        DOM.openStatusModalBtn.focus();
       }
 
       const Api = {
@@ -510,9 +794,20 @@
       const Mapper = {
         getInstanceType(instance) {
           if (!instance) return "Inconnu";
-          if (instance.includes("agent")) return "Agent";
-          if (instance.includes("externe")) return "Externe";
+          if (instance.toLowerCase().includes("externe")) return "Externe";
+          if (instance.toLowerCase().includes("agent")) return "Agent";
           return "Autre";
+        },
+
+        getDomainOpeningStatus(instance) {
+          if (!instance) return "unknown";
+          return instance.toLowerCase().includes("externe") ? "closed" : "open";
+        },
+
+        getDomainOpeningLabel(status) {
+          if (status === "open") return "Ouvert sur Tchap";
+          if (status === "closed") return "Non ouvert";
+          return "Indéterminé";
         }
       };
 
@@ -557,12 +852,12 @@
               <div class="result-grid">
                 <div class="result-item">
                   <span class="result-label">Domaine</span>
-                  <div class="result-value">${data.domain}</div>
+                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
                 </div>
 
                 <div class="result-item">
                   <span class="result-label">Instance</span>
-                  <div class="result-value">${data.instance}</div>
+                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
                   <div class="copy-row">
                     <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
                     <span class="copy-feedback"></span>
@@ -570,7 +865,7 @@
                 </div>
               </div>
 
-              <div class="badge">${data.instanceType}</div>
+              <div class="badge">${this.escapeHtml(data.instanceType)}</div>
             </div>
           `;
 
@@ -583,17 +878,17 @@
               <div class="result-grid">
                 <div class="result-item">
                   <span class="result-label">Email</span>
-                  <div class="result-value">${data.email}</div>
+                  <div class="result-value">${this.escapeHtml(data.email)}</div>
                 </div>
 
                 <div class="result-item">
                   <span class="result-label">Domaine</span>
-                  <div class="result-value">${data.domain}</div>
+                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
                 </div>
 
                 <div class="result-item">
                   <span class="result-label">Instance</span>
-                  <div class="result-value">${data.instance}</div>
+                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
                   <div class="copy-row">
                     <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
                     <span class="copy-feedback"></span>
@@ -602,7 +897,7 @@
 
                 <div class="result-item">
                   <span class="result-label">MXID</span>
-                  <div class="result-value">${data.mxid}</div>
+                  <div class="result-value">${this.escapeHtml(data.mxid)}</div>
                   <div class="copy-row">
                     <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.mxid)}">Copier le MXID</button>
                     <span class="copy-feedback"></span>
@@ -610,7 +905,42 @@
                 </div>
               </div>
 
-              <div class="badge">${data.instanceType}</div>
+              <div class="badge">${this.escapeHtml(data.instanceType)}</div>
+            </div>
+          `;
+
+          this.attachCopyHandlers(container);
+        },
+
+        renderDomainStatusResult(container, data) {
+          const statusLabel = Mapper.getDomainOpeningLabel(data.domainStatus);
+
+          container.innerHTML = `
+            <div class="result">
+              <div class="result-grid">
+                <div class="result-item">
+                  <span class="result-label">Domaine</span>
+                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">Statut</span>
+                  <div class="result-value">
+                    <span class="status-pill ${this.escapeAttribute(data.domainStatus)}">${this.escapeHtml(statusLabel)}</span>
+                  </div>
+                </div>
+
+                <div class="result-item">
+                  <span class="result-label">Instance</span>
+                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
+                  <div class="copy-row">
+                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
+                    <span class="copy-feedback"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="badge">${this.escapeHtml(data.instanceType)}</div>
             </div>
           `;
 
@@ -635,6 +965,15 @@
             .replace(/"/g, "&quot;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
+        },
+
+        escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
         }
       };
 
