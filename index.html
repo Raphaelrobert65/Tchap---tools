@@ -8,28 +8,30 @@
     :root {
       --tchap-navy: #0B1F3A;
       --tchap-navy-light: #143158;
+      --tchap-navy-deep: #09162a;
       --tchap-gold: #C8A96A;
       --tchap-gold-soft: rgba(200, 169, 106, 0.14);
-      --tchap-bg: #f4f7fb;
       --tchap-card: rgba(255, 255, 255, 0.98);
       --tchap-text: #0B1F3A;
-      --tchap-muted: #607086;
+      --tchap-muted: #66758a;
       --tchap-border: #dbe3ed;
-      --tchap-border-strong: #c9d5e3;
+      --tchap-border-strong: #cdd7e4;
       --tchap-success-bg: #eef5ff;
+      --tchap-success-soft: #eaf7ee;
+      --tchap-success: #17663a;
       --tchap-error-bg: #fff2f2;
       --tchap-error: #b42318;
-      --tchap-success: #17663a;
-      --tchap-success-soft: #eaf7ee;
       --tchap-overlay: rgba(7, 18, 35, 0.58);
-      --shadow-lg: 0 26px 70px rgba(11, 31, 58, 0.18);
-      --shadow-md: 0 14px 34px rgba(11, 31, 58, 0.12);
-      --shadow-sm: 0 8px 18px rgba(11, 31, 58, 0.08);
-      --radius-xl: 24px;
+      --shadow-xl: 0 26px 70px rgba(11, 31, 58, 0.18);
+      --shadow-lg: 0 16px 38px rgba(11, 31, 58, 0.13);
+      --shadow-md: 0 10px 24px rgba(11, 31, 58, 0.09);
+      --shadow-sm: 0 6px 14px rgba(11, 31, 58, 0.06);
+      --radius-2xl: 26px;
+      --radius-xl: 22px;
       --radius-lg: 18px;
-      --radius-md: 14px;
+      --radius-md: 16px;
       --radius-sm: 12px;
-      --container: 1120px;
+      --container: 1240px;
       --transition: 0.22s ease;
     }
 
@@ -46,11 +48,11 @@
       font-family: Arial, sans-serif;
       color: var(--tchap-text);
       background:
-        radial-gradient(circle at top left, rgba(200,169,106,0.16), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(255,255,255,0.05), transparent 20%),
+        radial-gradient(circle at top left, rgba(200,169,106,0.15), transparent 22%),
+        radial-gradient(circle at 92% 10%, rgba(255,255,255,0.06), transparent 18%),
         linear-gradient(180deg, #102748 0%, #0B1F3A 100%);
       min-height: 100vh;
-      padding: 40px 20px 56px;
+      padding: 40px 24px 56px;
     }
 
     .page {
@@ -58,48 +60,37 @@
       margin: 0 auto;
     }
 
-    .topbar {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 18px;
-    }
-
     .hero {
       position: relative;
       overflow: hidden;
       color: white;
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 28px;
-      padding: 34px 34px 30px;
+      border-radius: 30px;
+      padding: 34px 36px;
       background:
         linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
         rgba(255,255,255,0.03);
-      backdrop-filter: blur(8px);
-      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-lg);
       margin-bottom: 24px;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      top: -80px;
-      right: -80px;
-      width: 240px;
-      height: 240px;
+      top: -90px;
+      right: -90px;
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,169,106,0.18), transparent 62%);
+      background: radial-gradient(circle, rgba(200,169,106,0.18), transparent 64%);
       pointer-events: none;
     }
 
-    .hero-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
     .hero-copy {
-      max-width: 760px;
+      max-width: 820px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-kicker {
@@ -120,9 +111,9 @@
 
     .hero h1 {
       margin: 0 0 10px;
-      font-size: 40px;
+      font-size: 42px;
       line-height: 1.04;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
 
     .hero p {
@@ -130,39 +121,26 @@
       color: rgba(255,255,255,0.88);
       font-size: 16px;
       line-height: 1.65;
-      max-width: 720px;
+      max-width: 760px;
     }
 
-    .hero-badge {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      color: #fff;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .grid {
+    .tools-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 22px;
+      align-items: stretch;
     }
 
     .card {
       position: relative;
-      background: var(--tchap-card);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-lg);
-      padding: 28px;
-      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
       min-height: 100%;
+      background: var(--tchap-card);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .card::before {
@@ -170,12 +148,12 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 4px;
-      border-radius: 24px 24px 0 0;
-      background: linear-gradient(90deg, var(--tchap-gold), rgba(200,169,106,0.24));
+      border-radius: 26px 26px 0 0;
+      background: linear-gradient(90deg, var(--tchap-gold), rgba(200,169,106,0.22));
     }
 
     .card-header {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .eyebrow {
@@ -193,9 +171,10 @@
     .card h2 {
       margin: 0 0 8px;
       font-size: 24px;
+      line-height: 1.12;
       letter-spacing: -0.02em;
       color: var(--tchap-navy);
-      line-height: 1.15;
+      min-height: 54px;
     }
 
     .card p {
@@ -203,11 +182,11 @@
       color: var(--tchap-muted);
       line-height: 1.65;
       font-size: 14px;
-      max-width: 520px;
+      min-height: 70px;
     }
 
     .field {
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     .field label {
@@ -232,7 +211,7 @@
       transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
       color: var(--tchap-text);
       background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-      min-height: 52px;
+      min-height: 54px;
     }
 
     input::placeholder {
@@ -254,13 +233,13 @@
 
     button {
       border: none;
-      border-radius: 14px;
+      border-radius: 15px;
       padding: 14px 16px;
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       transition: transform var(--transition), background var(--transition), opacity var(--transition), box-shadow var(--transition);
-      min-height: 52px;
+      min-height: 54px;
     }
 
     button:hover {
@@ -269,7 +248,7 @@
 
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.65;
+      opacity: 0.66;
       transform: none;
       box-shadow: none;
     }
@@ -295,16 +274,16 @@
       background: #e8eef6;
     }
 
-    .btn-tertiary {
-      background: linear-gradient(180deg, rgba(200,169,106,0.18), rgba(200,169,106,0.1));
-      color: white;
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 20px rgba(9, 24, 47, 0.16);
+    .btn-ghost {
+      background: rgba(11,31,58,0.04);
+      color: var(--tchap-navy);
+      border: 1px solid rgba(11,31,58,0.08);
+      width: 100%;
+      justify-content: center;
     }
 
-    .btn-tertiary:hover {
-      background: linear-gradient(180deg, rgba(200,169,106,0.24), rgba(200,169,106,0.14));
+    .btn-ghost:hover {
+      background: rgba(11,31,58,0.06);
     }
 
     .result,
@@ -448,6 +427,37 @@
       border: 1px solid #d9e1ea;
     }
 
+    .feature-card-spacer {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .feature-entry {
+      margin-top: auto;
+      padding-top: 14px;
+    }
+
+    .entry-box {
+      border: 1px dashed rgba(11,31,58,0.12);
+      border-radius: 18px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(11,31,58,0.02), rgba(11,31,58,0.01));
+    }
+
+    .entry-box-title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--tchap-navy);
+    }
+
+    .entry-box-text {
+      margin: 0 0 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--tchap-muted);
+    }
+
     .modal {
       position: fixed;
       inset: 0;
@@ -555,37 +565,49 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 980px) {
-      .grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 1120px) {
+      .tools-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
-      .hero-top {
-        flex-direction: column;
+      .card--feature-3 {
+        grid-column: 1 / -1;
       }
 
-      .hero-badge {
-        white-space: normal;
+      .card--feature-3 .feature-entry {
+        margin-top: 0;
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       body {
         padding: 20px 14px 36px;
       }
 
       .hero {
         padding: 24px 20px 22px;
-        border-radius: 22px;
+        border-radius: 24px;
       }
 
       .hero h1 {
-        font-size: 30px;
+        font-size: 32px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
       }
 
       .card {
         padding: 22px 18px;
         border-radius: 22px;
+      }
+
+      .card h2 {
+        min-height: auto;
+      }
+
+      .card p {
+        min-height: auto;
       }
 
       .modal-panel {
@@ -600,44 +622,24 @@
       .modal-close {
         align-self: flex-end;
       }
-
-      .topbar {
-        justify-content: stretch;
-      }
-
-      .topbar .btn-tertiary {
-        width: 100%;
-      }
-
-      .result-footer {
-        align-items: flex-start;
-      }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <div class="topbar">
-      <button id="openStatusModalBtn" class="btn-tertiary" type="button">Fonctionnalité 3 · Domaine ouvert ?</button>
-    </div>
-
     <section class="hero">
-      <div class="hero-top">
-        <div class="hero-copy">
-          <div class="hero-kicker">Outil interne Tchap</div>
-          <h1>Tchap - Tools</h1>
-          <p>
-            Outil interne pour retrouver une instance Tchap à partir d’un domaine,
-            générer un MXID à partir d’une adresse email professionnelle
-            et vérifier rapidement le statut d’ouverture d’un domaine.
-          </p>
-        </div>
-
-        <div class="hero-badge">3 fonctionnalités · même logique · même charte</div>
+      <div class="hero-copy">
+        <div class="hero-kicker">Outil interne Tchap</div>
+        <h1>Tchap - Tools</h1>
+        <p>
+          Outil interne pour retrouver une instance Tchap à partir d’un domaine,
+          générer un MXID à partir d’une adresse email professionnelle
+          et vérifier rapidement le statut d’ouverture d’un domaine.
+        </p>
       </div>
     </section>
 
-    <div class="grid">
+    <div class="tools-grid">
       <section class="card">
         <div class="card-header">
           <div class="eyebrow">Fonctionnalité 1</div>
@@ -680,6 +682,26 @@
         </div>
 
         <div id="emailOutput"></div>
+      </section>
+
+      <section class="card card--feature-3">
+        <div class="card-header">
+          <div class="eyebrow">Fonctionnalité 3</div>
+          <h2>Vérifier si un domaine est ouvert</h2>
+          <p>Consulte rapidement le statut métier d’un domaine à partir de l’instance Tchap retournée.</p>
+        </div>
+
+        <div class="feature-card-spacer"></div>
+
+        <div class="feature-entry">
+          <div class="entry-box">
+            <p class="entry-box-title">Contrôle du statut d’ouverture</p>
+            <p class="entry-box-text">
+              Ouvre le module dédié pour vérifier si un domaine est ouvert sur Tchap ou routé vers externe.
+            </p>
+            <button id="openStatusModalBtn" class="btn-ghost" type="button">Ouvrir la vérification</button>
+          </div>
+        </div>
       </section>
     </div>
   </div>
