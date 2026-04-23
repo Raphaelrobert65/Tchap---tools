@@ -8,20 +8,25 @@
     :root {
       --tchap-navy: #0B1F3A;
       --tchap-navy-light: #143158;
+      --tchap-bg-top: #102748;
+      --tchap-bg-bottom: #0B1F3A;
+      --tchap-gold: #C8A96A;
       --tchap-card: rgba(255, 255, 255, 0.985);
-      --tchap-card-stroke: rgba(255, 255, 255, 0.16);
+      --tchap-card-border: rgba(255, 255, 255, 0.14);
       --tchap-text: #0B1F3A;
-      --tchap-muted: #68778b;
+      --tchap-muted: #6a788c;
       --tchap-border: #dbe4ee;
+      --tchap-border-strong: #cfd9e5;
       --tchap-success-bg: #eef6ff;
       --tchap-success-soft: #eaf7ee;
       --tchap-success: #17663a;
       --tchap-error-bg: #fff2f2;
       --tchap-error: #b42318;
       --shadow-hero: 0 24px 64px rgba(8, 23, 46, 0.22);
-      --shadow-card: 0 20px 54px rgba(9, 24, 47, 0.16);
+      --shadow-card: 0 18px 48px rgba(9, 24, 47, 0.14);
       --shadow-sm: 0 6px 14px rgba(9, 24, 47, 0.06);
       --radius-2xl: 28px;
+      --radius-xl: 24px;
       --radius-lg: 18px;
       --radius-md: 16px;
       --radius-sm: 12px;
@@ -42,9 +47,9 @@
       font-family: Arial, sans-serif;
       color: var(--tchap-text);
       background:
-        radial-gradient(circle at top left, rgba(200,169,106,0.09), transparent 22%),
+        radial-gradient(circle at top left, rgba(200,169,106,0.08), transparent 22%),
         radial-gradient(circle at 88% 12%, rgba(255,255,255,0.05), transparent 16%),
-        linear-gradient(180deg, #102748 0%, #0B1F3A 100%);
+        linear-gradient(180deg, var(--tchap-bg-top) 0%, var(--tchap-bg-bottom) 100%);
       min-height: 100vh;
       padding: 40px 24px 56px;
     }
@@ -73,8 +78,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(200,169,106,0.10), transparent 28%);
+      background: radial-gradient(circle at 100% 0%, rgba(200,169,106,0.12), transparent 28%);
       pointer-events: none;
     }
 
@@ -92,8 +96,8 @@
       padding: 8px 12px;
       border-radius: 999px;
       background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.12);
+      color: #f3dfb0;
+      border: 1px solid rgba(200,169,106,0.2);
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -125,12 +129,14 @@
 
     .card {
       position: relative;
+      display: block;
       background: linear-gradient(180deg, rgba(255,255,255,0.985) 0%, rgba(250,252,255,0.985) 100%);
       border-radius: var(--radius-2xl);
       box-shadow: var(--shadow-card);
       padding: 28px;
-      border: 1px solid var(--tchap-card-stroke);
+      border: 1px solid var(--tchap-card-border);
       overflow: hidden;
+      min-width: 0;
       align-self: start;
     }
 
@@ -146,7 +152,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #7c8ca2;
+      color: #af8c4e;
       margin-bottom: 10px;
     }
 
@@ -156,7 +162,6 @@
       line-height: 1.15;
       letter-spacing: -0.02em;
       color: var(--tchap-text);
-      min-height: 56px;
     }
 
     .card p {
@@ -164,7 +169,6 @@
       color: var(--tchap-muted);
       line-height: 1.68;
       font-size: 14px;
-      min-height: 72px;
     }
 
     .field {
@@ -201,8 +205,8 @@
     }
 
     input:focus {
-      border-color: rgba(11,31,58,0.28);
-      box-shadow: 0 0 0 5px rgba(11,31,58,0.08);
+      border-color: rgba(200,169,106,0.72);
+      box-shadow: 0 0 0 5px rgba(200,169,106,0.14);
       transform: translateY(-1px);
       background: #fff;
     }
@@ -357,7 +361,7 @@
       align-items: center;
       gap: 8px;
       width: fit-content;
-      background: linear-gradient(180deg, #8c9aab 0%, #75859a 100%);
+      background: linear-gradient(180deg, #cfb173 0%, #be9a55 100%);
       color: white;
       font-weight: 700;
       font-size: 12px;
@@ -365,7 +369,7 @@
       border-radius: 999px;
       letter-spacing: 0.03em;
       text-transform: capitalize;
-      box-shadow: 0 8px 18px rgba(116,133,154,0.18);
+      box-shadow: 0 8px 18px rgba(200,169,106,0.18);
     }
 
     .status-pill {
@@ -403,10 +407,6 @@
       .tools-grid {
         grid-template-columns: 1fr 1fr;
       }
-
-      .card--feature-3 {
-        grid-column: 1 / -1;
-      }
     }
 
     @media (max-width: 760px) {
@@ -430,11 +430,6 @@
       .card {
         padding: 22px 18px;
         border-radius: 22px;
-      }
-
-      .card h2,
-      .card p {
-        min-height: auto;
       }
     }
   </style>
@@ -498,11 +493,11 @@
         <div id="emailOutput"></div>
       </section>
 
-      <section class="card card--feature-3">
+      <section class="card">
         <div class="card-header">
           <div class="eyebrow">Fonctionnalité 3</div>
           <h2>Vérifier si un domaine est ouvert</h2>
-          <p>Renseigner un domaine. Vérifier le statut d’ouverture directement dans l’interface principale.</p>
+          <p>Renseigner un domaine. Vérifier le statut métier d’ouverture à partir de l’instance Tchap retournée.</p>
         </div>
 
         <div class="field">
