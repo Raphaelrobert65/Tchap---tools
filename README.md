@@ -1,152 +1,111 @@
 # Tchap - Tools
 
-Tchap - Tools est un outil web simple et rapide permettant d’interagir avec l’écosystème Tchap (basé sur Matrix).
-
-Il permet d’automatiser deux actions clés :
-- 🔍 retrouver l’instance Tchap associée à un domaine
-- 🆔 générer un MXID à partir d’un email professionnel
-
----
+Outil interne permettant d’exploiter rapidement les informations liées aux domaines Tchap.
 
 ## 🎯 Objectif
 
-Simplifier les usages techniques autour de Tchap pour :
-- les équipes support
-- les équipes IT
-- les utilisateurs avancés
-- les contextes de déploiement ou d’investigation
+Faciliter l’identification des instances Tchap, la génération de MXID et la vérification du statut d’ouverture d’un domaine à partir d’une interface simple, rapide et centralisée.
 
 ---
 
-## 🚀 Fonctionnalités
+## ⚙️ Fonctionnalités
 
-### 1. Recherche d’instance
+### 1. Retrouver une instance
+Saisir un domaine professionnel.  
+L’outil identifie automatiquement l’instance Tchap associée.
 
-À partir d’un domaine (ex : `beta.gouv.fr`), l’outil permet de :
-- récupérer l’instance Tchap associée (homeserver)
-- identifier le type d’instance :
-  - Agent
-  - Externe
-  - Autre
+**Exemple :**
+beta.gouv.fr → agent.dinum.tchap.gouv.fr
 
 ---
 
-### 2. Génération de MXID
+### 2. Générer un MXID
+Saisir une adresse email professionnelle.  
+L’outil :
+- extrait le domaine  
+- identifie l’instance  
+- génère automatiquement le MXID  
 
-À partir d’un email professionnel (ex : `prenom.nom@beta.gouv.fr`), l’outil :
-1. extrait le domaine
-2. interroge l’API Tchap
-3. récupère l’instance associée
-4. génère automatiquement le MXID
-
-Exemple :
-
-Email : raphael.robert@beta.gouv.fr  
-Instance : agent.dinum.tchap.gouv.fr  
-MXID : @raphael.robert-beta.gouv.fr:agent.dinum.tchap.gouv.fr  
+**Exemple :**
+raphael.robert@beta.gouv.fr  
+→ @raphael.robert-beta.gouv.fr:agent.dinum.tchap.gouv.fr
 
 ---
 
-## ⚙️ Fonctionnement technique
+### 3. Vérifier si un domaine est ouvert
+Saisir un domaine professionnel.  
+L’outil détermine si le domaine est :
 
-### API utilisée
+- **Ouvert sur Tchap** → instance dédiée identifiée  
+- **Non ouvert** → domaine routé vers `externe`
+
+---
+
+## 🧠 Logique technique
+
+L’outil repose sur l’API Matrix de Tchap :
 
 https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info
 
----
-
-### Logique de récupération d’instance
-
-1. domaine → test@domaine  
-2. appel API  
-3. récupération de data.hs (homeserver)  
-
----
-
-### Logique de génération du MXID
-
-email → remplacement du @ par -  
-→ ajout de :instance  
-
-Format final :
-
-@prenom.nom-domaine:instance  
+Principe :
+- une requête est simulée avec un email fictif (`test@domaine`)  
+- l’API retourne une instance (`hs`)  
+- interprétation du résultat :
+  - instance contenant `externe` → domaine non ouvert  
+  - autre instance → domaine ouvert  
 
 ---
 
-## 🧱 Architecture
+## 🖥️ Utilisation
 
-Le code est structuré en modules JavaScript :
+1. Ouvrir le fichier `index.html`  
+2. Utiliser directement les trois blocs :
+   - Domaine → instance  
+   - Email → MXID  
+   - Domaine → statut d’ouverture  
 
-- Api → appels à l’API Tchap
-- Validator → validation des entrées
-- Parser → extraction du domaine
-- Builder → construction du MXID
-- Mapper → typologie des instances
-- Renderer → affichage UI
-- UI → gestion des interactions (loading, copy)
+Aucune installation requise.
 
 ---
 
-## 🎨 UX & Design
+## 🧩 Stack technique
 
-- Interface simple et lisible
-- Couleurs inspirées de Tchap (bleu nuit / doré)
-- Résultats en cartes
-- Boutons de copie rapide
-- Gestion des états (chargement, erreur, succès)
+- HTML5  
+- CSS3 (design system custom)  
+- JavaScript vanilla (aucune dépendance)  
 
 ---
 
-## 📦 Installation
+## 🎨 Design
 
-Aucune dépendance.
-
-Cloner le repo :
-
-git clone https://github.com/TON-USERNAME/tchap-tools.git
-
-Ouvrir :
-
-index.html
+- Interface alignée avec la charte Tchap (bleu institutionnel + accents sobres)  
+- UX centrée sur :
+  - rapidité d’exécution  
+  - lisibilité  
+  - cohérence entre fonctionnalités  
+- Composants homogènes (cards, inputs, résultats)  
 
 ---
 
-## 🌐 Déploiement
+## 🔒 Limites
 
-Compatible avec :
-- GitHub Pages
-- Netlify
-- Vercel
-- tout hébergement statique
+- dépendance à l’API publique Matrix Tchap  
+- pas de garantie sur la disponibilité ou l’évolution de l’endpoint  
+- logique basée sur convention (`externe` = non ouvert)  
 
 ---
 
-## ⚠️ Limites
+## 🚀 Évolutions possibles
 
-- Le MXID est reconstruit via une convention métier
-- Ne garantit pas l’existence réelle du compte
-- Dépendance à l’API Tchap
-
----
-
-## 🔜 Évolutions possibles
-
-- mode batch (liste d’emails)
-- export CSV / Excel
-- historique des recherches
-- amélioration UX (toast, feedback)
-- ajout backend
+- ajout d’un export CSV / JSON  
+- détection automatique via bulk (liste de domaines)  
+- intégration d’un scoring ou d’un statut enrichi  
+- historisation des requêtes  
+- version SaaS avec authentification  
 
 ---
 
 ## 👤 Auteur
 
-Projet développé pour simplifier les usages autour de Tchap en contexte professionnel.
-
----
-
-## 📄 Licence
-
-Usage interne / expérimental.
-Libre d’adaptation.
+Projet interne – Tchap / DINUM  
+Design & développement : r2bizdev
