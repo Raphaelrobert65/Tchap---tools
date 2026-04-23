@@ -1,938 +1,296 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tchap - Tools</title>
-  <style>
-    :root {
-      --tchap-navy: #0B1F3A;
-      --tchap-navy-light: #143158;
-      --tchap-bg-top: #102748;
-      --tchap-bg-bottom: #0B1F3A;
-      --tchap-gold: #C8A96A;
-      --tchap-card: rgba(255, 255, 255, 0.985);
-      --tchap-card-border: rgba(255, 255, 255, 0.14);
-      --tchap-text: #0B1F3A;
-      --tchap-muted: #6a788c;
-      --tchap-border: #dbe4ee;
-      --tchap-border-strong: #cfd9e5;
-      --tchap-success-bg: #eef6ff;
-      --tchap-success-soft: #eaf7ee;
-      --tchap-success: #17663a;
-      --tchap-error-bg: #fff2f2;
-      --tchap-error: #b42318;
-      --shadow-hero: 0 24px 64px rgba(8, 23, 46, 0.22);
-      --shadow-card: 0 18px 48px rgba(9, 24, 47, 0.14);
-      --shadow-sm: 0 6px 14px rgba(9, 24, 47, 0.06);
-      --radius-2xl: 28px;
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --container: 1240px;
-      --transition: 0.22s ease;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tchap - Tools</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root {
+  --navy:#0B1F3A;
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --border:#dbe4ee;
+  --text:#0B1F3A;
+  --muted:#6b7c93;
+  --success:#17663a;
+  --success-bg:#eef6ff;
+  --error:#b42318;
+  --error-bg:#fff2f2;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--bg);
+  padding:40px 24px;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--tchap-text);
-      background:
-        radial-gradient(circle at top left, rgba(200,169,106,0.08), transparent 22%),
-        radial-gradient(circle at 88% 12%, rgba(255,255,255,0.05), transparent 16%),
-        linear-gradient(180deg, var(--tchap-bg-top) 0%, var(--tchap-bg-bottom) 100%);
-      min-height: 100vh;
-      padding: 40px 24px 56px;
-    }
+.page{
+  max-width:1200px;
+  margin:auto;
+}
 
-    .page {
-      max-width: var(--container);
-      margin: 0 auto;
-    }
+.hero{
+  background:var(--navy);
+  color:white;
+  padding:28px;
+  border-radius:20px;
+  margin-bottom:24px;
+}
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 30px;
-      padding: 34px 36px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02)),
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-hero);
-      margin-bottom: 24px;
-    }
+.hero h1{
+  margin:0 0 6px;
+}
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 100% 0%, rgba(200,169,106,0.12), transparent 28%);
-      pointer-events: none;
-    }
+.hero p{
+  margin:0;
+  opacity:0.85;
+}
 
-    .hero-copy {
-      max-width: 830px;
-      position: relative;
-      z-index: 1;
-    }
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
 
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: #f3dfb0;
-      border: 1px solid rgba(200,169,106,0.2);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-    }
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+}
 
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: 42px;
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-    }
+/* 🔥 FIX LAYOUT STABLE */
+.card-body{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
-    .hero p {
-      margin: 0;
-      color: rgba(255,255,255,0.88);
-      font-size: 16px;
-      line-height: 1.65;
-      max-width: 760px;
-    }
+.result-zone{
+  margin-top:12px;
+  min-height:120px; /* stabilité visuelle */
+}
 
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      align-items: start;
-    }
+h2{
+  margin:0;
+  font-size:20px;
+}
 
-    .card {
-      position: relative;
-      display: block;
-      background: linear-gradient(180deg, rgba(255,255,255,0.985) 0%, rgba(250,252,255,0.985) 100%);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-card);
-      padding: 28px;
-      border: 1px solid var(--tchap-card-border);
-      overflow: hidden;
-      min-width: 0;
-      align-self: start;
-    }
+p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
 
-    .card-header {
-      margin-bottom: 20px;
-    }
+label{
+  font-size:13px;
+  font-weight:600;
+}
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #af8c4e;
-      margin-bottom: 10px;
-    }
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
 
-    .card h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--tchap-text);
-    }
+.actions{
+  display:flex;
+  gap:10px;
+}
 
-    .card p {
-      margin: 0;
-      color: var(--tchap-muted);
-      line-height: 1.68;
-      font-size: 14px;
-    }
+button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
 
-    .field {
-      margin-top: 20px;
-    }
+.btn-primary{
+  background:var(--navy);
+  color:white;
+}
 
-    .field label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--tchap-text);
-    }
+.btn-secondary{
+  background:#eef3f8;
+}
 
-    .input-wrap {
-      position: relative;
-    }
+.result{
+  background:var(--success-bg);
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+}
 
-    input {
-      width: 100%;
-      border: 1px solid var(--tchap-border);
-      border-radius: 16px;
-      padding: 15px 16px;
-      font-size: 15px;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
-      color: var(--tchap-text);
-      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-      min-height: 54px;
-    }
+.error{
+  background:var(--error-bg);
+  color:var(--error);
+  padding:12px;
+  border-radius:10px;
+  font-size:13px;
+}
 
-    input::placeholder {
-      color: #8a97a8;
-    }
-
-    input:focus {
-      border-color: rgba(200,169,106,0.72);
-      box-shadow: 0 0 0 5px rgba(200,169,106,0.14);
-      transform: translateY(-1px);
-      background: #fff;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    button {
-      border: none;
-      border-radius: 15px;
-      padding: 14px 16px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform var(--transition), background var(--transition), opacity var(--transition), box-shadow var(--transition), border-color var(--transition);
-      min-height: 54px;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.66;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(180deg, #17365f 0%, #0B1F3A 100%);
-      color: white;
-      flex: 1;
-      box-shadow: 0 12px 24px rgba(11,31,58,0.18);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(180deg, #1b3d6b 0%, #0B1F3A 100%);
-    }
-
-    .btn-secondary {
-      background: #eef3f8;
-      color: var(--tchap-text);
-      border: 1px solid #dde6f0;
-    }
-
-    .btn-secondary:hover {
-      background: #e7eef6;
-      border-color: #d3ddeb;
-    }
-
-    .result,
-    .status,
-    .error-box {
-      margin-top: 20px;
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .status {
-      background: #f8fafc;
-      border: 1px solid var(--tchap-border);
-      color: var(--tchap-muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .error-box {
-      background: var(--tchap-error-bg);
-      border: 1px solid #f3caca;
-      color: var(--tchap-error);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .result {
-      background: linear-gradient(180deg, var(--tchap-success-bg) 0%, #f6faff 100%);
-      border: 1px solid #dbe7fb;
-    }
-
-    .result-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .result-item {
-      background: rgba(255,255,255,0.97);
-      border: 1px solid #dfe8f5;
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .result-label {
-      display: block;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--tchap-muted);
-      margin-bottom: 7px;
-      font-weight: 700;
-    }
-
-    .result-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--tchap-text);
-      line-height: 1.55;
-      word-break: break-word;
-    }
-
-    .copy-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .copy-btn {
-      padding: 8px 12px;
-      min-height: auto;
-      font-size: 13px;
-      font-weight: 700;
-      border-radius: 11px;
-      background: white;
-      color: var(--tchap-text);
-      border: 1px solid #cfdae8;
-      box-shadow: 0 4px 10px rgba(11,31,58,0.05);
-    }
-
-    .copy-feedback {
-      font-size: 12px;
-      color: var(--tchap-muted);
-    }
-
-    .result-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      background: linear-gradient(180deg, #cfb173 0%, #be9a55 100%);
-      color: white;
-      font-weight: 700;
-      font-size: 12px;
-      padding: 9px 13px;
-      border-radius: 999px;
-      letter-spacing: 0.03em;
-      text-transform: capitalize;
-      box-shadow: 0 8px 18px rgba(200,169,106,0.18);
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .status-pill.open {
-      background: var(--tchap-success-soft);
-      color: var(--tchap-success);
-      border: 1px solid #b9e2c5;
-    }
-
-    .status-pill.closed {
-      background: #fff1f1;
-      color: #b42318;
-      border: 1px solid #f0c8c8;
-    }
-
-    .status-pill.unknown {
-      background: #f5f7fa;
-      color: #5f6b7a;
-      border: 1px solid #d9e1ea;
-    }
-
-    @media (max-width: 1120px) {
-      .tools-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      body {
-        padding: 20px 14px 36px;
-      }
-
-      .hero {
-        padding: 24px 20px 22px;
-        border-radius: 24px;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 22px 18px;
-        border-radius: 22px;
-      }
-    }
-  </style>
+@media(max-width:900px){
+  .tools-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
+
 <body>
-  <div class="page">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="hero-kicker">Outil interne Tchap</div>
-        <h1>Tchap - Tools</h1>
-        <p>
-          Retrouver une instance Tchap à partir d’un domaine,
-          générer un MXID à partir d’une adresse email professionnelle
-          et vérifier rapidement le statut d’ouverture d’un domaine.
-        </p>
-      </div>
-    </section>
 
-    <div class="tools-grid">
-      <section class="card">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 1</div>
-          <h2>Retrouver une instance</h2>
-          <p>Renseigner un domaine professionnel. L’outil identifie automatiquement l’instance Tchap associée.</p>
-        </div>
+<div class="page">
 
-        <div class="field">
-          <label for="domainInput">Domaine</label>
-          <div class="input-wrap">
-            <input id="domainInput" type="text" placeholder="ex : beta.gouv.fr" />
-          </div>
-        </div>
+<div class="hero">
+  <h1>Tchap - Tools</h1>
+  <p>Identifier une instance, générer un MXID et vérifier l’ouverture d’un domaine.</p>
+</div>
 
-        <div class="actions">
-          <button id="domainSearchBtn" class="btn-primary" type="button">Tester le domaine</button>
-          <button id="domainResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
+<div class="tools-grid">
 
-        <div id="domainOutput"></div>
-      </section>
+<!-- 1 -->
+<div class="card">
+  <h2>Instance</h2>
+  <p>Renseigner un domaine</p>
 
-      <section class="card">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 2</div>
-          <h2>Générer un MXID</h2>
-          <p>Renseigner un email professionnel. L’outil construit automatiquement le MXID.</p>
-        </div>
+  <div class="card-body">
+    <label>Domaine</label>
+    <input id="domainInput" placeholder="beta.gouv.fr">
 
-        <div class="field">
-          <label for="emailInput">Email professionnel</label>
-          <div class="input-wrap">
-            <input id="emailInput" type="email" placeholder="ex : raphael.robert@beta.gouv.fr" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="emailSearchBtn" class="btn-primary" type="button">Générer le MXID</button>
-          <button id="emailResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
-
-        <div id="emailOutput"></div>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 3</div>
-          <h2>Vérifier si un domaine est ouvert</h2>
-          <p>Renseigner un domaine. Vérifier le statut métier d’ouverture à partir de l’instance Tchap retournée.</p>
-        </div>
-
-        <div class="field">
-          <label for="statusDomainInput">Domaine</label>
-          <div class="input-wrap">
-            <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="statusSearchBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
-          <button id="statusResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
-
-        <div id="statusOutput"></div>
-      </section>
+    <div class="actions">
+      <button class="btn-primary" onclick="searchDomain()">Tester</button>
+      <button class="btn-secondary" onclick="reset('domain')">Reset</button>
     </div>
+
+    <div id="domainOutput" class="result-zone"></div>
   </div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+  <h2>MXID</h2>
+  <p>Renseigner un email</p>
+
+  <div class="card-body">
+    <label>Email</label>
+    <input id="emailInput" placeholder="nom@beta.gouv.fr">
+
+    <div class="actions">
+      <button class="btn-primary" onclick="generateMxid()">Générer</button>
+      <button class="btn-secondary" onclick="reset('email')">Reset</button>
+    </div>
+
+    <div id="emailOutput" class="result-zone"></div>
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+  <h2>Ouverture</h2>
+  <p>Renseigner un domaine</p>
+
+  <div class="card-body">
+    <label>Domaine</label>
+    <input id="statusInput" placeholder="beta.gouv.fr">
+
+    <div class="actions">
+      <button class="btn-primary" onclick="checkStatus()">Vérifier</button>
+      <button class="btn-secondary" onclick="reset('status')">Reset</button>
+    </div>
+
+    <div id="statusOutput" class="result-zone"></div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const API="https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info";
+
+async function fetchInstance(domain){
+  const res = await fetch(API+"?medium=&address=test@"+domain);
+  const data = await res.json();
+  return data.hs;
+}
+
+/* FEATURE 1 */
+async function searchDomain(){
+  const domain=document.getElementById("domainInput").value.trim();
+  const out=document.getElementById("domainOutput");
+
+  if(!domain) return out.innerHTML='<div class="error">Domaine invalide</div>';
+
+  try{
+    const instance=await fetchInstance(domain);
+    out.innerHTML=`<div class="result">${instance}</div>`;
+  }catch{
+    out.innerHTML='<div class="error">Erreur</div>';
+  }
+}
+
+/* FEATURE 2 */
+async function generateMxid(){
+  const email=document.getElementById("emailInput").value.trim();
+  const out=document.getElementById("emailOutput");
+
+  if(!email.includes("@")) return out.innerHTML='<div class="error">Email invalide</div>';
+
+  const domain=email.split("@")[1];
+
+  try{
+    const instance=await fetchInstance(domain);
+    const mxid="@"+email.replace("@","-")+":"+instance;
+    out.innerHTML=`<div class="result">${mxid}</div>`;
+  }catch{
+    out.innerHTML='<div class="error">Erreur</div>';
+  }
+}
+
+/* FEATURE 3 (refonte totale) */
+async function checkStatus(){
+  const domain=document.getElementById("statusInput").value.trim();
+  const out=document.getElementById("statusOutput");
+
+  if(!domain) return out.innerHTML='<div class="error">Domaine invalide</div>';
+
+  try{
+    const instance=await fetchInstance(domain);
+    const status=instance.includes("externe") ? "Non ouvert" : "Ouvert";
+
+    out.innerHTML=`
+      <div class="result">
+        ${status}<br><br>
+        ${instance}
+      </div>
+    `;
+  }catch{
+    out.innerHTML='<div class="error">Erreur</div>';
+  }
+}
+
+/* RESET */
+function reset(type){
+  if(type==="domain"){
+    domainInput.value="";
+    domainOutput.innerHTML="";
+  }
+  if(type==="email"){
+    emailInput.value="";
+    emailOutput.innerHTML="";
+  }
+  if(type==="status"){
+    statusInput.value="";
+    statusOutput.innerHTML="";
+  }
+}
+</script>
 
-  <script>
-    const TchapApp = (() => {
-      const CONFIG = {
-        apiBaseUrl: "https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info"
-      };
-
-      const DOM = {
-        domainInput: document.getElementById("domainInput"),
-        emailInput: document.getElementById("emailInput"),
-        statusDomainInput: document.getElementById("statusDomainInput"),
-
-        domainOutput: document.getElementById("domainOutput"),
-        emailOutput: document.getElementById("emailOutput"),
-        statusOutput: document.getElementById("statusOutput"),
-
-        domainSearchBtn: document.getElementById("domainSearchBtn"),
-        emailSearchBtn: document.getElementById("emailSearchBtn"),
-        statusSearchBtn: document.getElementById("statusSearchBtn"),
-
-        domainResetBtn: document.getElementById("domainResetBtn"),
-        emailResetBtn: document.getElementById("emailResetBtn"),
-        statusResetBtn: document.getElementById("statusResetBtn")
-      };
-
-      function init() {
-        bindEvents();
-      }
-
-      function bindEvents() {
-        DOM.domainSearchBtn.addEventListener("click", handleDomainSearch);
-        DOM.emailSearchBtn.addEventListener("click", handleEmailSearch);
-        DOM.statusSearchBtn.addEventListener("click", handleDomainStatusSearch);
-
-        DOM.domainResetBtn.addEventListener("click", resetDomainBlock);
-        DOM.emailResetBtn.addEventListener("click", resetEmailBlock);
-        DOM.statusResetBtn.addEventListener("click", resetStatusBlock);
-
-        DOM.domainInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleDomainSearch();
-        });
-
-        DOM.emailInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleEmailSearch();
-        });
-
-        DOM.statusDomainInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleDomainStatusSearch();
-        });
-      }
-
-      async function handleDomainSearch() {
-        const domain = DOM.domainInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.domainOutput, "Veuillez renseigner un domaine valide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.domainSearchBtn, true, "Recherche...");
-        Renderer.renderStatus(DOM.domainOutput, "Recherche de l’instance en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-
-          Renderer.renderDomainResult(DOM.domainOutput, {
-            domain,
-            instance,
-            instanceType
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.domainOutput,
-            "Impossible de retrouver l’instance pour ce domaine."
-          );
-        } finally {
-          UI.setLoadingState(DOM.domainSearchBtn, false, "Tester le domaine");
-        }
-      }
-
-      async function handleEmailSearch() {
-        const email = DOM.emailInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidEmail(email)) {
-          Renderer.renderError(DOM.emailOutput, "Veuillez renseigner une adresse email professionnelle valide.");
-          return;
-        }
-
-        const domain = Parser.extractDomainFromEmail(email);
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.emailOutput, "Le domaine extrait depuis cet email est invalide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.emailSearchBtn, true, "Génération...");
-        Renderer.renderStatus(DOM.emailOutput, "Recherche de l’instance et génération du MXID en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-          const mxid = Builder.buildMxid(email, instance);
-
-          Renderer.renderEmailResult(DOM.emailOutput, {
-            email,
-            domain,
-            instance,
-            instanceType,
-            mxid
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.emailOutput,
-            "Impossible de générer le MXID pour cette adresse email."
-          );
-        } finally {
-          UI.setLoadingState(DOM.emailSearchBtn, false, "Générer le MXID");
-        }
-      }
-
-      async function handleDomainStatusSearch() {
-        const domain = DOM.statusDomainInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.statusOutput, "Veuillez renseigner un domaine valide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.statusSearchBtn, true, "Vérification...");
-        Renderer.renderStatus(DOM.statusOutput, "Vérification du statut du domaine en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-          const domainStatus = Mapper.getDomainOpeningStatus(instance);
-
-          Renderer.renderDomainStatusResult(DOM.statusOutput, {
-            domain,
-            instance,
-            instanceType,
-            domainStatus
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.statusOutput,
-            "Impossible de vérifier l’ouverture de ce domaine."
-          );
-        } finally {
-          UI.setLoadingState(DOM.statusSearchBtn, false, "Vérifier l’ouverture");
-        }
-      }
-
-      function resetDomainBlock() {
-        DOM.domainInput.value = "";
-        DOM.domainOutput.innerHTML = "";
-        DOM.domainInput.focus();
-      }
-
-      function resetEmailBlock() {
-        DOM.emailInput.value = "";
-        DOM.emailOutput.innerHTML = "";
-        DOM.emailInput.focus();
-      }
-
-      function resetStatusBlock() {
-        DOM.statusDomainInput.value = "";
-        DOM.statusOutput.innerHTML = "";
-        DOM.statusDomainInput.focus();
-      }
-
-      const Api = {
-        async fetchInstanceFromDomain(domain) {
-          const syntheticEmail = `test@${domain}`;
-          const url = `${CONFIG.apiBaseUrl}?medium=&address=${encodeURIComponent(syntheticEmail)}`;
-
-          const response = await fetch(url);
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          const data = await response.json();
-
-          if (!data || !data.hs || typeof data.hs !== "string") {
-            throw new Error("Réponse API invalide");
-          }
-
-          return data.hs;
-        }
-      };
-
-      const Validator = {
-        isValidDomain(domain) {
-          const domainRegex = /^(?!-)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
-          return Boolean(domain) && domainRegex.test(domain);
-        },
-
-        isValidEmail(email) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return Boolean(email) && emailRegex.test(email);
-        }
-      };
-
-      const Parser = {
-        extractDomainFromEmail(email) {
-          const parts = email.split("@");
-          return parts.length === 2 ? parts[1] : "";
-        }
-      };
-
-      const Builder = {
-        buildMxid(email, instance) {
-          const matrixLocalPart = email.replace("@", "-");
-          return `@${matrixLocalPart}:${instance}`;
-        }
-      };
-
-      const Mapper = {
-        getInstanceType(instance) {
-          if (!instance) return "Inconnu";
-          if (instance.toLowerCase().includes("externe")) return "Externe";
-          if (instance.toLowerCase().includes("agent")) return "Agent";
-          return "Autre";
-        },
-
-        getDomainOpeningStatus(instance) {
-          if (!instance) return "unknown";
-          return instance.toLowerCase().includes("externe") ? "closed" : "open";
-        },
-
-        getDomainOpeningLabel(status) {
-          if (status === "open") return "Ouvert sur Tchap";
-          if (status === "closed") return "Non ouvert";
-          return "Indéterminé";
-        }
-      };
-
-      const UI = {
-        setLoadingState(button, isLoading, loadingLabel) {
-          button.disabled = isLoading;
-          if (isLoading) {
-            button.dataset.originalText = button.textContent;
-            button.textContent = loadingLabel;
-          } else {
-            button.textContent = button.dataset.originalText || button.textContent;
-          }
-        },
-
-        async copyToClipboard(text, feedbackElement) {
-          try {
-            await navigator.clipboard.writeText(text);
-            feedbackElement.textContent = "Copié";
-          } catch (error) {
-            console.error(error);
-            feedbackElement.textContent = "Copie impossible";
-          }
-
-          setTimeout(() => {
-            feedbackElement.textContent = "";
-          }, 1800);
-        }
-      };
-
-      const Renderer = {
-        renderStatus(container, message) {
-          container.innerHTML = `<div class="status">${message}</div>`;
-        },
-
-        renderError(container, message) {
-          container.innerHTML = `<div class="error-box">${message}</div>`;
-        },
-
-        renderDomainResult(container, data) {
-          container.innerHTML = `
-            <div class="result">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-          this.attachCopyHandlers(container);
-        },
-
-        renderEmailResult(container, data) {
-          container.innerHTML = `
-            <div class="result">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Email</span>
-                  <div class="result-value">${this.escapeHtml(data.email)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">MXID</span>
-                  <div class="result-value">${this.escapeHtml(data.mxid)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.mxid)}">Copier le MXID</button>
-                    <span class="copy-feedback"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-          this.attachCopyHandlers(container);
-        },
-
-        renderDomainStatusResult(container, data) {
-          const statusLabel = Mapper.getDomainOpeningLabel(data.domainStatus);
-
-          container.innerHTML = `
-            <div class="result">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Statut</span>
-                  <div class="result-value">
-                    <span class="status-pill ${this.escapeAttribute(data.domainStatus)}">${this.escapeHtml(statusLabel)}</span>
-                  </div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-          this.attachCopyHandlers(container);
-        },
-
-        attachCopyHandlers(container) {
-          const buttons = container.querySelectorAll("[data-copy]");
-
-          buttons.forEach((button) => {
-            button.addEventListener("click", async () => {
-              const textToCopy = button.getAttribute("data-copy");
-              const feedbackElement = button.parentElement.querySelector(".copy-feedback");
-              await UI.copyToClipboard(textToCopy, feedbackElement);
-            });
-          });
-        },
-
-        escapeAttribute(value) {
-          return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/"/g, "&quot;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-        },
-
-        escapeHtml(value) {
-          return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-        }
-      };
-
-      return { init };
-    })();
-
-    TchapApp.init();
-  </script>
 </body>
 </html>
