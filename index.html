@@ -63,8 +63,8 @@
       overflow: hidden;
       color: white;
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 30px;
-      padding: 34px 36px;
+      border-radius: 22px;
+      padding: 20px 28px;
       background:
         linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02)),
         linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
@@ -83,48 +83,60 @@
     }
 
     .hero-copy {
-      max-width: 830px;
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px 28px;
+      flex-wrap: wrap;
+    }
+
+    .hero-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
     .hero-kicker {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
-      padding: 8px 12px;
+      padding: 6px 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.06);
       color: rgba(255,255,255,0.92);
       border: 1px solid rgba(255,255,255,0.12);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      white-space: nowrap;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
     .hero h1 {
-      margin: 0 0 10px;
-      font-size: 42px;
-      line-height: 1.04;
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      white-space: nowrap;
       letter-spacing: -0.03em;
     }
 
     .hero p {
+      flex: 1 1 360px;
       margin: 0;
-      color: rgba(255,255,255,0.88);
-      font-size: 16px;
-      line-height: 1.65;
-      max-width: 760px;
+      padding-left: 28px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      align-items: start;
+      column-gap: 22px;
+      row-gap: 0;
     }
 
     .card {
@@ -135,11 +147,18 @@
       padding: 28px;
       border: 1px solid var(--tchap-card-stroke);
       overflow: hidden;
-      align-self: start;
+    }
+
+    /* Les cartes partagent les mêmes lignes : titres, champs et boutons restent alignés. */
+    .tools-grid > .card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      align-content: start;
     }
 
     .card-header {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .eyebrow {
@@ -160,7 +179,6 @@
       line-height: 1.15;
       letter-spacing: -0.02em;
       color: var(--tchap-text);
-      min-height: 56px;
     }
 
     .card p {
@@ -168,11 +186,10 @@
       color: var(--tchap-muted);
       line-height: 1.68;
       font-size: 14px;
-      min-height: 72px;
     }
 
     .field {
-      margin-top: 20px;
+      margin-top: 4px;
     }
 
     .field label {
@@ -322,29 +339,79 @@
       word-break: break-word;
     }
 
-    .copy-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .copy-btn {
-      padding: 8px 12px;
-      min-height: auto;
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 13px;
-      font-weight: 700;
-      border-radius: 11px;
-      background: white;
-      color: var(--tchap-text);
-      border: 1px solid #cfdae8;
-      box-shadow: 0 4px 10px rgba(11,31,58,0.05);
+      font-weight: 600;
+      word-break: break-all;
     }
 
-    .copy-feedback {
-      font-size: 12px;
-      color: var(--tchap-muted);
+    /* Valeur copiable : un clic copie la valeur. */
+    .copyable {
+      position: relative;
+      margin: -6px -8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      cursor: copy;
+      transition: background var(--transition);
+    }
+
+    .copyable::after {
+      content: "Copier";
+      position: absolute;
+      top: -22px;
+      right: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--tchap-navy);
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .copyable:hover,
+    .copyable:focus-visible {
+      background: #eef3fa;
+      outline: none;
+    }
+
+    .copyable:hover::after,
+    .copyable:focus-visible::after {
+      opacity: 1;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      z-index: 1000;
+      max-width: calc(100vw - 32px);
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--tchap-navy);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.3);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translate(-50%, 12px);
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast.is-error {
+      background: var(--tchap-error);
     }
 
     .result-footer {
@@ -371,6 +438,33 @@
       text-transform: capitalize;
       box-shadow: 0 8px 18px rgba(116,133,154,0.18);
     }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+    }
+
+    .badge[data-type="agent"] {
+      background: linear-gradient(180deg, #3b7be0 0%, #2459b8 100%);
+      box-shadow: 0 8px 18px rgba(36,89,184,0.22);
+    }
+
+    .badge[data-type="externe"] {
+      background: linear-gradient(180deg, #e39a2d 0%, #c47a12 100%);
+      box-shadow: 0 8px 18px rgba(196,122,18,0.22);
+    }
+
+    .badge[data-type="autre"] {
+      background: linear-gradient(180deg, #8a6ad6 0%, #6a4bb8 100%);
+      box-shadow: 0 8px 18px rgba(106,75,184,0.22);
+    }
+
+    .result[data-type="agent"] { border-left: 4px solid #2f6ad0; }
+    .result[data-type="externe"] { border-left: 4px solid #d58a1f; }
+    .result[data-type="autre"] { border-left: 4px solid #7a5bc7; }
 
     .status-pill {
       display: inline-flex;
@@ -442,11 +536,6 @@
     .bulk-panel {
       margin-top: 18px;
       text-align: left;
-    }
-
-    .bulk-panel .card h2,
-    .bulk-panel .card p {
-      min-height: auto;
     }
 
     .bulk-panel .card + .card {
@@ -570,6 +659,7 @@
 
       .card--feature-3 {
         grid-column: 1 / -1;
+        margin-top: 22px;
       }
     }
 
@@ -579,26 +669,30 @@
       }
 
       .hero {
-        padding: 24px 20px 22px;
-        border-radius: 24px;
+        padding: 18px 20px;
+        border-radius: 20px;
       }
 
       .hero h1 {
-        font-size: 32px;
+        font-size: 24px;
+      }
+
+      .hero p {
+        padding-left: 0;
+        border-left: none;
       }
 
       .tools-grid {
         grid-template-columns: 1fr;
       }
 
+      .tools-grid > .card + .card {
+        margin-top: 22px;
+      }
+
       .card {
         padding: 22px 18px;
         border-radius: 22px;
-      }
-
-      .card h2,
-      .card p {
-        min-height: auto;
       }
 
       .bulk-stats {
@@ -611,12 +705,13 @@
   <div class="page">
     <section class="hero">
       <div class="hero-copy">
-        <div class="hero-kicker">Outil interne Tchap</div>
-        <h1>Tchap - Tools</h1>
+        <div class="hero-title">
+          <h1>Tchap - Tools</h1>
+          <div class="hero-kicker">Outil interne</div>
+        </div>
         <p>
-          Retrouver une instance Tchap à partir d’un domaine,
-          générer un MXID à partir d’une adresse email professionnelle
-          et vérifier rapidement le statut d’ouverture d’un domaine.
+          Retrouver une instance, générer un MXID et vérifier l’ouverture d’un domaine.
+          Cliquez sur une valeur pour la copier.
         </p>
       </div>
     </section>
@@ -786,6 +881,8 @@
     </div>
   </div>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script>
     const TchapApp = (() => {
       const CONFIG = {
@@ -812,7 +909,24 @@
 
       function init() {
         bindEvents();
+        bindCopyHandlers();
         Bulk.init();
+      }
+
+      // Un clic (ou Entrée) sur une valeur [data-copy] la copie dans le presse-papiers.
+      function bindCopyHandlers() {
+        document.addEventListener("click", (event) => {
+          const target = event.target.closest("[data-copy]");
+          if (target) UI.copyToClipboard(target.dataset.copy);
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          const target = event.target.closest("[data-copy]");
+          if (!target) return;
+          event.preventDefault();
+          UI.copyToClipboard(target.dataset.copy);
+        });
       }
 
       function bindEvents() {
@@ -1038,17 +1152,50 @@
           }
         },
 
-        async copyToClipboard(text, feedbackElement) {
+        async copyToClipboard(text) {
           try {
             await navigator.clipboard.writeText(text);
-            feedbackElement.textContent = "Copié";
+            this.showToast(`Copié : ${text}`);
           } catch (error) {
-            console.error(error);
-            feedbackElement.textContent = "Copie impossible";
+            // Fallback (ex. ouverture en file:// ou navigateur restrictif).
+            if (this.legacyCopy(text)) {
+              this.showToast(`Copié : ${text}`);
+            } else {
+              console.error(error);
+              this.showToast("Copie impossible", true);
+            }
+          }
+        },
+
+        legacyCopy(text) {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+
+          let copied = false;
+          try {
+            copied = document.execCommand("copy");
+          } catch {
+            copied = false;
           }
 
-          setTimeout(() => {
-            feedbackElement.textContent = "";
+          textarea.remove();
+          return copied;
+        },
+
+        showToast(message, isError = false) {
+          const toast = document.getElementById("toast");
+          toast.textContent = message;
+          toast.classList.toggle("is-error", isError);
+          toast.classList.add("is-visible");
+
+          clearTimeout(this.toastTimer);
+          this.toastTimer = setTimeout(() => {
+            toast.classList.remove("is-visible");
           }, 1800);
         }
       };
@@ -1064,7 +1211,7 @@
 
         renderDomainResult(container, data) {
           container.innerHTML = `
-            <div class="result">
+            <div class="result" data-type="${this.typeKey(data.instanceType)}">
               <div class="result-grid">
                 <div class="result-item">
                   <span class="result-label">Domaine</span>
@@ -1073,26 +1220,21 @@
 
                 <div class="result-item">
                   <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
+                  ${this.copyable(data.instance)}
                 </div>
               </div>
 
               <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
+                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
               </div>
             </div>
           `;
 
-          this.attachCopyHandlers(container);
         },
 
         renderEmailResult(container, data) {
           container.innerHTML = `
-            <div class="result">
+            <div class="result" data-type="${this.typeKey(data.instanceType)}">
               <div class="result-grid">
                 <div class="result-item">
                   <span class="result-label">Email</span>
@@ -1106,37 +1248,28 @@
 
                 <div class="result-item">
                   <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
+                  ${this.copyable(data.instance)}
                 </div>
 
                 <div class="result-item">
                   <span class="result-label">MXID</span>
-                  <div class="result-value">${this.escapeHtml(data.mxid)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.mxid)}">Copier le MXID</button>
-                    <span class="copy-feedback"></span>
-                  </div>
+                  ${this.copyable(data.mxid)}
                 </div>
               </div>
 
               <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
+                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
               </div>
             </div>
           `;
 
-          this.attachCopyHandlers(container);
         },
 
         renderDomainStatusResult(container, data) {
           const statusLabel = Mapper.getDomainOpeningLabel(data.domainStatus);
 
           container.innerHTML = `
-            <div class="result">
+            <div class="result" data-type="${this.typeKey(data.instanceType)}">
               <div class="result-grid">
                 <div class="result-item">
                   <span class="result-label">Domaine</span>
@@ -1152,33 +1285,27 @@
 
                 <div class="result-item">
                   <span class="result-label">Instance</span>
-                  <div class="result-value">${this.escapeHtml(data.instance)}</div>
-                  <div class="copy-row">
-                    <button class="copy-btn" type="button" data-copy="${this.escapeAttribute(data.instance)}">Copier l’instance</button>
-                    <span class="copy-feedback"></span>
-                  </div>
+                  ${this.copyable(data.instance)}
                 </div>
               </div>
 
               <div class="result-footer">
-                <div class="badge">${this.escapeHtml(data.instanceType)}</div>
+                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
               </div>
             </div>
           `;
 
-          this.attachCopyHandlers(container);
         },
 
-        attachCopyHandlers(container) {
-          const buttons = container.querySelectorAll("[data-copy]");
+        copyable(value) {
+          return `
+            <div class="result-value mono copyable" role="button" tabindex="0"
+                 title="Cliquer pour copier" data-copy="${this.escapeAttribute(value)}">${this.escapeHtml(value)}</div>
+          `;
+        },
 
-          buttons.forEach((button) => {
-            button.addEventListener("click", async () => {
-              const textToCopy = button.getAttribute("data-copy");
-              const feedbackElement = button.parentElement.querySelector(".copy-feedback");
-              await UI.copyToClipboard(textToCopy, feedbackElement);
-            });
-          });
+        typeKey(instanceType) {
+          return String(instanceType || "").toLowerCase();
         },
 
         escapeAttribute(value) {
@@ -1446,6 +1573,7 @@
           try {
             await navigator.clipboard.writeText(text);
             flashButton(BDOM.copyBtn, "MXID copiés ✓");
+            UI.showToast(`${results.length} MXID copiés`);
           } catch (error) {
             // Fallback (ex. ouverture en file://).
             BDOM.mxidOutput.focus();
