@@ -33,6 +33,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -399,6 +403,166 @@
       border: 1px solid #d9e1ea;
     }
 
+    /* ---------- MXID en masse (section discrète) ---------- */
+
+    .bulk-zone {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    .bulk-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: auto;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.55);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .bulk-toggle:hover {
+      color: rgba(255,255,255,0.9);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .bulk-toggle-icon {
+      display: inline-block;
+      transition: transform var(--transition);
+    }
+
+    .bulk-toggle[aria-expanded="true"] .bulk-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .bulk-panel {
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .bulk-panel .card h2,
+    .bulk-panel .card p {
+      min-height: auto;
+    }
+
+    .bulk-panel .card + .card {
+      margin-top: 22px;
+    }
+
+    .bulk-panel textarea {
+      width: 100%;
+      min-height: 220px;
+      resize: vertical;
+      border: 1px solid var(--tchap-border);
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      outline: none;
+      color: var(--tchap-text);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .bulk-panel textarea:focus {
+      border-color: rgba(11,31,58,0.28);
+      box-shadow: 0 0 0 5px rgba(11,31,58,0.08);
+      background: #fff;
+    }
+
+    .bulk-counter {
+      margin-top: 8px;
+      color: var(--tchap-muted);
+      font-size: 13px;
+    }
+
+    .bulk-panel .btn-primary {
+      flex: 0 1 auto;
+    }
+
+    .bulk-progress {
+      margin-top: 20px;
+    }
+
+    .bulk-progress-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--tchap-muted);
+    }
+
+    .bulk-progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e9eef5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bulk-progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #17365f 0%, #0B1F3A 100%);
+      transition: width 0.2s ease;
+    }
+
+    .bulk-info {
+      margin-top: 20px;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border: 1px solid var(--tchap-border);
+      border-radius: 16px;
+      color: var(--tchap-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .bulk-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .bulk-stat {
+      background: rgba(255,255,255,0.97);
+      border: 1px solid #dfe8f5;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bulk-stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--tchap-text);
+    }
+
+    .bulk-stat-value.success {
+      color: var(--tchap-success);
+    }
+
+    .bulk-stat-value.error {
+      color: var(--tchap-error);
+    }
+
+    .bulk-errors-list {
+      max-height: 240px;
+      overflow-y: auto;
+      margin-top: 8px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
     @media (max-width: 1120px) {
       .tools-grid {
         grid-template-columns: 1fr 1fr;
@@ -435,6 +599,10 @@
       .card h2,
       .card p {
         min-height: auto;
+      }
+
+      .bulk-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -520,6 +688,102 @@
         <div id="statusOutput"></div>
       </section>
     </div>
+
+    <div class="bulk-zone">
+      <button
+        id="bulkToggleBtn"
+        class="bulk-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="bulkPanel"
+      >
+        Générer des MXID en masse
+        <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
+      </button>
+
+      <div id="bulkPanel" class="bulk-panel" hidden>
+        <section class="card">
+          <div class="card-header">
+            <div class="eyebrow">MXID en masse</div>
+            <h2>Coller une liste d’adresses email</h2>
+            <p>
+              Jusqu’à 1 000 adresses. Une adresse par ligne est recommandée
+              (les séparateurs virgule, point-virgule et espace sont aussi acceptés).
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="bulkEmailInput">Adresses email</label>
+            <textarea
+              id="bulkEmailInput"
+              placeholder="john.doe@organisation.fr&#10;jane.doe@organisation.fr&#10;june.doe@autre-domaine.fr"
+            ></textarea>
+            <div class="bulk-counter">
+              <span id="bulkEmailCount">0</span> adresse(s) détectée(s)
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="bulkGenerateBtn" class="btn-primary" type="button">Générer les MXID</button>
+            <button id="bulkResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
+          </div>
+
+          <div id="bulkStatus" class="status" hidden></div>
+
+          <div id="bulkProgress" class="bulk-progress" hidden>
+            <div class="bulk-progress-info">
+              <span id="bulkProgressLabel">Traitement en cours…</span>
+              <span id="bulkProgressPercent">0 %</span>
+            </div>
+            <div class="bulk-progress-track">
+              <div id="bulkProgressBar" class="bulk-progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="bulk-info">
+            L’outil interroge l’API Tchap une seule fois par domaine :
+            si 500 adresses appartiennent au même domaine, une seule requête est envoyée.
+          </div>
+        </section>
+
+        <section id="bulkResultSection" class="card" hidden>
+          <div class="bulk-stats">
+            <div class="bulk-stat">
+              <span class="result-label">Emails</span>
+              <div id="bulkTotalStat" class="bulk-stat-value">0</div>
+            </div>
+            <div class="bulk-stat">
+              <span class="result-label">MXID générés</span>
+              <div id="bulkSuccessStat" class="bulk-stat-value success">0</div>
+            </div>
+            <div class="bulk-stat">
+              <span class="result-label">Erreurs</span>
+              <div id="bulkErrorStat" class="bulk-stat-value error">0</div>
+            </div>
+            <div class="bulk-stat">
+              <span class="result-label">Domaines</span>
+              <div id="bulkDomainStat" class="bulk-stat-value">0</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="bulkMxidOutput">MXID générés (prêts à être copiés-collés dans Tchap)</label>
+            <textarea id="bulkMxidOutput" readonly placeholder="Les MXID apparaîtront ici…"></textarea>
+          </div>
+
+          <div class="actions">
+            <button id="bulkCopyBtn" class="btn-primary" type="button">Copier tous les MXID</button>
+            <button id="bulkDownloadTxtBtn" class="btn-secondary" type="button">Télécharger TXT</button>
+            <button id="bulkDownloadCsvBtn" class="btn-secondary" type="button">Télécharger CSV</button>
+          </div>
+
+          <div id="bulkErrors" class="error-box" hidden>
+            <strong>Adresses non converties</strong>
+            <div id="bulkErrorsList" class="bulk-errors-list"></div>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -548,6 +812,7 @@
 
       function init() {
         bindEvents();
+        Bulk.init();
       }
 
       function bindEvents() {
@@ -933,6 +1198,343 @@
             .replace(/'/g, "&#039;");
         }
       };
+
+      /*
+       * -------------------------------------------------------
+       * MXID EN MASSE
+       * -------------------------------------------------------
+       */
+      const Bulk = (() => {
+        const BULK_CONFIG = {
+          maxEmails: 1000,
+          // Nombre de domaines interrogés simultanément.
+          concurrency: 8
+        };
+
+        const $ = (id) => document.getElementById(id);
+
+        const BDOM = {
+          toggleBtn: $("bulkToggleBtn"),
+          panel: $("bulkPanel"),
+          emailInput: $("bulkEmailInput"),
+          emailCount: $("bulkEmailCount"),
+          generateBtn: $("bulkGenerateBtn"),
+          resetBtn: $("bulkResetBtn"),
+          status: $("bulkStatus"),
+          progress: $("bulkProgress"),
+          progressBar: $("bulkProgressBar"),
+          progressLabel: $("bulkProgressLabel"),
+          progressPercent: $("bulkProgressPercent"),
+          resultSection: $("bulkResultSection"),
+          totalStat: $("bulkTotalStat"),
+          successStat: $("bulkSuccessStat"),
+          errorStat: $("bulkErrorStat"),
+          domainStat: $("bulkDomainStat"),
+          mxidOutput: $("bulkMxidOutput"),
+          copyBtn: $("bulkCopyBtn"),
+          downloadTxtBtn: $("bulkDownloadTxtBtn"),
+          downloadCsvBtn: $("bulkDownloadCsvBtn"),
+          errors: $("bulkErrors"),
+          errorsList: $("bulkErrorsList")
+        };
+
+        let results = [];
+        let errors = [];
+        const instanceCache = new Map();
+
+        function init() {
+          BDOM.toggleBtn.addEventListener("click", togglePanel);
+          BDOM.emailInput.addEventListener("input", updateCounter);
+          BDOM.generateBtn.addEventListener("click", generate);
+          BDOM.resetBtn.addEventListener("click", reset);
+          BDOM.copyBtn.addEventListener("click", copyMxids);
+          BDOM.downloadTxtBtn.addEventListener("click", downloadTxt);
+          BDOM.downloadCsvBtn.addEventListener("click", downloadCsv);
+        }
+
+        function togglePanel() {
+          const isOpen = BDOM.toggleBtn.getAttribute("aria-expanded") === "true";
+          BDOM.toggleBtn.setAttribute("aria-expanded", String(!isOpen));
+          BDOM.panel.hidden = isOpen;
+
+          if (!isOpen) {
+            BDOM.panel.scrollIntoView({ behavior: "smooth", block: "start" });
+            BDOM.emailInput.focus({ preventScroll: true });
+          }
+        }
+
+        // Accepte retours à la ligne, virgules, points-virgules, tabulations et espaces.
+        // Supprime les doublons en conservant l'ordre.
+        function parseEmails(text) {
+          const values = text
+            .split(/[\n\r,;\t ]+/)
+            .map((value) => value.trim().toLowerCase())
+            .filter(Boolean);
+
+          return [...new Set(values)];
+        }
+
+        function updateCounter() {
+          BDOM.emailCount.textContent = parseEmails(BDOM.emailInput.value).length;
+        }
+
+        async function fetchInstanceCached(domain) {
+          if (instanceCache.has(domain)) {
+            return instanceCache.get(domain);
+          }
+
+          const instance = await Api.fetchInstanceFromDomain(domain);
+          instanceCache.set(domain, instance);
+          return instance;
+        }
+
+        // Une requête par domaine unique, avec un nombre limité de requêtes simultanées.
+        async function processDomains(domains) {
+          const domainResults = new Map();
+          let processed = 0;
+          let index = 0;
+
+          async function worker() {
+            while (index < domains.length) {
+              const domain = domains[index++];
+
+              try {
+                const instance = await fetchInstanceCached(domain);
+                domainResults.set(domain, { success: true, instance });
+              } catch (error) {
+                console.error("Erreur domaine", domain, error);
+                domainResults.set(domain, {
+                  success: false,
+                  error: error.message || "Erreur inconnue"
+                });
+              }
+
+              processed++;
+              updateProgress(processed, domains.length, domain);
+            }
+          }
+
+          const workerCount = Math.min(BULK_CONFIG.concurrency, domains.length);
+          await Promise.all(Array.from({ length: workerCount }, worker));
+
+          return domainResults;
+        }
+
+        async function generate() {
+          clearResults();
+
+          const emails = parseEmails(BDOM.emailInput.value);
+
+          if (emails.length === 0) {
+            showStatus("Ajoutez au moins une adresse email.");
+            return;
+          }
+
+          if (emails.length > BULK_CONFIG.maxEmails) {
+            showStatus(
+              `La limite est de ${BULK_CONFIG.maxEmails} adresses par traitement. ` +
+              `Vous en avez collé ${emails.length}.`
+            );
+            return;
+          }
+
+          const validEmails = [];
+
+          emails.forEach((email) => {
+            const domain = Parser.extractDomainFromEmail(email);
+
+            if (Validator.isValidEmail(email) && Validator.isValidDomain(domain)) {
+              validEmails.push(email);
+            } else {
+              errors.push({ email, reason: "Adresse email invalide" });
+            }
+          });
+
+          const domains = [...new Set(validEmails.map(Parser.extractDomainFromEmail))];
+
+          setLoading(true);
+          showStatus(
+            `Analyse de ${validEmails.length} adresse(s) ` +
+            `sur ${domains.length} domaine(s) unique(s)…`
+          );
+
+          try {
+            const domainResults = await processDomains(domains);
+
+            // Reconstruction des MXID dans l'ordre d'origine des emails.
+            validEmails.forEach((email) => {
+              const domain = Parser.extractDomainFromEmail(email);
+              const domainResult = domainResults.get(domain);
+
+              if (domainResult && domainResult.success) {
+                results.push({
+                  email,
+                  domain,
+                  instance: domainResult.instance,
+                  mxid: Builder.buildMxid(email, domainResult.instance)
+                });
+              } else {
+                errors.push({
+                  email,
+                  reason: domainResult?.error || "Instance Tchap introuvable"
+                });
+              }
+            });
+
+            renderResults(emails.length, domains.length);
+            showStatus(
+              `Terminé : ${results.length} MXID généré(s), ${errors.length} erreur(s).`
+            );
+          } catch (error) {
+            console.error(error);
+            showStatus("Une erreur inattendue est survenue pendant le traitement.");
+          } finally {
+            setLoading(false);
+          }
+        }
+
+        function renderResults(total, domainCount) {
+          BDOM.resultSection.hidden = false;
+
+          BDOM.totalStat.textContent = total;
+          BDOM.successStat.textContent = results.length;
+          BDOM.errorStat.textContent = errors.length;
+          BDOM.domainStat.textContent = domainCount;
+
+          // Format : @user1:instance @user2:instance (séparés par un espace).
+          BDOM.mxidOutput.value = getMxidText();
+
+          if (errors.length > 0) {
+            BDOM.errors.hidden = false;
+            BDOM.errorsList.textContent = errors
+              .map((item) => `${item.email} — ${item.reason}`)
+              .join("\n");
+          } else {
+            BDOM.errors.hidden = true;
+            BDOM.errorsList.textContent = "";
+          }
+
+          BDOM.resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function getMxidText() {
+          return results.map((item) => item.mxid).join(" ");
+        }
+
+        function updateProgress(processed, total, domain) {
+          const percent = total === 0 ? 100 : Math.round((processed / total) * 100);
+
+          BDOM.progressBar.style.width = `${percent}%`;
+          BDOM.progressPercent.textContent = `${percent} %`;
+          BDOM.progressLabel.textContent = `${processed} / ${total} domaines — ${domain}`;
+        }
+
+        function flashButton(button, message) {
+          const original = button.dataset.label || button.textContent;
+          button.dataset.label = original;
+          button.textContent = message;
+
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1800);
+        }
+
+        async function copyMxids() {
+          const text = BDOM.mxidOutput.value;
+          if (!text) return;
+
+          try {
+            await navigator.clipboard.writeText(text);
+            flashButton(BDOM.copyBtn, "MXID copiés ✓");
+          } catch (error) {
+            // Fallback (ex. ouverture en file://).
+            BDOM.mxidOutput.focus();
+            BDOM.mxidOutput.select();
+
+            try {
+              document.execCommand("copy");
+              flashButton(BDOM.copyBtn, "MXID copiés ✓");
+            } catch {
+              alert(
+                "La copie automatique n’est pas disponible. " +
+                "Sélectionnez le contenu puis utilisez Ctrl+C."
+              );
+            }
+          }
+        }
+
+        function downloadTxt() {
+          if (results.length === 0) return;
+          downloadFile(getMxidText(), "mxid-tchap.txt", "text/plain;charset=utf-8");
+        }
+
+        function downloadCsv() {
+          if (results.length === 0) return;
+
+          const rows = [
+            ["email", "domain", "instance", "mxid"],
+            ...results.map((item) => [item.email, item.domain, item.instance, item.mxid])
+          ];
+
+          const csv = rows
+            .map((row) => row.map(csvEscape).join(";"))
+            .join("\n");
+
+          // BOM UTF-8 pour Excel.
+          downloadFile("﻿" + csv, "mxid-tchap.csv", "text/csv;charset=utf-8");
+        }
+
+        function csvEscape(value) {
+          return `"${String(value ?? "").replace(/"/g, '""')}"`;
+        }
+
+        function downloadFile(content, filename, mimeType) {
+          const blob = new Blob([content], { type: mimeType });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+        }
+
+        function setLoading(loading) {
+          BDOM.generateBtn.disabled = loading;
+          BDOM.resetBtn.disabled = loading;
+          BDOM.generateBtn.textContent = loading ? "Génération en cours…" : "Générer les MXID";
+          BDOM.progress.hidden = !loading;
+        }
+
+        function showStatus(message) {
+          BDOM.status.hidden = false;
+          BDOM.status.textContent = message;
+        }
+
+        function clearResults() {
+          results = [];
+          errors = [];
+
+          BDOM.resultSection.hidden = true;
+          BDOM.errors.hidden = true;
+          BDOM.mxidOutput.value = "";
+          BDOM.progressBar.style.width = "0%";
+          BDOM.progressPercent.textContent = "0 %";
+        }
+
+        function reset() {
+          BDOM.emailInput.value = "";
+          BDOM.emailCount.textContent = "0";
+          BDOM.status.hidden = true;
+          BDOM.progress.hidden = true;
+          clearResults();
+          BDOM.emailInput.focus();
+        }
+
+        return { init };
+      })();
 
       return { init };
     })();

@@ -41,6 +41,17 @@ L’outil détermine si le domaine est :
 
 ---
 
+### 4. Générer des MXID en masse
+Accessible via le bouton discret **« Générer des MXID en masse »** en bas de page.  
+Coller jusqu’à 1 000 adresses email (une par ligne, ou séparées par virgule / point-virgule / espace).  
+L’outil :
+- dédoublonne les adresses et écarte les adresses invalides  
+- interroge l’API une seule fois par domaine  
+- génère les MXID séparés par un espace, prêts à copier-coller dans Tchap  
+- permet l’export TXT ou CSV et liste les adresses non converties  
+
+---
+
 ## 🧠 Logique technique
 
 L’outil repose sur l’API Matrix de Tchap :
