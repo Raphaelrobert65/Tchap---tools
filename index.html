@@ -497,11 +497,18 @@
       border: 1px solid #d9e1ea;
     }
 
-    /* ---------- MXID en masse (section discrète) ---------- */
+    /* ---------- Sections discrètes en bas de page ---------- */
 
     .bulk-zone {
       margin-top: 36px;
       text-align: center;
+    }
+
+    .bulk-toggles {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .bulk-toggle {
@@ -652,6 +659,239 @@
       white-space: pre-wrap;
     }
 
+    /* ---------- Commandes Bot Admin ---------- */
+
+    .bot-search {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .bot-search input {
+      flex: 1;
+    }
+
+    .bot-panel .btn-primary {
+      flex: 0 0 auto;
+      padding: 14px 22px;
+    }
+
+    .bot-identity {
+      display: flex;
+      align-items: center;
+      gap: 10px 14px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, var(--tchap-success-bg) 0%, #f6faff 100%);
+      border: 1px solid #dbe7fb;
+      border-left: 4px solid #2f6ad0;
+      border-radius: 16px;
+    }
+
+    .bot-identity[data-type="externe"] { border-left-color: #d58a1f; }
+    .bot-identity[data-type="autre"] { border-left-color: #7a5bc7; }
+
+    .bot-identity .result-label {
+      margin: 0;
+    }
+
+    .bot-identity .spacer {
+      flex: 1;
+    }
+
+    .bot-identity small {
+      color: var(--tchap-muted);
+      font-size: 12px;
+    }
+
+    .cmd-group {
+      margin-top: 22px;
+    }
+
+    .cmd-group-title {
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7c8ca2;
+    }
+
+    .cmd {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid #e3eaf3;
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cmd-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tchap-text);
+    }
+
+    .cmd-name span {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--tchap-muted);
+    }
+
+    .cmd-code {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 9px 12px;
+      background: #f3f6fa;
+      border: 1px solid #e3eaf3;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--tchap-text);
+      word-break: break-all;
+    }
+
+    .cmd-code .k {
+      color: #2459b8;
+      font-weight: 700;
+    }
+
+    .cmd-code .e {
+      color: var(--tchap-success);
+    }
+
+    .cmd-code input {
+      width: 320px;
+      max-width: 100%;
+      min-height: auto;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .cmd-code input:focus {
+      transform: none;
+    }
+
+    .cmd-code input.is-invalid {
+      border-color: var(--tchap-error);
+      box-shadow: 0 0 0 4px rgba(180,35,24,0.10);
+    }
+
+    .cmd-copy {
+      min-height: auto;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      background: var(--tchap-navy);
+      color: #fff;
+    }
+
+    .cmd-copy.is-done {
+      background: var(--tchap-success);
+    }
+
+    .cmd.danger {
+      border-color: #f3d4d4;
+    }
+
+    .cmd.danger .cmd-name {
+      color: var(--tchap-error);
+    }
+
+    .cmd.danger .cmd-copy {
+      background: var(--tchap-error);
+    }
+
+    .cmd-hint {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--tchap-muted);
+    }
+
+    /* ---------- Zone sensible : !deactivate en masse ---------- */
+
+    .danger-zone {
+      margin-top: 28px;
+      padding: 20px;
+      border: 2px dashed #e7b4b4;
+      border-radius: 20px;
+      background: #fffafa;
+    }
+
+    .danger-zone-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--tchap-error);
+    }
+
+    .danger-zone-text {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #8a3b33;
+    }
+
+    .btn-danger-outline {
+      background: #fff;
+      color: var(--tchap-error);
+      border: 1px solid #e7b4b4;
+    }
+
+    .btn-danger-outline:hover {
+      background: #fff1f1;
+    }
+
+    .btn-danger {
+      background: linear-gradient(180deg, #c8372b 0%, #a11f15 100%);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(180,35,24,0.18);
+    }
+
+    .danger-zone textarea {
+      min-height: 140px;
+      margin-top: 14px;
+      border-color: #efc9c9;
+      background: #fff;
+    }
+
+    .instance-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .instance-chips .badge {
+      padding: 7px 11px;
+      font-size: 12px;
+    }
+
+    .danger-warn {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #fff8e7;
+      border: 1px solid #f1dfb0;
+      color: #7a5b12;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     @media (max-width: 1120px) {
       .tools-grid {
         grid-template-columns: 1fr 1fr;
@@ -697,6 +937,19 @@
 
       .bulk-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cmd {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .cmd-copy {
+        justify-self: start;
+      }
+
+      .bot-search {
+        flex-direction: column;
       }
     }
   </style>
@@ -785,16 +1038,49 @@
     </div>
 
     <div class="bulk-zone">
-      <button
-        id="bulkToggleBtn"
-        class="bulk-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="bulkPanel"
-      >
-        Générer des MXID en masse
-        <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
-      </button>
+      <div class="bulk-toggles">
+        <button
+          id="botToggleBtn"
+          class="bulk-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="botPanel"
+        >
+          Commandes Bot Admin
+          <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
+        </button>
+
+        <button
+          id="bulkToggleBtn"
+          class="bulk-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="bulkPanel"
+        >
+          Générer des MXID en masse
+          <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
+        </button>
+      </div>
+
+      <div id="botPanel" class="bulk-panel bot-panel" hidden>
+        <section class="card">
+          <div class="card-header">
+            <div class="eyebrow">Commandes Bot Admin</div>
+            <h2>Préparer les commandes pour un utilisateur</h2>
+            <p>
+              Coller un email ou un MXID existant (un lien Tchap fonctionne aussi).
+              Les commandes sont prêtes à coller dans l’Admin Room.
+            </p>
+          </div>
+
+          <div class="bot-search">
+            <input id="botInput" type="text" placeholder="ex : jean.dupont@dgfip.finances.gouv.fr ou @jean.dupont-dgfip.finances.gouv.fr:agent.finances.tchap.gouv.fr" />
+            <button id="botSearchBtn" class="btn-primary" type="button">Préparer</button>
+          </div>
+
+          <div id="botOutput"></div>
+        </section>
+      </div>
 
       <div id="bulkPanel" class="bulk-panel" hidden>
         <section class="card">
@@ -862,7 +1148,7 @@
           </div>
 
           <div class="field">
-            <label for="bulkMxidOutput">MXID générés (prêts à être copiés-collés dans Tchap)</label>
+            <label for="bulkMxidOutput">Liste des MXID générés (simple liste, aucune commande)</label>
             <textarea id="bulkMxidOutput" readonly placeholder="Les MXID apparaîtront ici…"></textarea>
           </div>
 
@@ -875,6 +1161,29 @@
           <div id="bulkErrors" class="error-box" hidden>
             <strong>Adresses non converties</strong>
             <div id="bulkErrorsList" class="bulk-errors-list"></div>
+          </div>
+
+          <div id="dangerZone" class="danger-zone" hidden>
+            <div class="danger-zone-title">⚠ Zone sensible · Désactivation des comptes</div>
+            <p class="danger-zone-text">
+              Prépare la commande <strong>!deactivate</strong> pour les MXID générés ci-dessus.
+              Vérifiez la liste avant de copier : la commande désactive les comptes.
+            </p>
+
+            <div class="actions">
+              <button id="dangerPrepareBtn" class="btn-danger-outline" type="button">Préparer la commande !deactivate</button>
+            </div>
+
+            <div id="dangerBody" hidden>
+              <div id="deactivateChips" class="instance-chips"></div>
+              <textarea id="deactivateOutput" readonly aria-label="Commande !deactivate"></textarea>
+              <div id="deactivateWarn" class="danger-warn" hidden></div>
+
+              <div class="actions">
+                <button id="deactivateCopyBtn" class="btn-danger" type="button">Copier la commande !deactivate</button>
+                <button id="dangerHideBtn" class="btn-secondary" type="button">Masquer</button>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -911,6 +1220,7 @@
         bindEvents();
         bindCopyHandlers();
         Bulk.init();
+        Bot.init();
       }
 
       // Un clic (ou Entrée) sur une valeur [data-copy] la copie dans le presse-papiers.
@@ -1134,6 +1444,31 @@
           return instance.toLowerCase().includes("externe") ? "closed" : "open";
         },
 
+        // Nom lisible de l'instance, aligné sur les noms des bots (« Finances BotAdmin »…).
+        getInstanceLabel(instance) {
+          const LABELS = {
+            "agent.tchap.gouv.fr": "Agents",
+            "agent.agriculture.tchap.gouv.fr": "Agriculture",
+            "agent.collectivites.tchap.gouv.fr": "Collectivités",
+            "agent.culture.tchap.gouv.fr": "Culture",
+            "agent.dev-durable.tchap.gouv.fr": "Développement durable",
+            "agent.diplomatie.tchap.gouv.fr": "Diplomatie",
+            "agent.dinum.tchap.gouv.fr": "DINUM",
+            "agent.education.tchap.gouv.fr": "Éducation",
+            "agent.elysee.tchap.gouv.fr": "Élysée",
+            "agent.externe.tchap.gouv.fr": "Externe",
+            "agent.finances.tchap.gouv.fr": "Finances",
+            "agent.interieur.tchap.gouv.fr": "Intérieur",
+            "agent.intradef.tchap.gouv.fr": "Intradef",
+            "agent.justice.tchap.gouv.fr": "Justice",
+            "agent.pm.tchap.gouv.fr": "PM",
+            "agent.social.tchap.gouv.fr": "Social",
+            "agent.ssi.tchap.gouv.fr": "SSI"
+          };
+
+          return LABELS[String(instance).toLowerCase()] || instance;
+        },
+
         getDomainOpeningLabel(status) {
           if (status === "open") return "Ouvert sur Tchap";
           if (status === "closed") return "Non ouvert";
@@ -1152,18 +1487,21 @@
           }
         },
 
-        async copyToClipboard(text) {
+        async copyToClipboard(text, message = `Copié : ${text}`) {
           try {
             await navigator.clipboard.writeText(text);
-            this.showToast(`Copié : ${text}`);
+            this.showToast(message);
+            return true;
           } catch (error) {
             // Fallback (ex. ouverture en file:// ou navigateur restrictif).
             if (this.legacyCopy(text)) {
-              this.showToast(`Copié : ${text}`);
-            } else {
-              console.error(error);
-              this.showToast("Copie impossible", true);
+              this.showToast(message);
+              return true;
             }
+
+            console.error(error);
+            this.showToast("Copie impossible", true);
+            return false;
           }
         },
 
@@ -1362,7 +1700,15 @@
           downloadTxtBtn: $("bulkDownloadTxtBtn"),
           downloadCsvBtn: $("bulkDownloadCsvBtn"),
           errors: $("bulkErrors"),
-          errorsList: $("bulkErrorsList")
+          errorsList: $("bulkErrorsList"),
+          dangerZone: $("dangerZone"),
+          dangerPrepareBtn: $("dangerPrepareBtn"),
+          dangerBody: $("dangerBody"),
+          dangerHideBtn: $("dangerHideBtn"),
+          deactivateChips: $("deactivateChips"),
+          deactivateOutput: $("deactivateOutput"),
+          deactivateWarn: $("deactivateWarn"),
+          deactivateCopyBtn: $("deactivateCopyBtn")
         };
 
         let results = [];
@@ -1377,6 +1723,9 @@
           BDOM.copyBtn.addEventListener("click", copyMxids);
           BDOM.downloadTxtBtn.addEventListener("click", downloadTxt);
           BDOM.downloadCsvBtn.addEventListener("click", downloadCsv);
+          BDOM.dangerPrepareBtn.addEventListener("click", showDeactivateCommand);
+          BDOM.dangerHideBtn.addEventListener("click", hideDeactivateCommand);
+          BDOM.deactivateCopyBtn.addEventListener("click", copyDeactivateCommand);
         }
 
         function togglePanel() {
@@ -1541,7 +1890,70 @@
             BDOM.errorsList.textContent = "";
           }
 
+          BDOM.dangerZone.hidden = results.length === 0;
+          hideDeactivateCommand();
+
           BDOM.resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // ---------- Zone sensible : commande !deactivate ----------
+
+        function getDeactivateCommand() {
+          return `!deactivate ${getMxidText()}`;
+        }
+
+        function showDeactivateCommand() {
+          if (results.length === 0) return;
+
+          const byInstance = new Map();
+          results.forEach((item) => {
+            byInstance.set(item.instance, (byInstance.get(item.instance) || 0) + 1);
+          });
+
+          BDOM.deactivateChips.innerHTML = [...byInstance.entries()]
+            .map(([instance, count]) => {
+              const type = Mapper.getInstanceType(instance).toLowerCase();
+              const label = Mapper.getInstanceLabel(instance);
+              return `<span class="badge" data-type="${Renderer.escapeAttribute(type)}">${Renderer.escapeHtml(label)} · ${count}</span>`;
+            })
+            .join("");
+
+          BDOM.deactivateOutput.value = getDeactivateCommand();
+
+          const warnings = [];
+          if (byInstance.size > 1) {
+            const labels = [...byInstance.keys()].map(Mapper.getInstanceLabel).join(", ");
+            warnings.push(`${byInstance.size} instances concernées : ${byInstance.size} bots vont répondre (${labels}). Vérifier chaque rapport.`);
+          }
+          if (errors.length > 0) {
+            warnings.push(`${errors.length} adresse(s) en erreur ne sont pas incluses dans la commande.`);
+          }
+          BDOM.deactivateWarn.hidden = warnings.length === 0;
+          BDOM.deactivateWarn.textContent = warnings.join(" ");
+
+          BDOM.deactivateCopyBtn.textContent =
+            `Copier la commande !deactivate (${results.length} compte${results.length > 1 ? "s" : ""})`;
+          delete BDOM.deactivateCopyBtn.dataset.label;
+
+          BDOM.dangerBody.hidden = false;
+          BDOM.dangerPrepareBtn.hidden = true;
+        }
+
+        function hideDeactivateCommand() {
+          BDOM.dangerBody.hidden = true;
+          BDOM.dangerPrepareBtn.hidden = false;
+          BDOM.deactivateOutput.value = "";
+        }
+
+        async function copyDeactivateCommand() {
+          const text = BDOM.deactivateOutput.value;
+          if (!text) return;
+
+          const copied = await UI.copyToClipboard(
+            text,
+            `Commande !deactivate copiée (${results.length} compte${results.length > 1 ? "s" : ""})`
+          );
+          if (copied) flashButton(BDOM.deactivateCopyBtn, "Commande copiée ✓");
         }
 
         function getMxidText() {
@@ -1647,6 +2059,8 @@
 
           BDOM.resultSection.hidden = true;
           BDOM.errors.hidden = true;
+          BDOM.dangerZone.hidden = true;
+          hideDeactivateCommand();
           BDOM.mxidOutput.value = "";
           BDOM.progressBar.style.width = "0%";
           BDOM.progressPercent.textContent = "0 %";
@@ -1659,6 +2073,258 @@
           BDOM.progress.hidden = true;
           clearResults();
           BDOM.emailInput.focus();
+        }
+
+        return { init };
+      })();
+
+      /*
+       * -------------------------------------------------------
+       * COMMANDES BOT ADMIN (un utilisateur)
+       * Formats repris des commandes validées dans l'Admin Room.
+       * -------------------------------------------------------
+       */
+      const Bot = (() => {
+        const $ = (id) => document.getElementById(id);
+
+        const BOTDOM = {
+          toggleBtn: $("botToggleBtn"),
+          panel: $("botPanel"),
+          input: $("botInput"),
+          searchBtn: $("botSearchBtn"),
+          output: $("botOutput")
+        };
+
+        /*
+         * field : paramètre à saisir après le MXID.
+         *  - type "email" : email valide obligatoire
+         *  - type "text"  : texte libre obligatoire (sans guillemets)
+         *  - prefill "email" : pré-rempli avec l'email saisi
+         */
+        const COMMANDS = [
+          {
+            group: "Consulter",
+            items: [
+              { id: "user", label: "Infos du compte", cmd: "!user" }
+            ]
+          },
+          {
+            group: "Accès",
+            items: [
+              { id: "deactivate", label: "Désactiver", cmd: "!deactivate", danger: true },
+              {
+                id: "reactivate",
+                label: "Réactiver",
+                cmd: "!reactivate",
+                hint: "MXID + email du compte",
+                field: { type: "email", placeholder: "email du compte", prefill: "email" }
+              },
+              { id: "reset_password", label: "Réinitialiser le mot de passe", cmd: "!reset_password" },
+              { id: "remove_upstream_oauth_links", label: "Supprimer les liens OAuth", cmd: "!remove_upstream_oauth_links" }
+            ]
+          },
+          {
+            group: "Modifier",
+            items: [
+              {
+                id: "replace_email",
+                label: "Changer l’email",
+                cmd: "!replace_email",
+                field: { type: "email", placeholder: "nouvel email" }
+              },
+              {
+                id: "replace_displayname",
+                label: "Changer le nom affiché",
+                cmd: "!replace_displayname",
+                field: { type: "text", placeholder: "ex : Jean Dupont [Structure]" }
+              }
+            ]
+          }
+        ];
+
+        const MXID_REGEX = /@[a-z0-9._=\-\/]+:[a-z0-9.-]+\.[a-z]{2,}/i;
+
+        let current = null;
+
+        function init() {
+          BOTDOM.toggleBtn.addEventListener("click", togglePanel);
+          BOTDOM.searchBtn.addEventListener("click", prepare);
+          BOTDOM.input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") prepare();
+          });
+          BOTDOM.output.addEventListener("click", handleOutputClick);
+        }
+
+        function togglePanel() {
+          const isOpen = BOTDOM.toggleBtn.getAttribute("aria-expanded") === "true";
+          BOTDOM.toggleBtn.setAttribute("aria-expanded", String(!isOpen));
+          BOTDOM.panel.hidden = isOpen;
+
+          if (!isOpen) {
+            BOTDOM.panel.scrollIntoView({ behavior: "smooth", block: "start" });
+            BOTDOM.input.focus({ preventScroll: true });
+          }
+        }
+
+        async function prepare() {
+          const raw = BOTDOM.input.value.trim();
+
+          if (!raw) {
+            Renderer.renderError(BOTDOM.output, "Veuillez coller un email ou un MXID.");
+            return;
+          }
+
+          // MXID collé tel quel (ou lien Tchap contenant un MXID) : utilisé sans modification.
+          const mxidMatch = raw.match(MXID_REGEX);
+          if (mxidMatch) {
+            const mxid = mxidMatch[0].toLowerCase();
+            const instance = mxid.slice(mxid.lastIndexOf(":") + 1);
+            current = { mxid, instance, email: "", source: "MXID collé tel quel" };
+            render();
+            return;
+          }
+
+          if (raw.startsWith("@")) {
+            Renderer.renderError(
+              BOTDOM.output,
+              "MXID mal formé : il doit avoir la forme @identifiant:serveur " +
+              "(il manque probablement le « : » avant le serveur)."
+            );
+            return;
+          }
+
+          const email = raw.toLowerCase();
+          const domain = Parser.extractDomainFromEmail(email);
+
+          if (!Validator.isValidEmail(email) || !Validator.isValidDomain(domain)) {
+            Renderer.renderError(BOTDOM.output, "Veuillez coller un email valide ou un MXID.");
+            return;
+          }
+
+          UI.setLoadingState(BOTDOM.searchBtn, true, "Recherche...");
+          Renderer.renderStatus(BOTDOM.output, "Recherche de l’instance en cours...");
+
+          try {
+            const instance = await Api.fetchInstanceFromDomain(domain);
+            current = {
+              mxid: Builder.buildMxid(email, instance),
+              instance,
+              email,
+              source: "MXID généré depuis l’email"
+            };
+            render();
+          } catch (error) {
+            console.error(error);
+            Renderer.renderError(BOTDOM.output, "Impossible de retrouver l’instance pour cet email.");
+          } finally {
+            UI.setLoadingState(BOTDOM.searchBtn, false, "Préparer");
+          }
+        }
+
+        function render() {
+          const esc = (v) => Renderer.escapeHtml(v);
+          const attr = (v) => Renderer.escapeAttribute(v);
+          const type = Mapper.getInstanceType(current.instance).toLowerCase();
+
+          const groups = COMMANDS.map((group) => `
+            <div class="cmd-group">
+              <div class="cmd-group-title">${esc(group.group)}</div>
+              ${group.items.map((item) => renderCommand(item)).join("")}
+              ${group.group === "Modifier"
+                ? `<div class="cmd-hint">Le nom affiché est saisi librement, sans guillemets (ex. « Philippe Combet [Ac-rennes] »).</div>`
+                : ""}
+            </div>
+          `).join("");
+
+          BOTDOM.output.innerHTML = `
+            <div class="bot-identity" data-type="${attr(type)}">
+              <span class="result-label">MXID</span>
+              ${Renderer.copyable(current.mxid)}
+              <span class="spacer"></span>
+              <small>${esc(current.source)}</small>
+              <div class="badge" data-type="${attr(type)}">${esc(Mapper.getInstanceLabel(current.instance))}</div>
+            </div>
+            ${groups}
+          `;
+        }
+
+        function renderCommand(item) {
+          const esc = (v) => Renderer.escapeHtml(v);
+          const attr = (v) => Renderer.escapeAttribute(v);
+          let fieldHtml = "";
+
+          if (item.field) {
+            const value = item.field.prefill === "email" ? current.email : "";
+            fieldHtml = `<input type="${item.field.type === "email" ? "email" : "text"}"
+              data-field-type="${attr(item.field.type)}"
+              value="${attr(value)}" placeholder="${attr(item.field.placeholder)}"
+              aria-label="${attr(item.label)} : ${attr(item.field.placeholder)}" />`;
+          }
+
+          return `
+            <div class="cmd${item.danger ? " danger" : ""}" data-cmd="${attr(item.id)}">
+              <div class="cmd-name">${esc(item.label)}<span>${esc(item.hint ? `${item.cmd} · ${item.hint}` : item.cmd)}</span></div>
+              <div class="cmd-code"><span class="k">${esc(item.cmd)}</span> <span>${esc(current.mxid)}</span> ${fieldHtml}</div>
+              <button class="cmd-copy" type="button">Copier</button>
+            </div>
+          `;
+        }
+
+        function findCommand(id) {
+          for (const group of COMMANDS) {
+            const found = group.items.find((item) => item.id === id);
+            if (found) return found;
+          }
+          return null;
+        }
+
+        function readField(row, item) {
+          if (!item.field) return { ok: true, value: "" };
+
+          const input = row.querySelector("input");
+          let value = input.value.trim();
+
+          if (item.field.type === "email") {
+            value = value.toLowerCase();
+            const ok = Validator.isValidEmail(value);
+            return { ok, value, input, message: "Renseigner un email valide avant de copier." };
+          }
+
+          // Texte libre : on retire les guillemets parasites en début/fin.
+          value = value.replace(/^['"«\s]+|['"»\s]+$/g, "");
+          return { ok: value.length > 0, value, input, message: "Renseigner le nom affiché avant de copier." };
+        }
+
+        async function handleOutputClick(event) {
+          const button = event.target.closest(".cmd-copy");
+          if (!button) return;
+
+          const row = button.closest(".cmd");
+          const item = findCommand(row.dataset.cmd);
+          if (!item || !current) return;
+
+          const field = readField(row, item);
+
+          if (!field.ok) {
+            field.input.classList.add("is-invalid");
+            field.input.focus();
+            UI.showToast(field.message, true);
+            return;
+          }
+
+          if (field.input) field.input.classList.remove("is-invalid");
+
+          const command = [item.cmd, current.mxid, field.value].filter(Boolean).join(" ");
+          const copied = await UI.copyToClipboard(command, `Copié : ${item.cmd}`);
+
+          if (copied) {
+            button.textContent = "Copié ✓";
+            button.classList.add("is-done");
+            setTimeout(() => {
+              button.textContent = "Copier";
+              button.classList.remove("is-done");
+            }, 1800);
+          }
         }
 
         return { init };

@@ -52,6 +52,29 @@ L’outil :
 
 ---
 
+### 5. Préparer les commandes Bot Admin
+Accessible via le bouton discret **« Commandes Bot Admin »** en bas de page.  
+Coller un email, un MXID ou un lien Tchap : l’outil affiche les commandes prêtes à coller dans l’Admin Room, chacune avec un bouton « Copier » :
+
+| Commande | Format |
+|---|---|
+| Infos du compte | `!user @mxid` |
+| Désactiver | `!deactivate @mxid` |
+| Réactiver | `!reactivate @mxid email` |
+| Réinitialiser le mot de passe | `!reset_password @mxid` |
+| Supprimer les liens OAuth | `!remove_upstream_oauth_links @mxid` |
+| Changer l’email | `!replace_email @mxid nouvel_email` |
+| Changer le nom affiché | `!replace_displayname @mxid Nom affiché` (sans guillemets) |
+
+Un MXID collé est utilisé tel quel (utile quand il diffère de l’email, ex. suffixe `1`).  
+Un MXID mal formé (sans `:` avant le serveur) est signalé.
+
+Dans **MXID en masse**, la commande `!deactivate` est isolée dans une **zone sensible** séparée, fermée par défaut, avec le récapitulatif par instance.
+
+L’outil ne se connecte jamais au Bot Admin : il prépare uniquement le texte à copier-coller.
+
+---
+
 ## 🧠 Logique technique
 
 L’outil repose sur l’API Matrix de Tchap :
