@@ -42,7 +42,7 @@ L’outil détermine si le domaine est :
 ---
 
 ### 4. Générer des MXID en masse
-Accessible via le bouton discret **« Générer des MXID en masse »** en bas de page.  
+Accessible via l’onglet **« MXID en masse »**.  
 Coller jusqu’à 1 000 adresses email (une par ligne, ou séparées par virgule / point-virgule / espace).  
 L’outil :
 - dédoublonne les adresses et écarte les adresses invalides  
@@ -53,7 +53,7 @@ L’outil :
 ---
 
 ### 5. Préparer les commandes Bot Admin
-Accessible via le bouton discret **« Commandes Bot Admin »** en bas de page.  
+Accessible via l’onglet **« Commandes Bot Admin »**.  
 Coller un email, un MXID ou un lien Tchap : l’outil affiche les commandes prêtes à coller dans l’Admin Room, chacune avec un bouton « Copier » :
 
 | Commande | Format |
@@ -93,10 +93,11 @@ Principe :
 ## 🖥️ Utilisation
 
 1. Ouvrir le fichier `index.html`  
-2. Utiliser directement les trois blocs :
-   - Domaine → instance  
-   - Email → MXID  
-   - Domaine → statut d’ouverture  
+2. Choisir un onglet dans l’en-tête (le dernier onglet utilisé est mémorisé) :
+   - **Recherche** : domaine → instance, email → MXID, domaine → statut d’ouverture  
+   - **Commandes Bot Admin** : commandes prêtes à coller dans l’Admin Room  
+   - **MXID en masse** : liste d’emails → liste de MXID (et commande `!deactivate` en zone sensible)  
+3. Cliquer sur une valeur (instance, MXID) pour la copier  
 
 Aucune installation requise.
 
