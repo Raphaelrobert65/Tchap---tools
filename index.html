@@ -10,27 +10,26 @@
   <meta name="theme-color" content="#0B1F3A" />
   <style>
     :root {
-      --tchap-navy: #0B1F3A;
-      --tchap-navy-light: #143158;
-      --tchap-card: rgba(255, 255, 255, 0.985);
-      --tchap-card-stroke: rgba(255, 255, 255, 0.16);
-      --tchap-text: #0B1F3A;
-      --tchap-muted: #68778b;
-      --tchap-border: #dbe4ee;
-      --tchap-success-bg: #eef6ff;
-      --tchap-success-soft: #eaf7ee;
-      --tchap-success: #17663a;
-      --tchap-error-bg: #fff2f2;
-      --tchap-error: #b42318;
-      --shadow-hero: 0 24px 64px rgba(8, 23, 46, 0.22);
+      --navy: #0B1F3A;
+      --navy-2: #17365F;
+      --text: #0B1F3A;
+      --muted: #68778b;
+      --label: #7c8ca2;
+      --border: #dbe4ee;
+      --line: #e3eaf3;
+      --surface: #fbfcfe;
+      --blue: #2f6ad0;
+      --blue-strong: #2459b8;
+      --orange: #d58a1f;
+      --violet: #7a5bc7;
+      --green: #17663a;
+      --red: #b42318;
+      --red-strong: #a11f15;
+      --font: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       --shadow-card: 0 20px 54px rgba(9, 24, 47, 0.16);
-      --shadow-sm: 0 6px 14px rgba(9, 24, 47, 0.06);
-      --radius-2xl: 28px;
-      --radius-lg: 18px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-      --container: 1240px;
-      --transition: 0.22s ease;
+      --shadow-sm: 0 4px 12px rgba(9, 24, 47, 0.05);
+      --transition: 0.2s ease;
     }
 
     * {
@@ -41,363 +40,879 @@
       display: none !important;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--tchap-text);
+      min-height: 100vh;
+      padding: 32px 24px 56px;
+      font-family: var(--font);
+      color: var(--text);
       background:
         radial-gradient(circle at top left, rgba(200,169,106,0.09), transparent 22%),
         radial-gradient(circle at 88% 12%, rgba(255,255,255,0.05), transparent 16%),
         linear-gradient(180deg, #102748 0%, #0B1F3A 100%);
-      min-height: 100vh;
-      padding: 40px 24px 56px;
     }
 
     .page {
-      max-width: var(--container);
+      max-width: 1240px;
       margin: 0 auto;
     }
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      color: white;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      padding: 20px 28px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02)),
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      backdrop-filter: blur(12px);
-      box-shadow: var(--shadow-hero);
-      margin-bottom: 24px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(200,169,106,0.10), transparent 28%);
-      pointer-events: none;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 14px 28px;
-      flex-wrap: wrap;
-    }
-
-    .hero-title {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.92);
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 28px;
-      line-height: 1.1;
-      white-space: nowrap;
-      letter-spacing: -0.03em;
-    }
-
-    .hero p {
-      flex: 1 1 360px;
-      margin: 0;
-      padding-left: 28px;
-      border-left: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.7);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: 22px;
-      row-gap: 0;
-    }
-
-    .card {
-      position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,0.985) 0%, rgba(250,252,255,0.985) 100%);
-      border-radius: var(--radius-2xl);
-      box-shadow: var(--shadow-card);
-      padding: 28px;
-      border: 1px solid var(--tchap-card-stroke);
-      overflow: hidden;
-    }
-
-    /* Les cartes partagent les mêmes lignes : titres, champs et boutons restent alignés. */
-    .tools-grid > .card {
-      display: grid;
-      grid-row: span 4;
-      grid-template-rows: subgrid;
-      align-content: start;
-    }
-
-    .card-header {
-      margin-bottom: 16px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #7c8ca2;
-      margin-bottom: 10px;
-    }
-
-    .card h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--tchap-text);
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--tchap-muted);
-      line-height: 1.68;
-      font-size: 14px;
-    }
-
-    .field {
-      margin-top: 4px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--tchap-text);
-    }
-
-    .input-wrap {
-      position: relative;
-    }
-
-    input {
-      width: 100%;
-      border: 1px solid var(--tchap-border);
-      border-radius: 16px;
-      padding: 15px 16px;
-      font-size: 15px;
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
-      color: var(--tchap-text);
-      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-      min-height: 54px;
-    }
-
-    input::placeholder {
-      color: #8a97a8;
-    }
-
-    input:focus {
-      border-color: rgba(11,31,58,0.28);
-      box-shadow: 0 0 0 5px rgba(11,31,58,0.08);
-      transform: translateY(-1px);
-      background: #fff;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+    button,
+    input,
+    textarea {
+      font-family: inherit;
     }
 
     button {
-      border: none;
-      border-radius: 15px;
-      padding: 14px 16px;
-      font-size: 15px;
-      font-weight: 700;
       cursor: pointer;
-      transition: transform var(--transition), background var(--transition), opacity var(--transition), box-shadow var(--transition), border-color var(--transition);
-      min-height: 54px;
     }
 
-    button:hover {
+    /* ---------- En-tête + onglets ---------- */
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 14px 24px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      padding: 14px 18px 14px 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      box-shadow: 0 24px 64px rgba(8, 23, 46, 0.22);
+      color: #fff;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-kicker {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.75);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-left: auto;
+      padding: 4px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tab {
+      border: 0;
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.68);
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .tab:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .tab[aria-selected="true"] {
+      background: #fff;
+      color: var(--navy);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+
+    .tab:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.8);
+      outline-offset: 2px;
+    }
+
+    /* ---------- Cartes ---------- */
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+
+    .grid-bulk {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 22px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-icon {
+      display: grid;
+      place-items: center;
+      flex: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #eaf1fb;
+      color: var(--blue-strong);
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-sub {
+      margin: 6px 0 14px 42px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ---------- Champ de recherche intégré ---------- */
+
+    .search {
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      height: 46px;
+      padding: 0 92px 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .search input::placeholder {
+      color: #8a97a8;
+    }
+
+    .search input:focus {
+      border-color: rgba(11,31,58,0.3);
+      box-shadow: 0 0 0 4px rgba(11,31,58,0.07);
+    }
+
+    .search .clear {
+      position: absolute;
+      top: 50%;
+      right: 52px;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #eef2f7;
+      color: #6a7a8f;
+      font-size: 15px;
+      line-height: 1;
+      transform: translateY(-50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), background var(--transition);
+    }
+
+    .search.has-value .clear {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .search .clear:hover {
+      background: #e2e8f0;
+    }
+
+    .search .go {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 38px;
+      height: 36px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
+      color: #fff;
+      font-size: 17px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .search .go:hover {
       transform: translateY(-1px);
     }
 
-    button:disabled {
+    .search--wide input {
+      height: 52px;
+      padding-right: 150px;
+    }
+
+    .search--wide .clear {
+      right: 120px;
+    }
+
+    .search--wide .go {
+      top: 6px;
+      right: 6px;
+      width: auto;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .is-busy {
+      position: relative;
+      color: transparent !important;
+      pointer-events: none;
+    }
+
+    .is-busy::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 16px;
+      height: 16px;
+      margin: auto;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ---------- Résultats compacts ---------- */
+
+    .kv {
+      margin: 14px 0 0;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--blue);
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .kv[data-type="externe"] { border-left-color: var(--orange); }
+    .kv[data-type="autre"] { border-left-color: var(--violet); }
+
+    .kv-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "label side" "value value";
+      align-items: center;
+      gap: 4px 10px;
+      padding: 10px 14px;
+      border-top: 1px solid #eef2f7;
+    }
+
+    .kv-row:first-child {
+      border-top: 0;
+    }
+
+    .kv-row dt {
+      grid-area: label;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+
+    .kv-row .side {
+      grid-area: side;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kv-row dd {
+      grid-area: value;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      word-break: break-all;
+    }
+
+    /* Bouton « Copier » toujours visible */
+    .copy-btn {
+      flex: none;
+      align-self: center;
+      border: 0;
+      border-radius: 8px;
+      padding: 7px 12px;
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(11,31,58,0.14);
+      transition: transform var(--transition), background var(--transition);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .copy-btn.is-done {
+      background: var(--green);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+    }
+
+    .badge[data-type="externe"] { background: var(--orange); }
+    .badge[data-type="autre"] { background: var(--violet); }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .pill.open { background: #eaf7ee; color: var(--green); border: 1px solid #b9e2c5; }
+    .pill.closed { background: #fff6e6; color: #9a5d07; border: 1px solid #f1d6a6; }
+    .pill.unknown { background: #f5f7fa; color: #5f6b7a; border: 1px solid #d9e1ea; }
+
+    .msg {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .msg.error {
+      background: #fff2f2;
+      border: 1px solid #f3caca;
+      color: var(--red);
+    }
+
+    .msg.info {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .skeleton {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .skeleton span {
+      display: block;
+      height: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #eef2f7 25%, #f7f9fc 50%, #eef2f7 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+    }
+
+    .skeleton span:nth-child(1) { width: 30%; }
+    .skeleton span:nth-child(2) { width: 85%; height: 12px; }
+    .skeleton span:nth-child(3) { width: 25%; margin-top: 16px; }
+    .skeleton span:nth-child(4) { width: 70%; height: 12px; }
+
+    @keyframes shimmer {
+      to { background-position: -200% 0; }
+    }
+
+    /* ---------- Boutons ---------- */
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      border-radius: 11px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform var(--transition), background var(--transition), opacity var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
-      opacity: 0.66;
       transform: none;
-      box-shadow: none;
     }
 
     .btn-primary {
-      background: linear-gradient(180deg, #17365f 0%, #0B1F3A 100%);
-      color: white;
-      flex: 1;
-      box-shadow: 0 12px 24px rgba(11,31,58,0.18);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(180deg, #1b3d6b 0%, #0B1F3A 100%);
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(11,31,58,0.16);
     }
 
     .btn-secondary {
       background: #eef3f8;
-      color: var(--tchap-text);
-      border: 1px solid #dde6f0;
+      color: var(--text);
+      border-color: #dde6f0;
     }
 
     .btn-secondary:hover {
       background: #e7eef6;
-      border-color: #d3ddeb;
     }
 
-    .result,
-    .status,
-    .error-box {
-      margin-top: 20px;
-      border-radius: 18px;
-      padding: 16px;
+    .btn-danger {
+      background: linear-gradient(180deg, #c8372b, var(--red-strong));
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(180,35,24,0.18);
     }
 
-    .status {
-      background: #f8fafc;
-      border: 1px solid var(--tchap-border);
-      color: var(--tchap-muted);
+    .btn-danger-outline {
+      background: #fff;
+      color: var(--red);
+      border-color: #e7b4b4;
+    }
+
+    .btn-danger-outline:hover {
+      background: #fff1f1;
+    }
+
+    .btn.is-done {
+      background: var(--green);
+      color: #fff;
+    }
+
+    /* ---------- Commandes Bot Admin ---------- */
+
+    .identity {
+      display: flex;
+      align-items: center;
+      gap: 10px 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--blue);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .identity[data-type="externe"] { border-left-color: var(--orange); }
+    .identity[data-type="autre"] { border-left-color: var(--violet); }
+
+    .identity-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+
+    .identity .mono {
       font-size: 14px;
-      line-height: 1.6;
     }
 
-    .error-box {
-      background: var(--tchap-error-bg);
-      border: 1px solid #f3caca;
-      color: var(--tchap-error);
-      font-size: 14px;
-      line-height: 1.6;
+    .identity .spacer {
+      flex: 1;
     }
 
-    .result {
-      background: linear-gradient(180deg, var(--tchap-success-bg) 0%, #f6faff 100%);
-      border: 1px solid #dbe7fb;
+    .identity small {
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    .result-grid {
+    .cmd-cols {
       display: grid;
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+      margin-top: 20px;
     }
 
-    .result-item {
-      background: rgba(255,255,255,0.97);
-      border: 1px solid #dfe8f5;
-      border-radius: 16px;
-      padding: 14px;
+    .cmd-group + .cmd-group {
+      margin-top: 18px;
+    }
+
+    .cmd-group h3 {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+
+    .cmd {
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
       box-shadow: var(--shadow-sm);
     }
 
-    .result-label {
+    .cmd-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .cmd-top b {
+      font-size: 14px;
+    }
+
+    .cmd-copy {
+      flex: none;
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 12px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .cmd-copy.is-done {
+      background: var(--green);
+    }
+
+    .cmd code {
       display: block;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--tchap-muted);
-      margin-bottom: 7px;
-      font-weight: 700;
-    }
-
-    .result-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--tchap-text);
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 12.5px;
       line-height: 1.55;
-      word-break: break-word;
-    }
-
-    .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 13px;
-      font-weight: 600;
+      color: #41536b;
       word-break: break-all;
     }
 
-    /* Valeur copiable : un clic copie la valeur. */
-    .copyable {
-      position: relative;
-      margin: -6px -8px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      cursor: copy;
-      transition: background var(--transition);
-    }
-
-    .copyable::after {
-      content: "Copier";
-      position: absolute;
-      top: -22px;
-      right: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--tchap-navy);
-      color: white;
-      font-family: Arial, sans-serif;
-      font-size: 11px;
+    .cmd code .k {
+      color: var(--blue-strong);
       font-weight: 700;
-      opacity: 0;
-      transition: opacity var(--transition);
     }
 
-    .copyable:hover,
-    .copyable:focus-visible {
-      background: #eef3fa;
+    .cmd input {
+      width: 100%;
+      height: 36px;
+      margin-top: 8px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
       outline: none;
     }
 
-    .copyable:hover::after,
-    .copyable:focus-visible::after {
-      opacity: 1;
+    .cmd input:focus {
+      border-color: rgba(11,31,58,0.3);
+      box-shadow: 0 0 0 3px rgba(11,31,58,0.07);
     }
+
+    .cmd input.is-invalid {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(180,35,24,0.10);
+    }
+
+    .cmd-hint {
+      margin-top: 6px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    .cmd.danger {
+      border: 2px dashed #ecc0c0;
+      background: #fffafa;
+    }
+
+    .cmd.danger b {
+      color: var(--red);
+    }
+
+    .cmd.danger .cmd-copy {
+      background: var(--red);
+    }
+
+    .cmd.danger .cmd-copy.is-done {
+      background: var(--green);
+    }
+
+    /* ---------- MXID en masse ---------- */
+
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+      outline: none;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      border-color: rgba(11,31,58,0.3);
+      box-shadow: 0 0 0 4px rgba(11,31,58,0.07);
+    }
+
+    #bulkEmailInput {
+      min-height: 300px;
+    }
+
+    .bulk-count {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .progress {
+      margin-top: 16px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: #e9eef5;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy-2), var(--navy));
+      transition: width 0.2s ease;
+    }
+
+    .note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .empty {
+      display: grid;
+      place-items: center;
+      min-height: 300px;
+      padding: 24px;
+      border: 2px dashed var(--line);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .stat span {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+
+    .stat b {
+      display: block;
+      margin-top: 2px;
+      font-size: 22px;
+    }
+
+    .stat b.ok { color: var(--green); }
+    .stat b.ko { color: var(--red); }
+
+    .output-label {
+      display: block;
+      margin: 16px 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    #bulkMxidOutput,
+    #deactivateOutput {
+      word-break: break-all;
+    }
+
+    #bulkMxidOutput {
+      min-height: 120px;
+    }
+
+    .errors-list {
+      max-height: 200px;
+      margin-top: 6px;
+      overflow-y: auto;
+      font-family: var(--mono);
+      font-size: 12px;
+      white-space: pre-wrap;
+    }
+
+    .danger-zone {
+      margin-top: 20px;
+      padding: 16px;
+      border: 2px dashed #e7b4b4;
+      border-radius: 16px;
+      background: #fffafa;
+    }
+
+    .danger-zone-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .danger-zone p {
+      margin: 4px 0 0;
+      color: #8a3b33;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    #deactivateOutput {
+      min-height: 100px;
+      margin-top: 12px;
+      border-color: #efc9c9;
+    }
+
+    .warn {
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: #fff8e7;
+      border: 1px solid #f1dfb0;
+      color: #7a5b12;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    /* ---------- Notification ---------- */
 
     .toast {
       position: fixed;
       left: 50%;
-      bottom: 28px;
+      bottom: 26px;
       z-index: 1000;
       max-width: calc(100vw - 32px);
-      padding: 12px 18px;
+      padding: 10px 16px;
       border-radius: 999px;
-      background: var(--tchap-navy);
-      color: white;
-      font-size: 14px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 13px;
       font-weight: 600;
       box-shadow: 0 14px 36px rgba(0,0,0,0.3);
       overflow: hidden;
@@ -415,783 +930,243 @@
     }
 
     .toast.is-error {
-      background: var(--tchap-error);
+      background: var(--red);
     }
 
-    .result-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      background: linear-gradient(180deg, #8c9aab 0%, #75859a 100%);
-      color: white;
-      font-weight: 700;
-      font-size: 12px;
-      padding: 9px 13px;
-      border-radius: 999px;
-      letter-spacing: 0.03em;
-      text-transform: capitalize;
-      box-shadow: 0 8px 18px rgba(116,133,154,0.18);
-    }
-
-    .badge::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.85);
-    }
-
-    .badge[data-type="agent"] {
-      background: linear-gradient(180deg, #3b7be0 0%, #2459b8 100%);
-      box-shadow: 0 8px 18px rgba(36,89,184,0.22);
-    }
-
-    .badge[data-type="externe"] {
-      background: linear-gradient(180deg, #e39a2d 0%, #c47a12 100%);
-      box-shadow: 0 8px 18px rgba(196,122,18,0.22);
-    }
-
-    .badge[data-type="autre"] {
-      background: linear-gradient(180deg, #8a6ad6 0%, #6a4bb8 100%);
-      box-shadow: 0 8px 18px rgba(106,75,184,0.22);
-    }
-
-    .result[data-type="agent"] { border-left: 4px solid #2f6ad0; }
-    .result[data-type="externe"] { border-left: 4px solid #d58a1f; }
-    .result[data-type="autre"] { border-left: 4px solid #7a5bc7; }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: fit-content;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .status-pill.open {
-      background: var(--tchap-success-soft);
-      color: var(--tchap-success);
-      border: 1px solid #b9e2c5;
-    }
-
-    .status-pill.closed {
-      background: #fff1f1;
-      color: #b42318;
-      border: 1px solid #f0c8c8;
-    }
-
-    .status-pill.unknown {
-      background: #f5f7fa;
-      color: #5f6b7a;
-      border: 1px solid #d9e1ea;
-    }
-
-    /* ---------- Sections discrètes en bas de page ---------- */
-
-    .bulk-zone {
-      margin-top: 36px;
-      text-align: center;
-    }
-
-    .bulk-toggles {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .bulk-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: auto;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.10);
-      color: rgba(255,255,255,0.55);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .bulk-toggle:hover {
-      color: rgba(255,255,255,0.9);
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .bulk-toggle-icon {
-      display: inline-block;
-      transition: transform var(--transition);
-    }
-
-    .bulk-toggle[aria-expanded="true"] .bulk-toggle-icon {
-      transform: rotate(180deg);
-    }
-
-    .bulk-panel {
-      margin-top: 18px;
-      text-align: left;
-    }
-
-    .bulk-panel .card + .card {
-      margin-top: 22px;
-    }
-
-    .bulk-panel textarea {
-      width: 100%;
-      min-height: 220px;
-      resize: vertical;
-      border: 1px solid var(--tchap-border);
-      border-radius: 16px;
-      padding: 15px 16px;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 14px;
-      line-height: 1.6;
-      outline: none;
-      color: var(--tchap-text);
-      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .bulk-panel textarea:focus {
-      border-color: rgba(11,31,58,0.28);
-      box-shadow: 0 0 0 5px rgba(11,31,58,0.08);
-      background: #fff;
-    }
-
-    .bulk-counter {
-      margin-top: 8px;
-      color: var(--tchap-muted);
-      font-size: 13px;
-    }
-
-    .bulk-panel .btn-primary {
-      flex: 0 1 auto;
-    }
-
-    .bulk-progress {
-      margin-top: 20px;
-    }
-
-    .bulk-progress-info {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: var(--tchap-muted);
-    }
-
-    .bulk-progress-track {
-      width: 100%;
-      height: 10px;
-      background: #e9eef5;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .bulk-progress-bar {
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, #17365f 0%, #0B1F3A 100%);
-      transition: width 0.2s ease;
-    }
-
-    .bulk-info {
-      margin-top: 20px;
-      padding: 14px 16px;
-      background: #f8fafc;
-      border: 1px solid var(--tchap-border);
-      border-radius: 16px;
-      color: var(--tchap-muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .bulk-stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .bulk-stat {
-      background: rgba(255,255,255,0.97);
-      border: 1px solid #dfe8f5;
-      border-radius: 16px;
-      padding: 14px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .bulk-stat-value {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--tchap-text);
-    }
-
-    .bulk-stat-value.success {
-      color: var(--tchap-success);
-    }
-
-    .bulk-stat-value.error {
-      color: var(--tchap-error);
-    }
-
-    .bulk-errors-list {
-      max-height: 240px;
-      overflow-y: auto;
-      margin-top: 8px;
-      font-family: Consolas, Monaco, monospace;
-      font-size: 12px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    /* ---------- Commandes Bot Admin ---------- */
-
-    .bot-search {
-      display: flex;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .bot-search input {
-      flex: 1;
-    }
-
-    .bot-panel .btn-primary {
-      flex: 0 0 auto;
-      padding: 14px 22px;
-    }
-
-    .bot-identity {
-      display: flex;
-      align-items: center;
-      gap: 10px 14px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, var(--tchap-success-bg) 0%, #f6faff 100%);
-      border: 1px solid #dbe7fb;
-      border-left: 4px solid #2f6ad0;
-      border-radius: 16px;
-    }
-
-    .bot-identity[data-type="externe"] { border-left-color: #d58a1f; }
-    .bot-identity[data-type="autre"] { border-left-color: #7a5bc7; }
-
-    .bot-identity .result-label {
-      margin: 0;
-    }
-
-    .bot-identity .spacer {
-      flex: 1;
-    }
-
-    .bot-identity small {
-      color: var(--tchap-muted);
-      font-size: 12px;
-    }
-
-    .cmd-group {
-      margin-top: 22px;
-    }
-
-    .cmd-group-title {
-      margin-bottom: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #7c8ca2;
-    }
-
-    .cmd {
-      display: grid;
-      grid-template-columns: 210px minmax(0, 1fr) auto;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 8px;
-      padding: 10px 12px;
-      background: #fff;
-      border: 1px solid #e3eaf3;
-      border-radius: 14px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .cmd-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--tchap-text);
-    }
-
-    .cmd-name span {
-      display: block;
-      margin-top: 2px;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--tchap-muted);
-    }
-
-    .cmd-code {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 9px 12px;
-      background: #f3f6fa;
-      border: 1px solid #e3eaf3;
-      border-radius: 10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 13px;
-      color: var(--tchap-text);
-      word-break: break-all;
-    }
-
-    .cmd-code .k {
-      color: #2459b8;
-      font-weight: 700;
-    }
-
-    .cmd-code .e {
-      color: var(--tchap-success);
-    }
-
-    .cmd-code input {
-      width: 320px;
-      max-width: 100%;
-      min-height: auto;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 13px;
-    }
-
-    .cmd-code input:focus {
-      transform: none;
-    }
-
-    .cmd-code input.is-invalid {
-      border-color: var(--tchap-error);
-      box-shadow: 0 0 0 4px rgba(180,35,24,0.10);
-    }
-
-    .cmd-copy {
-      min-height: auto;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      background: var(--tchap-navy);
-      color: #fff;
-    }
-
-    .cmd-copy.is-done {
-      background: var(--tchap-success);
-    }
-
-    .cmd.danger {
-      border-color: #f3d4d4;
-    }
-
-    .cmd.danger .cmd-name {
-      color: var(--tchap-error);
-    }
-
-    .cmd.danger .cmd-copy {
-      background: var(--tchap-error);
-    }
-
-    .cmd-hint {
-      margin-top: 6px;
-      font-size: 12px;
-      color: var(--tchap-muted);
-    }
-
-    /* ---------- Zone sensible : !deactivate en masse ---------- */
-
-    .danger-zone {
-      margin-top: 28px;
-      padding: 20px;
-      border: 2px dashed #e7b4b4;
-      border-radius: 20px;
-      background: #fffafa;
-    }
-
-    .danger-zone-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 0 0 6px;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--tchap-error);
-    }
-
-    .danger-zone-text {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #8a3b33;
-    }
-
-    .btn-danger-outline {
-      background: #fff;
-      color: var(--tchap-error);
-      border: 1px solid #e7b4b4;
-    }
-
-    .btn-danger-outline:hover {
-      background: #fff1f1;
-    }
-
-    .btn-danger {
-      background: linear-gradient(180deg, #c8372b 0%, #a11f15 100%);
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(180,35,24,0.18);
-    }
-
-    .danger-zone textarea {
-      min-height: 140px;
-      margin-top: 14px;
-      border-color: #efc9c9;
-      background: #fff;
-    }
-
-    .instance-chips {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .instance-chips .badge {
-      padding: 7px 11px;
-      font-size: 12px;
-    }
-
-    .danger-warn {
-      margin-top: 12px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: #fff8e7;
-      border: 1px solid #f1dfb0;
-      color: #7a5b12;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+    /* ---------- Responsive ---------- */
 
-    @media (max-width: 1120px) {
-      .tools-grid {
-        grid-template-columns: 1fr 1fr;
+    @media (max-width: 1080px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .card--feature-3 {
-        grid-column: 1 / -1;
-        margin-top: 22px;
+      .cmd-cols {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-bulk {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 760px) {
       body {
-        padding: 20px 14px 36px;
+        padding: 18px 12px 40px;
       }
 
-      .hero {
-        padding: 18px 20px;
-        border-radius: 20px;
+      .app-header {
+        padding: 14px;
       }
 
-      .hero h1 {
-        font-size: 24px;
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+        margin-left: 0;
       }
 
-      .hero p {
-        padding-left: 0;
-        border-left: none;
+      .tab {
+        padding: 8px 6px;
+        font-size: 12.5px;
+        line-height: 1.25;
+        white-space: normal;
+        text-align: center;
       }
 
-      .tools-grid {
+      .grid-3,
+      .cmd-cols {
         grid-template-columns: 1fr;
-      }
-
-      .tools-grid > .card + .card {
-        margin-top: 22px;
       }
 
       .card {
-        padding: 22px 18px;
-        border-radius: 22px;
+        padding: 18px;
       }
 
-      .bulk-stats {
+      .card-sub {
+        margin-left: 0;
+      }
+
+      .stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .cmd {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .cmd-copy {
-        justify-self: start;
-      }
-
-      .bot-search {
-        flex-direction: column;
-      }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="hero-title">
-          <h1>Tchap - Tools</h1>
-          <div class="hero-kicker">Outil interne</div>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 64 64"><rect x="9" y="9" width="46" height="13" rx="3" fill="#E1000F"/><rect x="25.5" y="9" width="13" height="46" rx="3" fill="#E1000F"/></svg>
         </div>
-        <p>
-          Retrouver une instance, générer un MXID et vérifier l’ouverture d’un domaine.
-          Cliquez sur une valeur pour la copier.
-        </p>
-      </div>
-    </section>
-
-    <div class="tools-grid">
-      <section class="card">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 1</div>
-          <h2>Retrouver une instance</h2>
-          <p>Renseigner un domaine professionnel. L’outil identifie automatiquement l’instance Tchap associée.</p>
-        </div>
-
-        <div class="field">
-          <label for="domainInput">Domaine</label>
-          <div class="input-wrap">
-            <input id="domainInput" type="text" placeholder="ex : beta.gouv.fr" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="domainSearchBtn" class="btn-primary" type="button">Tester le domaine</button>
-          <button id="domainResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
-
-        <div id="domainOutput"></div>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 2</div>
-          <h2>Générer un MXID</h2>
-          <p>Renseigner un email professionnel. L’outil construit automatiquement le MXID.</p>
-        </div>
-
-        <div class="field">
-          <label for="emailInput">Email professionnel</label>
-          <div class="input-wrap">
-            <input id="emailInput" type="email" placeholder="ex : raphael.robert@beta.gouv.fr" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="emailSearchBtn" class="btn-primary" type="button">Générer le MXID</button>
-          <button id="emailResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
-
-        <div id="emailOutput"></div>
-      </section>
-
-      <section class="card card--feature-3">
-        <div class="card-header">
-          <div class="eyebrow">Fonctionnalité 3</div>
-          <h2>Vérifier si un domaine est ouvert</h2>
-          <p>Renseigner un domaine. Vérifier le statut d’ouverture directement dans l’interface principale.</p>
-        </div>
-
-        <div class="field">
-          <label for="statusDomainInput">Domaine</label>
-          <div class="input-wrap">
-            <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button id="statusSearchBtn" class="btn-primary" type="button">Vérifier l’ouverture</button>
-          <button id="statusResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-        </div>
-
-        <div id="statusOutput"></div>
-      </section>
-    </div>
-
-    <div class="bulk-zone">
-      <div class="bulk-toggles">
-        <button
-          id="botToggleBtn"
-          class="bulk-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="botPanel"
-        >
-          Commandes Bot Admin
-          <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
-        </button>
-
-        <button
-          id="bulkToggleBtn"
-          class="bulk-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="bulkPanel"
-        >
-          Générer des MXID en masse
-          <span class="bulk-toggle-icon" aria-hidden="true">▾</span>
-        </button>
+        <h1>Tchap - Tools</h1>
+        <span class="brand-kicker">Outil interne</span>
       </div>
 
-      <div id="botPanel" class="bulk-panel bot-panel" hidden>
-        <section class="card">
-          <div class="card-header">
-            <div class="eyebrow">Commandes Bot Admin</div>
-            <h2>Préparer les commandes pour un utilisateur</h2>
-            <p>
-              Coller un email ou un MXID existant.
-              Les commandes sont prêtes à coller dans l’Admin Room.
-            </p>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button id="tab-search" class="tab" type="button" role="tab" aria-controls="panel-search" aria-selected="true" data-tab="search">Recherche</button>
+        <button id="tab-bot" class="tab" type="button" role="tab" aria-controls="panel-bot" aria-selected="false" tabindex="-1" data-tab="bot">Commandes Bot Admin</button>
+        <button id="tab-bulk" class="tab" type="button" role="tab" aria-controls="panel-bulk" aria-selected="false" tabindex="-1" data-tab="bulk">MXID en masse</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ================= Onglet Recherche ================= -->
+      <section id="panel-search" class="grid-3" role="tabpanel" aria-labelledby="tab-search">
+        <article class="card">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            </span>
+            <h2>Retrouver une instance</h2>
+          </div>
+          <p class="card-sub">Domaine → instance Tchap</p>
+          <div class="search" data-search="domain">
+            <input id="domainInput" type="text" placeholder="ex : beta.gouv.fr" aria-label="Domaine" autocomplete="off" />
+            <button class="clear" type="button" aria-label="Effacer">×</button>
+            <button class="go" type="button" aria-label="Rechercher l’instance">→</button>
+          </div>
+          <div id="domainOutput" aria-live="polite"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
+            </span>
+            <h2>Générer un MXID</h2>
+          </div>
+          <p class="card-sub">Email professionnel → MXID</p>
+          <div class="search" data-search="email">
+            <input id="emailInput" type="email" placeholder="ex : raphael.robert@beta.gouv.fr" aria-label="Email professionnel" autocomplete="off" />
+            <button class="clear" type="button" aria-label="Effacer">×</button>
+            <button class="go" type="button" aria-label="Générer le MXID">→</button>
+          </div>
+          <div id="emailOutput" aria-live="polite"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+            </span>
+            <h2>Statut d’ouverture</h2>
+          </div>
+          <p class="card-sub">Le domaine est-il ouvert sur Tchap ?</p>
+          <div class="search" data-search="status">
+            <input id="statusDomainInput" type="text" placeholder="ex : beta.gouv.fr" aria-label="Domaine à vérifier" autocomplete="off" />
+            <button class="clear" type="button" aria-label="Effacer">×</button>
+            <button class="go" type="button" aria-label="Vérifier l’ouverture">→</button>
+          </div>
+          <div id="statusOutput" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <!-- ================= Onglet Commandes Bot Admin ================= -->
+      <section id="panel-bot" role="tabpanel" aria-labelledby="tab-bot" hidden>
+        <article class="card">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg>
+            </span>
+            <h2>Préparer les commandes Bot Admin</h2>
+          </div>
+          <p class="card-sub">Coller un email ou un MXID existant. Les commandes sont prêtes à coller dans l’Admin Room.</p>
+
+          <div class="search search--wide" data-search="bot">
+            <input id="botInput" type="text" placeholder="ex : jean.dupont@dgfip.finances.gouv.fr ou @jean.dupont-dgfip.finances.gouv.fr:agent.finances.tchap.gouv.fr" aria-label="Email ou MXID" autocomplete="off" />
+            <button class="clear" type="button" aria-label="Effacer">×</button>
+            <button class="go" type="button">Préparer</button>
           </div>
 
-          <div class="bot-search">
-            <input id="botInput" type="text" placeholder="ex : jean.dupont@dgfip.finances.gouv.fr ou @jean.dupont-dgfip.finances.gouv.fr:agent.finances.tchap.gouv.fr" />
-            <button id="botSearchBtn" class="btn-primary" type="button">Préparer</button>
+          <div id="botOutput" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <!-- ================= Onglet MXID en masse ================= -->
+      <section id="panel-bulk" class="grid-bulk" role="tabpanel" aria-labelledby="tab-bulk" hidden>
+        <article class="card">
+          <div class="card-head">
+            <span class="card-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            </span>
+            <h2>MXID en masse</h2>
+          </div>
+          <p class="card-sub">Jusqu’à 1 000 emails, un par ligne (virgule, point-virgule et espace acceptés).</p>
+
+          <textarea
+            id="bulkEmailInput"
+            aria-label="Adresses email"
+            placeholder="john.doe@organisation.fr&#10;jane.doe@organisation.fr&#10;june.doe@autre-domaine.fr"
+          ></textarea>
+          <div id="bulkCount" class="bulk-count">0 adresse détectée</div>
+
+          <div class="btns">
+            <button id="bulkGenerateBtn" class="btn btn-primary" type="button">Générer les MXID</button>
+            <button id="bulkResetBtn" class="btn btn-secondary" type="button">Réinitialiser</button>
           </div>
 
-          <div id="botOutput"></div>
-        </section>
-      </div>
-
-      <div id="bulkPanel" class="bulk-panel" hidden>
-        <section class="card">
-          <div class="card-header">
-            <div class="eyebrow">MXID en masse</div>
-            <h2>Coller une liste d’adresses email</h2>
-            <p>
-              Jusqu’à 1 000 adresses. Une adresse par ligne est recommandée
-              (les séparateurs virgule, point-virgule et espace sont aussi acceptés).
-            </p>
-          </div>
-
-          <div class="field">
-            <label for="bulkEmailInput">Adresses email</label>
-            <textarea
-              id="bulkEmailInput"
-              placeholder="john.doe@organisation.fr&#10;jane.doe@organisation.fr&#10;june.doe@autre-domaine.fr"
-            ></textarea>
-            <div class="bulk-counter">
-              <span id="bulkEmailCount">0</span> adresse(s) détectée(s)
-            </div>
-          </div>
-
-          <div class="actions">
-            <button id="bulkGenerateBtn" class="btn-primary" type="button">Générer les MXID</button>
-            <button id="bulkResetBtn" class="btn-secondary" type="button">Réinitialiser</button>
-          </div>
-
-          <div id="bulkStatus" class="status" hidden></div>
-
-          <div id="bulkProgress" class="bulk-progress" hidden>
-            <div class="bulk-progress-info">
+          <div id="bulkProgress" class="progress" hidden>
+            <div class="progress-info">
               <span id="bulkProgressLabel">Traitement en cours…</span>
               <span id="bulkProgressPercent">0 %</span>
             </div>
-            <div class="bulk-progress-track">
-              <div id="bulkProgressBar" class="bulk-progress-bar"></div>
-            </div>
+            <div class="progress-track"><div id="bulkProgressBar" class="progress-bar"></div></div>
           </div>
 
-          <div class="bulk-info">
-            L’outil interroge l’API Tchap une seule fois par domaine :
-            si 500 adresses appartiennent au même domaine, une seule requête est envoyée.
-          </div>
-        </section>
+          <div id="bulkStatus" class="msg info" hidden></div>
 
-        <section id="bulkResultSection" class="card" hidden>
-          <div class="bulk-stats">
-            <div class="bulk-stat">
-              <span class="result-label">Emails</span>
-              <div id="bulkTotalStat" class="bulk-stat-value">0</div>
-            </div>
-            <div class="bulk-stat">
-              <span class="result-label">MXID générés</span>
-              <div id="bulkSuccessStat" class="bulk-stat-value success">0</div>
-            </div>
-            <div class="bulk-stat">
-              <span class="result-label">Erreurs</span>
-              <div id="bulkErrorStat" class="bulk-stat-value error">0</div>
-            </div>
-            <div class="bulk-stat">
-              <span class="result-label">Domaines</span>
-              <div id="bulkDomainStat" class="bulk-stat-value">0</div>
-            </div>
-          </div>
+          <p class="note">L’API Tchap est interrogée une seule fois par domaine : 500 adresses du même domaine = 1 seule requête.</p>
+        </article>
 
-          <div class="field">
-            <label for="bulkMxidOutput">Liste des MXID générés (simple liste, aucune commande)</label>
-            <textarea id="bulkMxidOutput" readonly placeholder="Les MXID apparaîtront ici…"></textarea>
-          </div>
+        <article class="card">
+          <div id="bulkEmpty" class="empty">Les MXID générés apparaîtront ici.</div>
 
-          <div class="actions">
-            <button id="bulkCopyBtn" class="btn-primary" type="button">Copier tous les MXID</button>
-            <button id="bulkDownloadTxtBtn" class="btn-secondary" type="button">Télécharger TXT</button>
-            <button id="bulkDownloadCsvBtn" class="btn-secondary" type="button">Télécharger CSV</button>
-          </div>
-
-          <div id="bulkErrors" class="error-box" hidden>
-            <strong>Adresses non converties</strong>
-            <div id="bulkErrorsList" class="bulk-errors-list"></div>
-          </div>
-
-          <div id="dangerZone" class="danger-zone" hidden>
-            <div class="danger-zone-title">⚠ Zone sensible · Désactivation des comptes</div>
-            <p class="danger-zone-text">
-              Prépare la commande <strong>!deactivate</strong> pour les MXID générés ci-dessus.
-              Vérifiez la liste avant de copier : la commande désactive les comptes.
-            </p>
-
-            <div class="actions">
-              <button id="dangerPrepareBtn" class="btn-danger-outline" type="button">Préparer la commande !deactivate</button>
+          <div id="bulkResults" hidden>
+            <div class="stats">
+              <div class="stat"><span>Emails</span><b id="bulkTotalStat">0</b></div>
+              <div class="stat"><span>MXID</span><b id="bulkSuccessStat" class="ok">0</b></div>
+              <div class="stat"><span>Erreurs</span><b id="bulkErrorStat" class="ko">0</b></div>
+              <div class="stat"><span>Domaines</span><b id="bulkDomainStat">0</b></div>
             </div>
 
-            <div id="dangerBody" hidden>
-              <div id="deactivateChips" class="instance-chips"></div>
-              <textarea id="deactivateOutput" readonly aria-label="Commande !deactivate"></textarea>
-              <div id="deactivateWarn" class="danger-warn" hidden></div>
+            <label class="output-label" for="bulkMxidOutput">Liste des MXID (simple liste, aucune commande)</label>
+            <textarea id="bulkMxidOutput" readonly></textarea>
 
-              <div class="actions">
-                <button id="deactivateCopyBtn" class="btn-danger" type="button">Copier la commande !deactivate</button>
-                <button id="dangerHideBtn" class="btn-secondary" type="button">Masquer</button>
+            <div class="btns">
+              <button id="bulkCopyBtn" class="btn btn-primary" type="button">Copier les MXID</button>
+              <button id="bulkDownloadTxtBtn" class="btn btn-secondary" type="button">TXT</button>
+              <button id="bulkDownloadCsvBtn" class="btn btn-secondary" type="button">CSV</button>
+            </div>
+
+            <div id="bulkErrors" class="msg error" hidden>
+              <strong>Adresses non converties</strong>
+              <div id="bulkErrorsList" class="errors-list"></div>
+            </div>
+
+            <div id="dangerZone" class="danger-zone">
+              <div class="danger-zone-title">⚠ Zone sensible · Désactivation des comptes</div>
+              <p>Commande <strong>!deactivate</strong> pour les MXID ci-dessus. Vérifiez la liste avant de copier : la commande désactive les comptes.</p>
+
+              <div class="btns">
+                <button id="dangerPrepareBtn" class="btn btn-danger-outline" type="button">Préparer la commande !deactivate</button>
+              </div>
+
+              <div id="dangerBody" hidden>
+                <div id="deactivateChips" class="chips"></div>
+                <textarea id="deactivateOutput" readonly aria-label="Commande !deactivate"></textarea>
+                <div id="deactivateWarn" class="warn" hidden></div>
+                <div class="btns">
+                  <button id="deactivateCopyBtn" class="btn btn-danger" type="button">Copier la commande !deactivate</button>
+                  <button id="dangerHideBtn" class="btn btn-secondary" type="button">Masquer</button>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-      </div>
-    </div>
+        </article>
+      </section>
+    </main>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -1199,194 +1174,17 @@
   <script>
     const TchapApp = (() => {
       const CONFIG = {
-        apiBaseUrl: "https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info"
+        apiBaseUrl: "https://matrix.agent.dinum.tchap.gouv.fr/_matrix/identity/api/v1/info",
+        storageKey: "tchapTools.activeTab"
       };
 
-      const DOM = {
-        domainInput: document.getElementById("domainInput"),
-        emailInput: document.getElementById("emailInput"),
-        statusDomainInput: document.getElementById("statusDomainInput"),
+      const $ = (id) => document.getElementById(id);
 
-        domainOutput: document.getElementById("domainOutput"),
-        emailOutput: document.getElementById("emailOutput"),
-        statusOutput: document.getElementById("statusOutput"),
-
-        domainSearchBtn: document.getElementById("domainSearchBtn"),
-        emailSearchBtn: document.getElementById("emailSearchBtn"),
-        statusSearchBtn: document.getElementById("statusSearchBtn"),
-
-        domainResetBtn: document.getElementById("domainResetBtn"),
-        emailResetBtn: document.getElementById("emailResetBtn"),
-        statusResetBtn: document.getElementById("statusResetBtn")
-      };
-
-      function init() {
-        bindEvents();
-        bindCopyHandlers();
-        Bulk.init();
-        Bot.init();
-      }
-
-      // Un clic (ou Entrée) sur une valeur [data-copy] la copie dans le presse-papiers.
-      function bindCopyHandlers() {
-        document.addEventListener("click", (event) => {
-          const target = event.target.closest("[data-copy]");
-          if (target) UI.copyToClipboard(target.dataset.copy);
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key !== "Enter" && event.key !== " ") return;
-          const target = event.target.closest("[data-copy]");
-          if (!target) return;
-          event.preventDefault();
-          UI.copyToClipboard(target.dataset.copy);
-        });
-      }
-
-      function bindEvents() {
-        DOM.domainSearchBtn.addEventListener("click", handleDomainSearch);
-        DOM.emailSearchBtn.addEventListener("click", handleEmailSearch);
-        DOM.statusSearchBtn.addEventListener("click", handleDomainStatusSearch);
-
-        DOM.domainResetBtn.addEventListener("click", resetDomainBlock);
-        DOM.emailResetBtn.addEventListener("click", resetEmailBlock);
-        DOM.statusResetBtn.addEventListener("click", resetStatusBlock);
-
-        DOM.domainInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleDomainSearch();
-        });
-
-        DOM.emailInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleEmailSearch();
-        });
-
-        DOM.statusDomainInput.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") handleDomainStatusSearch();
-        });
-      }
-
-      async function handleDomainSearch() {
-        const domain = DOM.domainInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.domainOutput, "Veuillez renseigner un domaine valide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.domainSearchBtn, true, "Recherche...");
-        Renderer.renderStatus(DOM.domainOutput, "Recherche de l’instance en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-
-          Renderer.renderDomainResult(DOM.domainOutput, {
-            domain,
-            instance,
-            instanceType
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.domainOutput,
-            "Impossible de retrouver l’instance pour ce domaine."
-          );
-        } finally {
-          UI.setLoadingState(DOM.domainSearchBtn, false, "Tester le domaine");
-        }
-      }
-
-      async function handleEmailSearch() {
-        const email = DOM.emailInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidEmail(email)) {
-          Renderer.renderError(DOM.emailOutput, "Veuillez renseigner une adresse email professionnelle valide.");
-          return;
-        }
-
-        const domain = Parser.extractDomainFromEmail(email);
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.emailOutput, "Le domaine extrait depuis cet email est invalide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.emailSearchBtn, true, "Génération...");
-        Renderer.renderStatus(DOM.emailOutput, "Recherche de l’instance et génération du MXID en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-          const mxid = Builder.buildMxid(email, instance);
-
-          Renderer.renderEmailResult(DOM.emailOutput, {
-            email,
-            domain,
-            instance,
-            instanceType,
-            mxid
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.emailOutput,
-            "Impossible de générer le MXID pour cette adresse email."
-          );
-        } finally {
-          UI.setLoadingState(DOM.emailSearchBtn, false, "Générer le MXID");
-        }
-      }
-
-      async function handleDomainStatusSearch() {
-        const domain = DOM.statusDomainInput.value.trim().toLowerCase();
-
-        if (!Validator.isValidDomain(domain)) {
-          Renderer.renderError(DOM.statusOutput, "Veuillez renseigner un domaine valide.");
-          return;
-        }
-
-        UI.setLoadingState(DOM.statusSearchBtn, true, "Vérification...");
-        Renderer.renderStatus(DOM.statusOutput, "Vérification du statut du domaine en cours...");
-
-        try {
-          const instance = await Api.fetchInstanceFromDomain(domain);
-          const instanceType = Mapper.getInstanceType(instance);
-          const domainStatus = Mapper.getDomainOpeningStatus(instance);
-
-          Renderer.renderDomainStatusResult(DOM.statusOutput, {
-            domain,
-            instance,
-            instanceType,
-            domainStatus
-          });
-        } catch (error) {
-          console.error(error);
-          Renderer.renderError(
-            DOM.statusOutput,
-            "Impossible de vérifier l’ouverture de ce domaine."
-          );
-        } finally {
-          UI.setLoadingState(DOM.statusSearchBtn, false, "Vérifier l’ouverture");
-        }
-      }
-
-      function resetDomainBlock() {
-        DOM.domainInput.value = "";
-        DOM.domainOutput.innerHTML = "";
-        DOM.domainInput.focus();
-      }
-
-      function resetEmailBlock() {
-        DOM.emailInput.value = "";
-        DOM.emailOutput.innerHTML = "";
-        DOM.emailInput.focus();
-      }
-
-      function resetStatusBlock() {
-        DOM.statusDomainInput.value = "";
-        DOM.statusOutput.innerHTML = "";
-        DOM.statusDomainInput.focus();
-      }
+      /*
+       * -------------------------------------------------------
+       * OUTILS COMMUNS
+       * -------------------------------------------------------
+       */
 
       const Api = {
         async fetchInstanceFromDomain(domain) {
@@ -1443,9 +1241,8 @@
           return "Autre";
         },
 
-        getDomainOpeningStatus(instance) {
-          if (!instance) return "unknown";
-          return instance.toLowerCase().includes("externe") ? "closed" : "open";
+        typeKey(instance) {
+          return Mapper.getInstanceType(instance).toLowerCase();
         },
 
         // Nom lisible de l'instance, aligné sur les noms des bots (« Finances BotAdmin »…).
@@ -1473,6 +1270,11 @@
           return LABELS[String(instance).toLowerCase()] || instance;
         },
 
+        getDomainOpeningStatus(instance) {
+          if (!instance) return "unknown";
+          return instance.toLowerCase().includes("externe") ? "closed" : "open";
+        },
+
         getDomainOpeningLabel(status) {
           if (status === "open") return "Ouvert sur Tchap";
           if (status === "closed") return "Non ouvert";
@@ -1480,31 +1282,47 @@
         }
       };
 
+      const Html = {
+        esc(value) {
+          return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        },
+
+        copyButton(value, label) {
+          return `<button class="copy-btn" type="button" data-copy="${Html.esc(value)}" aria-label="Copier ${Html.esc(label)}">Copier</button>`;
+        },
+
+        badge(instance, suffix = "") {
+          const type = Mapper.typeKey(instance);
+          const label = Mapper.getInstanceLabel(instance) + suffix;
+          return `<span class="badge" data-type="${Html.esc(type)}">${Html.esc(label)}</span>`;
+        }
+      };
+
       const UI = {
-        setLoadingState(button, isLoading, loadingLabel) {
-          button.disabled = isLoading;
-          if (isLoading) {
-            button.dataset.originalText = button.textContent;
-            button.textContent = loadingLabel;
-          } else {
-            button.textContent = button.dataset.originalText || button.textContent;
-          }
+        setBusy(button, busy) {
+          button.disabled = busy;
+          button.classList.toggle("is-busy", busy);
         },
 
         async copyToClipboard(text, message = `Copié : ${text}`) {
           try {
             await navigator.clipboard.writeText(text);
-            this.showToast(message);
+            UI.showToast(message);
             return true;
           } catch (error) {
             // Fallback (ex. ouverture en file:// ou navigateur restrictif).
-            if (this.legacyCopy(text)) {
-              this.showToast(message);
+            if (UI.legacyCopy(text)) {
+              UI.showToast(message);
               return true;
             }
 
             console.error(error);
-            this.showToast("Copie impossible", true);
+            UI.showToast("Copie impossible", true);
             return false;
           }
         },
@@ -1530,147 +1348,498 @@
         },
 
         showToast(message, isError = false) {
-          const toast = document.getElementById("toast");
+          const toast = $("toast");
           toast.textContent = message;
           toast.classList.toggle("is-error", isError);
           toast.classList.add("is-visible");
 
-          clearTimeout(this.toastTimer);
-          this.toastTimer = setTimeout(() => {
+          clearTimeout(UI.toastTimer);
+          UI.toastTimer = setTimeout(() => {
             toast.classList.remove("is-visible");
+          }, 1800);
+        },
+
+        // Retour visuel temporaire sur un bouton (« Copié ✓ »).
+        flash(button, message) {
+          if (!button.dataset.label) button.dataset.label = button.textContent;
+          const label = button.dataset.label;
+
+          button.textContent = message;
+          button.classList.add("is-done");
+
+          clearTimeout(button._flashTimer);
+          button._flashTimer = setTimeout(() => {
+            button.textContent = label;
+            button.classList.remove("is-done");
           }, 1800);
         }
       };
 
       const Renderer = {
-        renderStatus(container, message) {
-          container.innerHTML = `<div class="status">${message}</div>`;
+        loading(container) {
+          container.innerHTML = `<div class="skeleton" aria-label="Chargement"><span></span><span></span><span></span><span></span></div>`;
         },
 
-        renderError(container, message) {
-          container.innerHTML = `<div class="error-box">${message}</div>`;
+        error(container, message) {
+          container.innerHTML = `<div class="msg error">${Html.esc(message)}</div>`;
         },
 
-        renderDomainResult(container, data) {
-          container.innerHTML = `
-            <div class="result" data-type="${this.typeKey(data.instanceType)}">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
+        /*
+         * rows : [{ label, value, html?, mono?, copy?, badge? }]
+         *  - copy  : bouton « Copier » (toujours visible) qui copie `value`
+         *  - badge : instance dont on affiche le badge à droite
+         */
+        result(container, instance, rows) {
+          const rowsHtml = rows.map((row) => {
+            const side = row.badge ? Html.badge(row.badge) : "";
+            const value = row.html ?? Html.esc(row.value);
+            const copyBtn = row.copy ? Html.copyButton(row.value, row.label) : "";
 
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  ${this.copyable(data.instance)}
-                </div>
-              </div>
+            return `
+              <div class="kv-row">
+                <dt>${Html.esc(row.label)}</dt>
+                <span class="side">${side}${copyBtn}</span>
+                <dd class="${row.mono ? "mono" : ""}">${value}</dd>
+              </div>`;
+          }).join("");
 
-              <div class="result-footer">
-                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-        },
-
-        renderEmailResult(container, data) {
-          container.innerHTML = `
-            <div class="result" data-type="${this.typeKey(data.instanceType)}">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Email</span>
-                  <div class="result-value">${this.escapeHtml(data.email)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  ${this.copyable(data.instance)}
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">MXID</span>
-                  ${this.copyable(data.mxid)}
-                </div>
-              </div>
-
-              <div class="result-footer">
-                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-        },
-
-        renderDomainStatusResult(container, data) {
-          const statusLabel = Mapper.getDomainOpeningLabel(data.domainStatus);
-
-          container.innerHTML = `
-            <div class="result" data-type="${this.typeKey(data.instanceType)}">
-              <div class="result-grid">
-                <div class="result-item">
-                  <span class="result-label">Domaine</span>
-                  <div class="result-value">${this.escapeHtml(data.domain)}</div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Statut</span>
-                  <div class="result-value">
-                    <span class="status-pill ${this.escapeAttribute(data.domainStatus)}">${this.escapeHtml(statusLabel)}</span>
-                  </div>
-                </div>
-
-                <div class="result-item">
-                  <span class="result-label">Instance</span>
-                  ${this.copyable(data.instance)}
-                </div>
-              </div>
-
-              <div class="result-footer">
-                <div class="badge" data-type="${this.typeKey(data.instanceType)}">${this.escapeHtml(data.instanceType)}</div>
-              </div>
-            </div>
-          `;
-
-        },
-
-        copyable(value) {
-          return `
-            <div class="result-value mono copyable" role="button" tabindex="0"
-                 title="Cliquer pour copier" data-copy="${this.escapeAttribute(value)}">${this.escapeHtml(value)}</div>
-          `;
-        },
-
-        typeKey(instanceType) {
-          return String(instanceType || "").toLowerCase();
-        },
-
-        escapeAttribute(value) {
-          return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/"/g, "&quot;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-        },
-
-        escapeHtml(value) {
-          return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+          container.innerHTML = `<dl class="kv" data-type="${Html.esc(Mapper.typeKey(instance))}">${rowsHtml}</dl>`;
         }
       };
 
+      // Champ de recherche : → ou Entrée pour lancer, × ou Échap pour effacer.
+      function bindSearch(wrapper, onSubmit, onClear) {
+        const input = wrapper.querySelector("input");
+        const goBtn = wrapper.querySelector(".go");
+        const clearBtn = wrapper.querySelector(".clear");
+
+        const syncClear = () => wrapper.classList.toggle("has-value", input.value.length > 0);
+
+        input.addEventListener("input", syncClear);
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") onSubmit(input, goBtn);
+          if (event.key === "Escape") clearBtn.click();
+        });
+        goBtn.addEventListener("click", () => onSubmit(input, goBtn));
+        clearBtn.addEventListener("click", () => {
+          input.value = "";
+          syncClear();
+          onClear();
+          input.focus();
+        });
+
+        syncClear();
+      }
+
       /*
        * -------------------------------------------------------
-       * MXID EN MASSE
+       * ONGLETS (le dernier onglet ouvert est mémorisé)
+       * -------------------------------------------------------
+       */
+      const Tabs = (() => {
+        const tabs = [...document.querySelectorAll('[role="tab"]')];
+
+        function activate(name, { focusTab = false, focusPanel = false } = {}) {
+          const target = tabs.find((tab) => tab.dataset.tab === name) || tabs[0];
+
+          tabs.forEach((tab) => {
+            const selected = tab === target;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+            $(tab.getAttribute("aria-controls")).hidden = !selected;
+          });
+
+          if (focusTab) target.focus();
+
+          if (focusPanel && target.dataset.tab !== "search") {
+            const field = $(target.getAttribute("aria-controls")).querySelector("input, textarea");
+            if (field) field.focus({ preventScroll: true });
+          }
+
+          try {
+            localStorage.setItem(CONFIG.storageKey, target.dataset.tab);
+          } catch {
+            // Stockage indisponible (navigation privée…) : sans conséquence.
+          }
+        }
+
+        function init() {
+          tabs.forEach((tab, index) => {
+            tab.addEventListener("click", () => activate(tab.dataset.tab, { focusPanel: true }));
+            tab.addEventListener("keydown", (event) => {
+              const keys = {
+                ArrowRight: tabs[(index + 1) % tabs.length],
+                ArrowLeft: tabs[(index - 1 + tabs.length) % tabs.length],
+                Home: tabs[0],
+                End: tabs[tabs.length - 1]
+              };
+              const next = keys[event.key];
+              if (next) {
+                event.preventDefault();
+                activate(next.dataset.tab, { focusTab: true });
+              }
+            });
+          });
+
+          let saved = null;
+          try {
+            saved = localStorage.getItem(CONFIG.storageKey);
+          } catch {
+            saved = null;
+          }
+          activate(saved || "search");
+        }
+
+        return { init };
+      })();
+
+      /*
+       * -------------------------------------------------------
+       * ONGLET RECHERCHE
+       * -------------------------------------------------------
+       */
+      const Search = (() => {
+        const outputs = {
+          domain: $("domainOutput"),
+          email: $("emailOutput"),
+          status: $("statusOutput")
+        };
+
+        async function runDomain(input, button) {
+          const out = outputs.domain;
+          const domain = input.value.trim().toLowerCase();
+
+          if (!Validator.isValidDomain(domain)) {
+            Renderer.error(out, "Veuillez renseigner un domaine valide.");
+            return;
+          }
+
+          UI.setBusy(button, true);
+          Renderer.loading(out);
+
+          try {
+            const instance = await Api.fetchInstanceFromDomain(domain);
+            Renderer.result(out, instance, [
+              { label: "Domaine", value: domain },
+              { label: "Instance", value: instance, mono: true, copy: true, badge: instance }
+            ]);
+          } catch (error) {
+            console.error(error);
+            Renderer.error(out, "Impossible de retrouver l’instance pour ce domaine.");
+          } finally {
+            UI.setBusy(button, false);
+          }
+        }
+
+        async function runEmail(input, button) {
+          const out = outputs.email;
+          const email = input.value.trim().toLowerCase();
+
+          if (!Validator.isValidEmail(email)) {
+            Renderer.error(out, "Veuillez renseigner une adresse email professionnelle valide.");
+            return;
+          }
+
+          const domain = Parser.extractDomainFromEmail(email);
+
+          if (!Validator.isValidDomain(domain)) {
+            Renderer.error(out, "Le domaine extrait depuis cet email est invalide.");
+            return;
+          }
+
+          UI.setBusy(button, true);
+          Renderer.loading(out);
+
+          try {
+            const instance = await Api.fetchInstanceFromDomain(domain);
+            const mxid = Builder.buildMxid(email, instance);
+            Renderer.result(out, instance, [
+              { label: "MXID", value: mxid, mono: true, copy: true },
+              { label: "Instance", value: instance, mono: true, copy: true, badge: instance }
+            ]);
+          } catch (error) {
+            console.error(error);
+            Renderer.error(out, "Impossible de générer le MXID pour cette adresse email.");
+          } finally {
+            UI.setBusy(button, false);
+          }
+        }
+
+        async function runStatus(input, button) {
+          const out = outputs.status;
+          const domain = input.value.trim().toLowerCase();
+
+          if (!Validator.isValidDomain(domain)) {
+            Renderer.error(out, "Veuillez renseigner un domaine valide.");
+            return;
+          }
+
+          UI.setBusy(button, true);
+          Renderer.loading(out);
+
+          try {
+            const instance = await Api.fetchInstanceFromDomain(domain);
+            const status = Mapper.getDomainOpeningStatus(instance);
+            const pill = `<span class="pill ${Html.esc(status)}">${Html.esc(Mapper.getDomainOpeningLabel(status))}</span>`;
+
+            Renderer.result(out, instance, [
+              { label: "Statut", value: "", html: pill },
+              { label: "Instance", value: instance, mono: true, copy: true, badge: instance }
+            ]);
+          } catch (error) {
+            console.error(error);
+            Renderer.error(out, "Impossible de vérifier l’ouverture de ce domaine.");
+          } finally {
+            UI.setBusy(button, false);
+          }
+        }
+
+        function init() {
+          const runners = { domain: runDomain, email: runEmail, status: runStatus };
+
+          Object.entries(runners).forEach(([name, run]) => {
+            const wrapper = document.querySelector(`[data-search="${name}"]`);
+            bindSearch(wrapper, run, () => {
+              outputs[name].innerHTML = "";
+            });
+          });
+        }
+
+        return { init };
+      })();
+
+      /*
+       * -------------------------------------------------------
+       * ONGLET COMMANDES BOT ADMIN
+       * Formats repris des commandes validées dans l'Admin Room.
+       * -------------------------------------------------------
+       */
+      const Bot = (() => {
+        const output = $("botOutput");
+
+        /*
+         * field : paramètre à saisir après le MXID.
+         *  - type "email" : email valide obligatoire
+         *  - type "text"  : texte libre obligatoire (sans guillemets)
+         *  - prefill "email" : pré-rempli avec l'email saisi
+         */
+        const CMD = {
+          user: { id: "user", label: "Infos du compte", cmd: "!user" },
+          deactivate: { id: "deactivate", label: "Désactiver", cmd: "!deactivate", danger: true },
+          reactivate: {
+            id: "reactivate",
+            label: "Réactiver",
+            cmd: "!reactivate",
+            field: { type: "email", placeholder: "email du compte", prefill: "email" }
+          },
+          reset_password: { id: "reset_password", label: "Réinitialiser le mot de passe", cmd: "!reset_password" },
+          remove_upstream_oauth_links: {
+            id: "remove_upstream_oauth_links",
+            label: "Supprimer les liens OAuth",
+            cmd: "!remove_upstream_oauth_links"
+          },
+          replace_email: {
+            id: "replace_email",
+            label: "Changer l’email",
+            cmd: "!replace_email",
+            field: { type: "email", placeholder: "nouvel email" }
+          },
+          replace_displayname: {
+            id: "replace_displayname",
+            label: "Changer le nom affiché",
+            cmd: "!replace_displayname",
+            field: { type: "text", placeholder: "ex : Jean Dupont [Structure]" },
+            hint: "Sans guillemets, ex. « Philippe Combet [Ac-rennes] »."
+          }
+        };
+
+        const COLUMNS = [
+          [
+            { title: "Consulter", items: [CMD.user] },
+            { title: "Modifier", items: [CMD.replace_email, CMD.replace_displayname] }
+          ],
+          [
+            { title: "Accès", items: [CMD.deactivate, CMD.reactivate] }
+          ],
+          [
+            { title: "Sécurité", items: [CMD.reset_password, CMD.remove_upstream_oauth_links] }
+          ]
+        ];
+
+        const MXID_REGEX = /@[a-z0-9._=\-\/]+:[a-z0-9.-]+\.[a-z]{2,}/i;
+
+        let current = null;
+
+        function init() {
+          bindSearch(document.querySelector('[data-search="bot"]'), prepare, () => {
+            current = null;
+            output.innerHTML = "";
+          });
+          output.addEventListener("click", handleCopy);
+        }
+
+        async function prepare(input, button) {
+          const raw = input.value.trim();
+
+          if (!raw) {
+            Renderer.error(output, "Veuillez coller un email ou un MXID.");
+            return;
+          }
+
+          // MXID collé tel quel (ou lien Tchap contenant un MXID) : utilisé sans modification.
+          const mxidMatch = raw.match(MXID_REGEX);
+          if (mxidMatch) {
+            const mxid = mxidMatch[0].toLowerCase();
+            const instance = mxid.slice(mxid.lastIndexOf(":") + 1);
+            current = { mxid, instance, email: "", source: "MXID collé tel quel" };
+            render();
+            return;
+          }
+
+          if (raw.startsWith("@")) {
+            Renderer.error(
+              output,
+              "MXID mal formé : il doit avoir la forme @identifiant:serveur " +
+              "(il manque probablement le « : » avant le serveur)."
+            );
+            return;
+          }
+
+          const email = raw.toLowerCase();
+          const domain = Parser.extractDomainFromEmail(email);
+
+          if (!Validator.isValidEmail(email) || !Validator.isValidDomain(domain)) {
+            Renderer.error(output, "Veuillez coller un email valide ou un MXID.");
+            return;
+          }
+
+          UI.setBusy(button, true);
+          Renderer.loading(output);
+
+          try {
+            const instance = await Api.fetchInstanceFromDomain(domain);
+            current = {
+              mxid: Builder.buildMxid(email, instance),
+              instance,
+              email,
+              source: "MXID généré depuis l’email"
+            };
+            render();
+          } catch (error) {
+            console.error(error);
+            Renderer.error(output, "Impossible de retrouver l’instance pour cet email.");
+          } finally {
+            UI.setBusy(button, false);
+          }
+        }
+
+        function render() {
+          const type = Mapper.typeKey(current.instance);
+
+          const columns = COLUMNS.map((groups) => `
+            <div>
+              ${groups.map((group) => `
+                <div class="cmd-group">
+                  <h3>${Html.esc(group.title)}</h3>
+                  ${group.items.map(renderCommand).join("")}
+                </div>
+              `).join("")}
+            </div>
+          `).join("");
+
+          output.innerHTML = `
+            <div class="identity" data-type="${Html.esc(type)}">
+              <span class="identity-label">MXID</span>
+              <span class="mono">${Html.esc(current.mxid)}</span>
+              ${Html.copyButton(current.mxid, "MXID")}
+              <span class="spacer"></span>
+              <small>${Html.esc(current.source)}</small>
+              ${Html.badge(current.instance)}
+            </div>
+            <div class="cmd-cols">${columns}</div>
+          `;
+        }
+
+        function renderCommand(item) {
+          let fieldHtml = "";
+
+          if (item.field) {
+            const value = item.field.prefill === "email" ? current.email : "";
+            fieldHtml = `<input type="${item.field.type === "email" ? "email" : "text"}"
+              value="${Html.esc(value)}" placeholder="${Html.esc(item.field.placeholder)}"
+              aria-label="${Html.esc(item.label)} : ${Html.esc(item.field.placeholder)}" />`;
+          }
+
+          return `
+            <div class="cmd${item.danger ? " danger" : ""}" data-cmd="${Html.esc(item.id)}">
+              <div class="cmd-top">
+                <b>${Html.esc(item.label)}</b>
+                <button class="cmd-copy" type="button">Copier</button>
+              </div>
+              <code><span class="k">${Html.esc(item.cmd)}</span> ${Html.esc(current.mxid)}</code>
+              ${fieldHtml}
+              ${item.hint ? `<div class="cmd-hint">${Html.esc(item.hint)}</div>` : ""}
+            </div>
+          `;
+        }
+
+        function readField(card, item) {
+          if (!item.field) return { ok: true, value: "" };
+
+          const input = card.querySelector("input");
+          let value = input.value.trim();
+
+          if (item.field.type === "email") {
+            value = value.toLowerCase();
+            return {
+              ok: Validator.isValidEmail(value),
+              value,
+              input,
+              message: "Renseigner un email valide avant de copier."
+            };
+          }
+
+          // Texte libre : on retire les guillemets parasites en début/fin.
+          value = value.replace(/^['"«\s]+|['"»\s]+$/g, "");
+          return {
+            ok: value.length > 0,
+            value,
+            input,
+            message: "Renseigner le nom affiché avant de copier."
+          };
+        }
+
+        async function handleCopy(event) {
+          const button = event.target.closest(".cmd-copy");
+          if (!button || !current) return;
+
+          const card = button.closest(".cmd");
+          const item = CMD[card.dataset.cmd];
+          if (!item) return;
+
+          const field = readField(card, item);
+
+          if (!field.ok) {
+            field.input.classList.add("is-invalid");
+            field.input.focus();
+            UI.showToast(field.message, true);
+            return;
+          }
+
+          if (field.input) field.input.classList.remove("is-invalid");
+
+          const command = [item.cmd, current.mxid, field.value].filter(Boolean).join(" ");
+          const copied = await UI.copyToClipboard(command, `Copié : ${item.cmd}`);
+
+          if (copied) UI.flash(button, "Copié ✓");
+        }
+
+        return { init };
+      })();
+
+      /*
+       * -------------------------------------------------------
+       * ONGLET MXID EN MASSE
        * -------------------------------------------------------
        */
       const Bulk = (() => {
@@ -1680,13 +1849,9 @@
           concurrency: 8
         };
 
-        const $ = (id) => document.getElementById(id);
-
-        const BDOM = {
-          toggleBtn: $("bulkToggleBtn"),
-          panel: $("bulkPanel"),
+        const D = {
           emailInput: $("bulkEmailInput"),
-          emailCount: $("bulkEmailCount"),
+          count: $("bulkCount"),
           generateBtn: $("bulkGenerateBtn"),
           resetBtn: $("bulkResetBtn"),
           status: $("bulkStatus"),
@@ -1694,7 +1859,8 @@
           progressBar: $("bulkProgressBar"),
           progressLabel: $("bulkProgressLabel"),
           progressPercent: $("bulkProgressPercent"),
-          resultSection: $("bulkResultSection"),
+          empty: $("bulkEmpty"),
+          results: $("bulkResults"),
           totalStat: $("bulkTotalStat"),
           successStat: $("bulkSuccessStat"),
           errorStat: $("bulkErrorStat"),
@@ -1720,27 +1886,19 @@
         const instanceCache = new Map();
 
         function init() {
-          BDOM.toggleBtn.addEventListener("click", togglePanel);
-          BDOM.emailInput.addEventListener("input", updateCounter);
-          BDOM.generateBtn.addEventListener("click", generate);
-          BDOM.resetBtn.addEventListener("click", reset);
-          BDOM.copyBtn.addEventListener("click", copyMxids);
-          BDOM.downloadTxtBtn.addEventListener("click", downloadTxt);
-          BDOM.downloadCsvBtn.addEventListener("click", downloadCsv);
-          BDOM.dangerPrepareBtn.addEventListener("click", showDeactivateCommand);
-          BDOM.dangerHideBtn.addEventListener("click", hideDeactivateCommand);
-          BDOM.deactivateCopyBtn.addEventListener("click", copyDeactivateCommand);
+          D.emailInput.addEventListener("input", updateCounter);
+          D.generateBtn.addEventListener("click", generate);
+          D.resetBtn.addEventListener("click", reset);
+          D.copyBtn.addEventListener("click", copyMxids);
+          D.downloadTxtBtn.addEventListener("click", downloadTxt);
+          D.downloadCsvBtn.addEventListener("click", downloadCsv);
+          D.dangerPrepareBtn.addEventListener("click", showDeactivateCommand);
+          D.dangerHideBtn.addEventListener("click", hideDeactivateCommand);
+          D.deactivateCopyBtn.addEventListener("click", copyDeactivateCommand);
         }
 
-        function togglePanel() {
-          const isOpen = BDOM.toggleBtn.getAttribute("aria-expanded") === "true";
-          BDOM.toggleBtn.setAttribute("aria-expanded", String(!isOpen));
-          BDOM.panel.hidden = isOpen;
-
-          if (!isOpen) {
-            BDOM.panel.scrollIntoView({ behavior: "smooth", block: "start" });
-            BDOM.emailInput.focus({ preventScroll: true });
-          }
+        function plural(count, word) {
+          return `${count} ${word}${count > 1 ? "s" : ""}`;
         }
 
         // Accepte retours à la ligne, virgules, points-virgules, tabulations et espaces.
@@ -1755,7 +1913,16 @@
         }
 
         function updateCounter() {
-          BDOM.emailCount.textContent = parseEmails(BDOM.emailInput.value).length;
+          const emails = parseEmails(D.emailInput.value);
+          const domains = new Set(
+            emails
+              .filter((email) => Validator.isValidEmail(email))
+              .map((email) => Parser.extractDomainFromEmail(email))
+          );
+
+          D.count.textContent = emails.length === 0
+            ? "0 adresse détectée"
+            : `${plural(emails.length, "adresse")} détectée${emails.length > 1 ? "s" : ""} · ${plural(domains.size, "domaine")}`;
         }
 
         async function fetchInstanceCached(domain) {
@@ -1803,7 +1970,7 @@
         async function generate() {
           clearResults();
 
-          const emails = parseEmails(BDOM.emailInput.value);
+          const emails = parseEmails(D.emailInput.value);
 
           if (emails.length === 0) {
             showStatus("Ajoutez au moins une adresse email.");
@@ -1830,7 +1997,7 @@
             }
           });
 
-          const domains = [...new Set(validEmails.map(Parser.extractDomainFromEmail))];
+          const domains = [...new Set(validEmails.map((email) => Parser.extractDomainFromEmail(email)))];
 
           setLoading(true);
           showStatus(
@@ -1862,9 +2029,7 @@
             });
 
             renderResults(emails.length, domains.length);
-            showStatus(
-              `Terminé : ${results.length} MXID généré(s), ${errors.length} erreur(s).`
-            );
+            showStatus(`Terminé : ${results.length} MXID généré(s), ${errors.length} erreur(s).`);
           } catch (error) {
             console.error(error);
             showStatus("Une erreur inattendue est survenue pendant le traitement.");
@@ -1874,37 +2039,31 @@
         }
 
         function renderResults(total, domainCount) {
-          BDOM.resultSection.hidden = false;
+          D.empty.hidden = true;
+          D.results.hidden = false;
 
-          BDOM.totalStat.textContent = total;
-          BDOM.successStat.textContent = results.length;
-          BDOM.errorStat.textContent = errors.length;
-          BDOM.domainStat.textContent = domainCount;
+          D.totalStat.textContent = total;
+          D.successStat.textContent = results.length;
+          D.errorStat.textContent = errors.length;
+          D.domainStat.textContent = domainCount;
 
           // Format : @user1:instance @user2:instance (séparés par un espace).
-          BDOM.mxidOutput.value = getMxidText();
+          D.mxidOutput.value = getMxidText();
 
-          if (errors.length > 0) {
-            BDOM.errors.hidden = false;
-            BDOM.errorsList.textContent = errors
-              .map((item) => `${item.email} — ${item.reason}`)
-              .join("\n");
-          } else {
-            BDOM.errors.hidden = true;
-            BDOM.errorsList.textContent = "";
-          }
+          D.errors.hidden = errors.length === 0;
+          D.errorsList.textContent = errors
+            .map((item) => `${item.email} — ${item.reason}`)
+            .join("\n");
 
-          BDOM.dangerZone.hidden = results.length === 0;
+          D.dangerZone.hidden = results.length === 0;
           hideDeactivateCommand();
+        }
 
-          BDOM.resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        function getMxidText() {
+          return results.map((item) => item.mxid).join(" ");
         }
 
         // ---------- Zone sensible : commande !deactivate ----------
-
-        function getDeactivateCommand() {
-          return `!deactivate ${getMxidText()}`;
-        }
 
         function showDeactivateCommand() {
           if (results.length === 0) return;
@@ -1914,97 +2073,55 @@
             byInstance.set(item.instance, (byInstance.get(item.instance) || 0) + 1);
           });
 
-          BDOM.deactivateChips.innerHTML = [...byInstance.entries()]
-            .map(([instance, count]) => {
-              const type = Mapper.getInstanceType(instance).toLowerCase();
-              const label = Mapper.getInstanceLabel(instance);
-              return `<span class="badge" data-type="${Renderer.escapeAttribute(type)}">${Renderer.escapeHtml(label)} · ${count}</span>`;
-            })
+          D.deactivateChips.innerHTML = [...byInstance.entries()]
+            .map(([instance, count]) => Html.badge(instance, ` · ${count}`))
             .join("");
 
-          BDOM.deactivateOutput.value = getDeactivateCommand();
+          D.deactivateOutput.value = `!deactivate ${getMxidText()}`;
 
           const warnings = [];
           if (byInstance.size > 1) {
-            const labels = [...byInstance.keys()].map(Mapper.getInstanceLabel).join(", ");
+            const labels = [...byInstance.keys()].map((i) => Mapper.getInstanceLabel(i)).join(", ");
             warnings.push(`${byInstance.size} instances concernées : ${byInstance.size} bots vont répondre (${labels}). Vérifier chaque rapport.`);
           }
           if (errors.length > 0) {
             warnings.push(`${errors.length} adresse(s) en erreur ne sont pas incluses dans la commande.`);
           }
-          BDOM.deactivateWarn.hidden = warnings.length === 0;
-          BDOM.deactivateWarn.textContent = warnings.join(" ");
+          D.deactivateWarn.hidden = warnings.length === 0;
+          D.deactivateWarn.textContent = warnings.join(" ");
 
-          BDOM.deactivateCopyBtn.textContent =
-            `Copier la commande !deactivate (${results.length} compte${results.length > 1 ? "s" : ""})`;
-          delete BDOM.deactivateCopyBtn.dataset.label;
+          D.deactivateCopyBtn.textContent = `Copier la commande !deactivate (${plural(results.length, "compte")})`;
+          delete D.deactivateCopyBtn.dataset.label;
 
-          BDOM.dangerBody.hidden = false;
-          BDOM.dangerPrepareBtn.hidden = true;
+          D.dangerBody.hidden = false;
+          D.dangerPrepareBtn.hidden = true;
         }
 
         function hideDeactivateCommand() {
-          BDOM.dangerBody.hidden = true;
-          BDOM.dangerPrepareBtn.hidden = false;
-          BDOM.deactivateOutput.value = "";
+          D.dangerBody.hidden = true;
+          D.dangerPrepareBtn.hidden = false;
+          D.deactivateOutput.value = "";
         }
 
         async function copyDeactivateCommand() {
-          const text = BDOM.deactivateOutput.value;
+          const text = D.deactivateOutput.value;
           if (!text) return;
 
           const copied = await UI.copyToClipboard(
             text,
-            `Commande !deactivate copiée (${results.length} compte${results.length > 1 ? "s" : ""})`
+            `Commande !deactivate copiée (${plural(results.length, "compte")})`
           );
-          if (copied) flashButton(BDOM.deactivateCopyBtn, "Commande copiée ✓");
+          if (copied) UI.flash(D.deactivateCopyBtn, "Commande copiée ✓");
         }
 
-        function getMxidText() {
-          return results.map((item) => item.mxid).join(" ");
-        }
-
-        function updateProgress(processed, total, domain) {
-          const percent = total === 0 ? 100 : Math.round((processed / total) * 100);
-
-          BDOM.progressBar.style.width = `${percent}%`;
-          BDOM.progressPercent.textContent = `${percent} %`;
-          BDOM.progressLabel.textContent = `${processed} / ${total} domaines — ${domain}`;
-        }
-
-        function flashButton(button, message) {
-          const original = button.dataset.label || button.textContent;
-          button.dataset.label = original;
-          button.textContent = message;
-
-          setTimeout(() => {
-            button.textContent = original;
-          }, 1800);
-        }
+        // ---------- Copie / exports ----------
 
         async function copyMxids() {
-          const text = BDOM.mxidOutput.value;
+          const text = D.mxidOutput.value;
           if (!text) return;
 
-          try {
-            await navigator.clipboard.writeText(text);
-            flashButton(BDOM.copyBtn, "MXID copiés ✓");
-            UI.showToast(`${results.length} MXID copiés`);
-          } catch (error) {
-            // Fallback (ex. ouverture en file://).
-            BDOM.mxidOutput.focus();
-            BDOM.mxidOutput.select();
-
-            try {
-              document.execCommand("copy");
-              flashButton(BDOM.copyBtn, "MXID copiés ✓");
-            } catch {
-              alert(
-                "La copie automatique n’est pas disponible. " +
-                "Sélectionnez le contenu puis utilisez Ctrl+C."
-              );
-            }
-          }
+          const copied = await UI.copyToClipboard(text, `${results.length} MXID copiés`);
+          if (copied) UI.flash(D.copyBtn, "MXID copiés ✓");
         }
 
         function downloadTxt() {
@@ -2045,38 +2162,48 @@
           URL.revokeObjectURL(url);
         }
 
+        // ---------- États ----------
+
+        function updateProgress(processed, total, domain) {
+          const percent = total === 0 ? 100 : Math.round((processed / total) * 100);
+
+          D.progressBar.style.width = `${percent}%`;
+          D.progressPercent.textContent = `${percent} %`;
+          D.progressLabel.textContent = `${processed} / ${total} domaines — ${domain}`;
+        }
+
         function setLoading(loading) {
-          BDOM.generateBtn.disabled = loading;
-          BDOM.resetBtn.disabled = loading;
-          BDOM.generateBtn.textContent = loading ? "Génération en cours…" : "Générer les MXID";
-          BDOM.progress.hidden = !loading;
+          D.generateBtn.disabled = loading;
+          D.resetBtn.disabled = loading;
+          D.generateBtn.textContent = loading ? "Génération en cours…" : "Générer les MXID";
+          D.progress.hidden = !loading;
         }
 
         function showStatus(message) {
-          BDOM.status.hidden = false;
-          BDOM.status.textContent = message;
+          D.status.hidden = false;
+          D.status.textContent = message;
         }
 
         function clearResults() {
           results = [];
           errors = [];
 
-          BDOM.resultSection.hidden = true;
-          BDOM.errors.hidden = true;
-          BDOM.dangerZone.hidden = true;
+          D.results.hidden = true;
+          D.empty.hidden = false;
+          D.errors.hidden = true;
+          D.mxidOutput.value = "";
+          D.progressBar.style.width = "0%";
+          D.progressPercent.textContent = "0 %";
           hideDeactivateCommand();
-          BDOM.mxidOutput.value = "";
-          BDOM.progressBar.style.width = "0%";
-          BDOM.progressPercent.textContent = "0 %";
         }
 
         function reset() {
-          BDOM.emailInput.value = "";
-          BDOM.emailCount.textContent = "0";
-          BDOM.status.hidden = true;
-          BDOM.progress.hidden = true;
+          D.emailInput.value = "";
+          updateCounter();
+          D.status.hidden = true;
+          D.progress.hidden = true;
           clearResults();
-          BDOM.emailInput.focus();
+          D.emailInput.focus();
         }
 
         return { init };
@@ -2084,255 +2211,26 @@
 
       /*
        * -------------------------------------------------------
-       * COMMANDES BOT ADMIN (un utilisateur)
-       * Formats repris des commandes validées dans l'Admin Room.
+       * BOUTONS « COPIER » (instance, MXID)
        * -------------------------------------------------------
        */
-      const Bot = (() => {
-        const $ = (id) => document.getElementById(id);
-
-        const BOTDOM = {
-          toggleBtn: $("botToggleBtn"),
-          panel: $("botPanel"),
-          input: $("botInput"),
-          searchBtn: $("botSearchBtn"),
-          output: $("botOutput")
-        };
-
-        /*
-         * field : paramètre à saisir après le MXID.
-         *  - type "email" : email valide obligatoire
-         *  - type "text"  : texte libre obligatoire (sans guillemets)
-         *  - prefill "email" : pré-rempli avec l'email saisi
-         */
-        const COMMANDS = [
-          {
-            group: "Consulter",
-            items: [
-              { id: "user", label: "Infos du compte", cmd: "!user" }
-            ]
-          },
-          {
-            group: "Accès",
-            items: [
-              { id: "deactivate", label: "Désactiver", cmd: "!deactivate", danger: true },
-              {
-                id: "reactivate",
-                label: "Réactiver",
-                cmd: "!reactivate",
-                hint: "MXID + email du compte",
-                field: { type: "email", placeholder: "email du compte", prefill: "email" }
-              },
-              { id: "reset_password", label: "Réinitialiser le mot de passe", cmd: "!reset_password" },
-              { id: "remove_upstream_oauth_links", label: "Supprimer les liens OAuth", cmd: "!remove_upstream_oauth_links" }
-            ]
-          },
-          {
-            group: "Modifier",
-            items: [
-              {
-                id: "replace_email",
-                label: "Changer l’email",
-                cmd: "!replace_email",
-                field: { type: "email", placeholder: "nouvel email" }
-              },
-              {
-                id: "replace_displayname",
-                label: "Changer le nom affiché",
-                cmd: "!replace_displayname",
-                field: { type: "text", placeholder: "ex : Jean Dupont [Structure]" }
-              }
-            ]
-          }
-        ];
-
-        const MXID_REGEX = /@[a-z0-9._=\-\/]+:[a-z0-9.-]+\.[a-z]{2,}/i;
-
-        let current = null;
-
-        function init() {
-          BOTDOM.toggleBtn.addEventListener("click", togglePanel);
-          BOTDOM.searchBtn.addEventListener("click", prepare);
-          BOTDOM.input.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") prepare();
-          });
-          BOTDOM.output.addEventListener("click", handleOutputClick);
-        }
-
-        function togglePanel() {
-          const isOpen = BOTDOM.toggleBtn.getAttribute("aria-expanded") === "true";
-          BOTDOM.toggleBtn.setAttribute("aria-expanded", String(!isOpen));
-          BOTDOM.panel.hidden = isOpen;
-
-          if (!isOpen) {
-            BOTDOM.panel.scrollIntoView({ behavior: "smooth", block: "start" });
-            BOTDOM.input.focus({ preventScroll: true });
-          }
-        }
-
-        async function prepare() {
-          const raw = BOTDOM.input.value.trim();
-
-          if (!raw) {
-            Renderer.renderError(BOTDOM.output, "Veuillez coller un email ou un MXID.");
-            return;
-          }
-
-          // MXID collé tel quel (ou lien Tchap contenant un MXID) : utilisé sans modification.
-          const mxidMatch = raw.match(MXID_REGEX);
-          if (mxidMatch) {
-            const mxid = mxidMatch[0].toLowerCase();
-            const instance = mxid.slice(mxid.lastIndexOf(":") + 1);
-            current = { mxid, instance, email: "", source: "MXID collé tel quel" };
-            render();
-            return;
-          }
-
-          if (raw.startsWith("@")) {
-            Renderer.renderError(
-              BOTDOM.output,
-              "MXID mal formé : il doit avoir la forme @identifiant:serveur " +
-              "(il manque probablement le « : » avant le serveur)."
-            );
-            return;
-          }
-
-          const email = raw.toLowerCase();
-          const domain = Parser.extractDomainFromEmail(email);
-
-          if (!Validator.isValidEmail(email) || !Validator.isValidDomain(domain)) {
-            Renderer.renderError(BOTDOM.output, "Veuillez coller un email valide ou un MXID.");
-            return;
-          }
-
-          UI.setLoadingState(BOTDOM.searchBtn, true, "Recherche...");
-          Renderer.renderStatus(BOTDOM.output, "Recherche de l’instance en cours...");
-
-          try {
-            const instance = await Api.fetchInstanceFromDomain(domain);
-            current = {
-              mxid: Builder.buildMxid(email, instance),
-              instance,
-              email,
-              source: "MXID généré depuis l’email"
-            };
-            render();
-          } catch (error) {
-            console.error(error);
-            Renderer.renderError(BOTDOM.output, "Impossible de retrouver l’instance pour cet email.");
-          } finally {
-            UI.setLoadingState(BOTDOM.searchBtn, false, "Préparer");
-          }
-        }
-
-        function render() {
-          const esc = (v) => Renderer.escapeHtml(v);
-          const attr = (v) => Renderer.escapeAttribute(v);
-          const type = Mapper.getInstanceType(current.instance).toLowerCase();
-
-          const groups = COMMANDS.map((group) => `
-            <div class="cmd-group">
-              <div class="cmd-group-title">${esc(group.group)}</div>
-              ${group.items.map((item) => renderCommand(item)).join("")}
-              ${group.group === "Modifier"
-                ? `<div class="cmd-hint">Le nom affiché est saisi librement, sans guillemets (ex. « Philippe Combet [Ac-rennes] »).</div>`
-                : ""}
-            </div>
-          `).join("");
-
-          BOTDOM.output.innerHTML = `
-            <div class="bot-identity" data-type="${attr(type)}">
-              <span class="result-label">MXID</span>
-              ${Renderer.copyable(current.mxid)}
-              <span class="spacer"></span>
-              <small>${esc(current.source)}</small>
-              <div class="badge" data-type="${attr(type)}">${esc(Mapper.getInstanceLabel(current.instance))}</div>
-            </div>
-            ${groups}
-          `;
-        }
-
-        function renderCommand(item) {
-          const esc = (v) => Renderer.escapeHtml(v);
-          const attr = (v) => Renderer.escapeAttribute(v);
-          let fieldHtml = "";
-
-          if (item.field) {
-            const value = item.field.prefill === "email" ? current.email : "";
-            fieldHtml = `<input type="${item.field.type === "email" ? "email" : "text"}"
-              data-field-type="${attr(item.field.type)}"
-              value="${attr(value)}" placeholder="${attr(item.field.placeholder)}"
-              aria-label="${attr(item.label)} : ${attr(item.field.placeholder)}" />`;
-          }
-
-          return `
-            <div class="cmd${item.danger ? " danger" : ""}" data-cmd="${attr(item.id)}">
-              <div class="cmd-name">${esc(item.label)}<span>${esc(item.hint ? `${item.cmd} · ${item.hint}` : item.cmd)}</span></div>
-              <div class="cmd-code"><span class="k">${esc(item.cmd)}</span> <span>${esc(current.mxid)}</span> ${fieldHtml}</div>
-              <button class="cmd-copy" type="button">Copier</button>
-            </div>
-          `;
-        }
-
-        function findCommand(id) {
-          for (const group of COMMANDS) {
-            const found = group.items.find((item) => item.id === id);
-            if (found) return found;
-          }
-          return null;
-        }
-
-        function readField(row, item) {
-          if (!item.field) return { ok: true, value: "" };
-
-          const input = row.querySelector("input");
-          let value = input.value.trim();
-
-          if (item.field.type === "email") {
-            value = value.toLowerCase();
-            const ok = Validator.isValidEmail(value);
-            return { ok, value, input, message: "Renseigner un email valide avant de copier." };
-          }
-
-          // Texte libre : on retire les guillemets parasites en début/fin.
-          value = value.replace(/^['"«\s]+|['"»\s]+$/g, "");
-          return { ok: value.length > 0, value, input, message: "Renseigner le nom affiché avant de copier." };
-        }
-
-        async function handleOutputClick(event) {
-          const button = event.target.closest(".cmd-copy");
+      function bindCopyHandlers() {
+        document.addEventListener("click", async (event) => {
+          const button = event.target.closest(".copy-btn[data-copy]");
           if (!button) return;
 
-          const row = button.closest(".cmd");
-          const item = findCommand(row.dataset.cmd);
-          if (!item || !current) return;
+          const copied = await UI.copyToClipboard(button.dataset.copy);
+          if (copied) UI.flash(button, "Copié ✓");
+        });
+      }
 
-          const field = readField(row, item);
-
-          if (!field.ok) {
-            field.input.classList.add("is-invalid");
-            field.input.focus();
-            UI.showToast(field.message, true);
-            return;
-          }
-
-          if (field.input) field.input.classList.remove("is-invalid");
-
-          const command = [item.cmd, current.mxid, field.value].filter(Boolean).join(" ");
-          const copied = await UI.copyToClipboard(command, `Copié : ${item.cmd}`);
-
-          if (copied) {
-            button.textContent = "Copié ✓";
-            button.classList.add("is-done");
-            setTimeout(() => {
-              button.textContent = "Copier";
-              button.classList.remove("is-done");
-            }, 1800);
-          }
-        }
-
-        return { init };
-      })();
+      function init() {
+        Tabs.init();
+        Search.init();
+        Bot.init();
+        Bulk.init();
+        bindCopyHandlers();
+      }
 
       return { init };
     })();
