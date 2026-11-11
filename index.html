@@ -343,7 +343,7 @@
 
     .kv-row {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas: "label side" "value value";
       align-items: center;
       gap: 4px 10px;
@@ -366,6 +366,9 @@
 
     .kv-row .side {
       grid-area: side;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .kv-row dd {
@@ -384,31 +387,33 @@
       word-break: break-all;
     }
 
-    [data-copy] {
-      cursor: copy;
-      transition: background var(--transition);
-    }
-
-    .kv-row[data-copy]:hover,
-    .kv-row[data-copy]:focus-visible {
-      background: #f4f7fc;
-      outline: none;
-    }
-
-    .copy-hint {
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--navy);
+    /* Bouton « Copier » toujours visible */
+    .copy-btn {
+      flex: none;
+      align-self: center;
+      border: 0;
+      border-radius: 8px;
+      padding: 7px 12px;
+      background: linear-gradient(180deg, var(--navy-2), var(--navy));
       color: #fff;
-      font-size: 11px;
+      font-size: 12.5px;
       font-weight: 700;
-      opacity: 0;
-      transition: opacity var(--transition);
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(11,31,58,0.14);
+      transition: transform var(--transition), background var(--transition);
     }
 
-    [data-copy]:hover .copy-hint,
-    [data-copy]:focus-visible .copy-hint {
-      opacity: 1;
+    .copy-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .copy-btn:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .copy-btn.is-done {
+      background: var(--green);
     }
 
     .badge {
@@ -589,13 +594,6 @@
 
     .identity .mono {
       font-size: 14px;
-      padding: 2px 6px;
-      margin: -2px -6px;
-      border-radius: 6px;
-    }
-
-    .identity .mono:hover {
-      background: #f4f7fc;
     }
 
     .identity .spacer {
@@ -1294,6 +1292,10 @@
             .replace(/'/g, "&#039;");
         },
 
+        copyButton(value, label) {
+          return `<button class="copy-btn" type="button" data-copy="${Html.esc(value)}" aria-label="Copier ${Html.esc(label)}">Copier</button>`;
+        },
+
         badge(instance, suffix = "") {
           const type = Mapper.typeKey(instance);
           const label = Mapper.getInstanceLabel(instance) + suffix;
@@ -1384,23 +1386,19 @@
 
         /*
          * rows : [{ label, value, html?, mono?, copy?, badge? }]
-         *  - copy  : la ligne copie `value` au clic
+         *  - copy  : bouton « Copier » (toujours visible) qui copie `value`
          *  - badge : instance dont on affiche le badge à droite
          */
         result(container, instance, rows) {
           const rowsHtml = rows.map((row) => {
-            const copyAttrs = row.copy
-              ? ` data-copy="${Html.esc(row.value)}" role="button" tabindex="0" title="Cliquer pour copier"`
-              : "";
-            const side = row.badge
-              ? Html.badge(row.badge)
-              : row.copy ? `<span class="copy-hint">Copier</span>` : "";
+            const side = row.badge ? Html.badge(row.badge) : "";
             const value = row.html ?? Html.esc(row.value);
+            const copyBtn = row.copy ? Html.copyButton(row.value, row.label) : "";
 
             return `
-              <div class="kv-row"${copyAttrs}>
+              <div class="kv-row">
                 <dt>${Html.esc(row.label)}</dt>
-                <span class="side">${side}</span>
+                <span class="side">${side}${copyBtn}</span>
                 <dd class="${row.mono ? "mono" : ""}">${value}</dd>
               </div>`;
           }).join("");
@@ -1752,7 +1750,8 @@
           output.innerHTML = `
             <div class="identity" data-type="${Html.esc(type)}">
               <span class="identity-label">MXID</span>
-              <span class="mono" data-copy="${Html.esc(current.mxid)}" role="button" tabindex="0" title="Cliquer pour copier">${Html.esc(current.mxid)}</span>
+              <span class="mono">${Html.esc(current.mxid)}</span>
+              ${Html.copyButton(current.mxid, "MXID")}
               <span class="spacer"></span>
               <small>${Html.esc(current.source)}</small>
               ${Html.badge(current.instance)}
@@ -2212,21 +2211,16 @@
 
       /*
        * -------------------------------------------------------
-       * COPIE AU CLIC (toute valeur [data-copy])
+       * BOUTONS « COPIER » (instance, MXID)
        * -------------------------------------------------------
        */
       function bindCopyHandlers() {
-        document.addEventListener("click", (event) => {
-          const target = event.target.closest("[data-copy]");
-          if (target) UI.copyToClipboard(target.dataset.copy);
-        });
+        document.addEventListener("click", async (event) => {
+          const button = event.target.closest(".copy-btn[data-copy]");
+          if (!button) return;
 
-        document.addEventListener("keydown", (event) => {
-          if (event.key !== "Enter" && event.key !== " ") return;
-          const target = event.target.closest("[data-copy]");
-          if (!target) return;
-          event.preventDefault();
-          UI.copyToClipboard(target.dataset.copy);
+          const copied = await UI.copyToClipboard(button.dataset.copy);
+          if (copied) UI.flash(button, "Copié ✓");
         });
       }
 
